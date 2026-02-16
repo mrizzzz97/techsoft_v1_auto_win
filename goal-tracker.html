@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Target Tabungan - Monetra</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                        secondary: '#06b6d4',
+                    },
+                    screens: {
+                        'xs': '480px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html.dark body {
+            background-color: #020617;
+            color: #f8fafc;
+        }
+        
+        html.light body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        /* Noise texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Loading Screen */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #020617;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .loader-wrapper.slide-up {
+            transform: translateY(-100%);
+        }
+
+        .loader-logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+            opacity: 0;
+            animation: logoReveal 1s ease forwards 0.5s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-logo-img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @keyframes logoReveal {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1.2s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-text {
+                font-size: 2rem;
+                margin-top: 24px;
+            }
+        }
+
+        .loader-subtext {
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: #64748b;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.8s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-subtext {
+                font-size: 0.875rem;
+                margin-top: 8px;
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Floating Rounded Header */
+        .navbar {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        
+        @media (min-width: 768px) {
+            .navbar {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+        }
+        
+        .navbar .navbar-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .navbar.floating {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .navbar.floating .navbar-container {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            max-width: 1200px;
+        }
+        
+        @media (min-width: 768px) {
+            .navbar.floating .navbar-container {
+                padding: 0.75rem 2rem;
+            }
+        }
+        
+        html.light .navbar.floating .navbar-container {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cards */
+        .goal-card {
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        html.light .goal-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .goal-card:hover {
+            transform: translateY(-4px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .progress-bar {
+                height: 10px;
+            }
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            transition: width 0.5s ease;
+            border-radius: 999px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary *,
+        .btn-primary i,
+        .btn-primary span {
+            color: #ffffff !important;
+        }
+
+        /* Goal Badges */
+        .goal-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 640px) {
+            .goal-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+                gap: 0.5rem;
+            }
+        }
+
+        .badge-vacation {
+            background: rgba(6, 182, 212, 0.2);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+        }
+
+        .badge-education {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #8b5cf6;
+        }
+
+        .badge-vehicle {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+
+        .badge-house {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .badge-emergency {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            max-width: 400px;
+            width: 100%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .modal-content {
+                padding: 2rem;
+                border-radius: 2rem;
+            }
+        }
+
+        html.light .modal-content {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Input Styling */
+        .goal-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem 0.75rem;
+            color: inherit;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 640px) {
+            .goal-input {
+                padding: 0.6rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        .goal-input::placeholder {
+            font-size: 0.875rem;
+            opacity: 0.5;
+        }
+
+        html.light .goal-input {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .goal-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        select.goal-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1em;
+        }
+
+        /* Milestone */
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        @media (min-width: 640px) {
+            .milestone-item {
+                gap: 1rem;
+                padding: 0.75rem;
+                border-radius: 12px;
+            }
+        }
+
+        .milestone-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .milestone-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        @media (min-width: 640px) {
+            .milestone-check {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+            }
+        }
+
+        html.light .milestone-check {
+            border-color: #cbd5e1;
+        }
+
+        .milestone-check.checked {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
+        }
+
+        /* Celebration Animation */
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            position: absolute;
+            animation: confetti 3s ease-in-out forwards;
+            z-index: 10002;
+        }
+
+        @media (min-width: 640px) {
+            .confetti {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        /* Mobile Menu - Improved */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: #0f172a;
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.light .mobile-menu {
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        #closeMobileMenu {
+            position: relative;
+            z-index: 10000;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        #closeMobileMenu:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #closeMobileMenu:active {
+            transform: scale(0.95);
+        }
+
+        #mobileMenuBtn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        #mobileMenuBtn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #mobileMenuBtn:active {
+            transform: scale(0.95);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        html.light .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            color: #f8fafc;
+        }
+
+        html.light .dropdown-item {
+            color: #0f172a;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Hero Section Responsive */
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 5rem;
+            }
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Light Mode Fixes */
+        html.light h1,
+        html.light h2,
+        html.light h3,
+        html.light h4,
+        html.light h5 {
+            color: #0f172a !important;
+        }
+        
+        html.light p,
+        html.light span,
+        html.light li,
+        html.light a {
+            color: #334155 !important;
+        }
+        
+        html.light .text-gray-300,
+        html.light .text-gray-400,
+        html.light .text-gray-500 {
+            color: #64748b !important;
+        }
+
+        /* Footer - Always White Text */
+        footer,
+        footer h4,
+        footer p,
+        footer a,
+        footer span,
+        footer li,
+        footer div {
+            color: #ffffff !important;
+        }
+
+        html.light footer,
+        html.light footer h4,
+        html.light footer p,
+        html.light footer a,
+        html.light footer span,
+        html.light footer li,
+        html.light footer div {
+            color: #ffffff !important;
+        }
+        
+        html.light footer .opacity-50,
+        html.light footer .opacity-60,
+        html.light footer .opacity-40 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        @media (min-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        html.light ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        /* Responsive Padding */
+        .section-padding {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .section-padding {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section-padding {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Smooth transitions */
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader-wrapper" id="loader">
+        <img src="image.jpeg" alt="Monetra Logo" class="loader-logo-img">
+        <div class="loader-text">MONETRA</div>
+        <div class="loader-subtext">Target Tabungan</div>
+    </div>
+
+    <!-- Floating Rounded Header -->
+    <nav class="navbar fixed w-full top-0 z-50 px-4 sm:px-6">
+        <div class="navbar-container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
+                <div class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+                    <img src="image.jpeg" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <span class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
+                <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
+                
+                <!-- Features Dropdown -->
+                <div class="dropdown">
+                    <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
+                        Features
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="personality-test.html" class="dropdown-item">
+                            <i data-lucide="user-circle" class="w-4 h-4"></i>
+                            <span>Tes Kepribadian</span>
+                        </a>
+                        <a href="budget-simulator.html" class="dropdown-item">
+                            <i data-lucide="wallet" class="w-4 h-4"></i>
+                            <span>Simulasi Budget</span>
+                        </a>
+                        <a href="goal-tracker.html" class="dropdown-item">
+                            <i data-lucide="target" class="w-4 h-4"></i>
+                            <span>Target Tabungan</span>
+                        </a>
+                        <a href="challenge.html" class="dropdown-item">
+                            <i data-lucide="trophy" class="w-4 h-4"></i>
+                            <span>Saving Challenge</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="insight-dashboard.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Dashboard</a>
+                <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
+                
+                <button class="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
+                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-yellow-300"></i>
+                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                </button>
+                
+                <a href="personality-test.html" class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">
+                    Mulai Tes
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center space-x-2 sm:space-x-3">
+                <button class="p-2" id="themeToggleMobile">
+                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                </button>
+                <button id="mobileMenuBtn" class="p-2">
+                    <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-end mb-6 sm:mb-8">
+            <button id="closeMobileMenu">
+                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-3 sm:space-y-4">
+            <a href="index.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Home</a>
+            <a href="about.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
+            
+            <div class="border-t border-white/10 pt-4 sm:pt-6">
+                <div class="text-xs uppercase tracking-wider opacity-50 mb-2 sm:mb-3">Features</div>
+                <div class="space-y-2 sm:space-y-3">
+                    <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="user-circle" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Tes Kepribadian</span>
+                    </a>
+                    <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Simulasi Budget</span>
+                    </a>
+                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="target" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Target Tabungan</span>
+                    </a>
+                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="trophy" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Saving Challenge</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="insight-dashboard.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Dashboard</a>
+            <a href="contact.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
+            
+            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">
+                Mulai Tes
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-16 md:pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-900/20 via-transparent to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center" data-aos="fade-down">
+                <div class="inline-block mb-4 sm:mb-6">
+                    <span class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                        Target Tracker
+                    </span>
+                </div>
+                <h1 class="hero-title font-black mb-4 sm:mb-6">Wujudkan <span class="gradient-text">Impian Finansialmu</span></h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed px-4">
+                    Tetapkan target tabungan, pantau progres, dan rayakan setiap pencapaian dalam perjalanan menuju impianmu.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Goal Button -->
+    <section class="pb-8 sm:pb-10 md:pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-end">
+                <button onclick="openAddGoalModal()" class="btn-primary px-5 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-bold text-sm sm:text-base flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    Tambah Target Baru
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goals Grid -->
+    <section class="pb-20 sm:pb-24 md:pb-28 lg:pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8" id="goalsContainer">
+                <!-- Goals will be dynamically added here -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-12 sm:py-16 md:py-20 hidden">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 mx-auto mb-4 sm:mb-5 md:mb-6 opacity-30">
+                    <i data-lucide="target" class="w-full h-full"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Belum Ada Target</h3>
+                <p class="text-sm sm:text-base opacity-60 mb-6 sm:mb-8">Mulai dengan menambahkan target tabungan pertamamu</p>
+                <button onclick="openAddGoalModal()" class="btn-primary px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-bold text-sm sm:text-base inline-flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    Tambah Target
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Milestones Section -->
+    <section class="pb-20 sm:pb-24 md:pb-28 lg:pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16" data-aos="fade-up">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6">Perjalanan Menuju Impian</h2>
+                <div class="w-16 sm:w-20 md:w-24 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-3 sm:mb-4 md:mb-6"></div>
+                <p class="text-sm sm:text-base md:text-lg opacity-70 max-w-2xl mx-auto px-4">
+                    Setiap langkah kecil membawamu lebih dekat ke tujuan besar
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                <!-- Recent Milestones -->
+                <div class="goal-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl" data-aos="fade-right">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                        <i data-lucide="clock" class="w-5 h-5 sm:w-6 sm:h-6 text-violet-400"></i>
+                        Pencapaian Terbaru
+                    </h3>
+                    <div class="space-y-3 sm:space-y-4" id="recentMilestones">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Tips Container -->
+                <div class="goal-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl" data-aos="fade-left">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                        <i data-lucide="lightbulb" class="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400"></i>
+                        Tips Mencapai Target
+                    </h3>
+                    <div class="space-y-3 sm:space-y-4" id="tipsContainer">
+                        <!-- Tips will be dynamically updated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Goal Modal (Smaller Version) -->
+    <div class="modal" id="addGoalModal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-3 sm:mb-4">
+                <h3 class="text-lg sm:text-xl font-bold">Tambah Target Baru</h3>
+                <button onclick="closeAddGoalModal()" class="p-1.5 hover:bg-white/10 rounded-lg transition">
+                    <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-2 sm:space-y-3">
+                <div>
+                    <label class="block text-xs font-medium mb-1 opacity-70">Nama Target</label>
+                    <input type="text" id="goalName" class="goal-input" placeholder="Contoh: Liburan ke Bali">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-medium mb-1 opacity-70">Kategori</label>
+                    <select id="goalCategory" class="goal-input">
+                        <option value="vacation">Liburan</option>
+                        <option value="education">Pendidikan</option>
+                        <option value="vehicle">Kendaraan</option>
+                        <option value="house">Rumah</option>
+                        <option value="emergency">Dana Darurat</option>
+                        <option value="other">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div>
+                        <label class="block text-xs font-medium mb-1 opacity-70">Target (Rp)</label>
+                        <input type="number" id="goalTarget" class="goal-input" min="0" step="100000" placeholder="10.000.000">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1 opacity-70">Tabungan Saat Ini</label>
+                        <input type="number" id="goalCurrent" class="goal-input" min="0" step="100000" value="0" placeholder="0">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-medium mb-1 opacity-70">Target Tanggal (Opsional)</label>
+                    <input type="date" id="goalDeadline" class="goal-input">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-medium mb-1 sm:mb-2 opacity-70">Warna</label>
+                    <div class="flex gap-1.5 sm:gap-2">
+                        <button type="button" onclick="selectColor('violet')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-violet-500 border-2 border-transparent hover:scale-110 transition color-option" data-color="violet"></button>
+                        <button type="button" onclick="selectColor('cyan')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-cyan-500 border-2 border-transparent hover:scale-110 transition color-option" data-color="cyan"></button>
+                        <button type="button" onclick="selectColor('emerald')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-500 border-2 border-transparent hover:scale-110 transition color-option" data-color="emerald"></button>
+                        <button type="button" onclick="selectColor('amber')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500 border-2 border-transparent hover:scale-110 transition color-option" data-color="amber"></button>
+                        <button type="button" onclick="selectColor('rose')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-rose-500 border-2 border-transparent hover:scale-110 transition color-option" data-color="rose"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-2 sm:gap-3 mt-4 sm:mt-5 md:mt-6">
+                <button onclick="addNewGoal()" class="btn-primary flex-1 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm">
+                    Simpan Target
+                </button>
+                <button onclick="closeAddGoalModal()" class="flex-1 py-2 sm:py-2.5 rounded-xl border border-white/20 font-semibold text-xs sm:text-sm hover:bg-white/5 transition">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
+                <div>
+                    <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
+                            <img src="image.jpeg" alt="Logo" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xl sm:text-2xl font-bold">Monetra</span>
+                    </div>
+                    <p class="opacity-50 text-xs sm:text-sm">Platform edukasi finansial untuk generasi muda Indonesia.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Produk</h4>
+                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
+                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
+                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
+                        <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Perusahaan</h4>
+                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
+                        <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
+                        <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
+                        <li><a href="insight-dashboard.html" class="hover:text-violet-400 transition">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Ikuti Kami</h4>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-6 sm:pt-7 md:pt-8 text-center opacity-40 text-xxs sm:text-xs">
+                <p>&copy; 2026 Monetra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Loading
+        window.addEventListener('load', function() {
+            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
+        });
+        
+        // AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 30,
+            disable: window.innerWidth < 768 // Disable on mobile for better performance
+        });
+        
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        const html = document.documentElement;
+        
+        function toggleTheme() {
+            html.classList.toggle('dark');
+            html.classList.toggle('light');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            lucide.createIcons();
+        }
+        
+        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            html.classList.remove('dark');
+            html.classList.add('light');
+        } else if (!savedTheme) {
+            html.classList.add('dark');
+        }
+        
+        // Floating Navbar on Scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('floating');
+            } else {
+                navbar.classList.remove('floating');
+            }
+        });
+        
+        // Mobile Menu - IMPROVED VERSION
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        
+        function openMobileMenu() {
+            if (mobileMenu && mobileMenuOverlay) {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeMobileMenuFunc() {
+            if (mobileMenu && mobileMenuOverlay) {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+        }
+        
+        if (closeMobileMenu) {
+            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        }
+        
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
+        }
+        
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMobileMenuFunc);
+        });
+        
+        // Handle escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+                closeMobileMenuFunc();
+            }
+        });
+
+        // Goal Tracker Logic
+        let goals = [];
+        let selectedColor = 'violet';
+
+        // Load goals from localStorage
+        if (localStorage.getItem('goals')) {
+            goals = JSON.parse(localStorage.getItem('goals'));
+        } else {
+            // Sample data
+            goals = [
+                {
+                    id: 1,
+                    name: 'Liburan ke Bali',
+                    category: 'vacation',
+                    target: 15000000,
+                    current: 7500000,
+                    deadline: '2026-06-30',
+                    color: 'violet',
+                    milestones: [
+                        { id: 1, text: 'Booking tiket pesawat', completed: false },
+                        { id: 2, text: 'Cari penginapan', completed: true },
+                        { id: 3, text: 'Buat itinerary', completed: false }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: 'Dana Darurat',
+                    category: 'emergency',
+                    target: 50000000,
+                    current: 12500000,
+                    deadline: '2026-12-31',
+                    color: 'emerald',
+                    milestones: [
+                        { id: 1, text: 'Buka rekening khusus', completed: true },
+                        { id: 2, text: 'Transfer rutin tiap bulan', completed: false }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: 'Motor Baru',
+                    category: 'vehicle',
+                    target: 25000000,
+                    current: 20000000,
+                    deadline: '2026-05-15',
+                    color: 'amber',
+                    milestones: [
+                        { id: 1, text: 'Survey motor', completed: true },
+                        { id: 2, text: 'Test drive', completed: true },
+                        { id: 3, text: 'Urus kredit', completed: false }
+                    ]
+                }
+            ];
+            localStorage.setItem('goals', JSON.stringify(goals));
+        }
+
+        const formatRupiah = (number) => {
+            return 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        };
+
+        function getCategoryBadge(category) {
+            const badges = {
+                vacation: 'badge-vacation',
+                education: 'badge-education',
+                vehicle: 'badge-vehicle',
+                house: 'badge-house',
+                emergency: 'badge-emergency',
+                other: 'badge-vacation'
+            };
+            
+            const icons = {
+                vacation: 'plane',
+                education: 'graduation-cap',
+                vehicle: 'car',
+                house: 'home',
+                emergency: 'alert-triangle',
+                other: 'target'
+            };
+            
+            const labels = {
+                vacation: 'Liburan',
+                education: 'Pendidikan',
+                vehicle: 'Kendaraan',
+                house: 'Rumah',
+                emergency: 'Darurat',
+                other: 'Lainnya'
+            };
+            
+            return `
+                <span class="goal-badge ${badges[category]}">
+                    <i data-lucide="${icons[category]}" class="w-3 h-3"></i>
+                    ${labels[category]}
+                </span>
+            `;
+        }
+
+        function calculateProgress(current, target) {
+            return Math.min(Math.round((current / target) * 100), 100);
+        }
+
+        function getDaysLeft(deadline) {
+            if (!deadline) return null;
+            const today = new Date();
+            const targetDate = new Date(deadline);
+            const diffTime = targetDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        function renderGoals() {
+            const container = document.getElementById('goalsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (!container) return;
+            
+            if (goals.length === 0) {
+                container.innerHTML = '';
+                if (emptyState) emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            if (emptyState) emptyState.classList.add('hidden');
+            
+            let html = '';
+            goals.forEach(goal => {
+                const progress = calculateProgress(goal.current, goal.target);
+                const daysLeft = getDaysLeft(goal.deadline);
+                const milestoneCompleted = goal.milestones ? goal.milestones.filter(m => m.completed).length : 0;
+                const totalMilestones = goal.milestones ? goal.milestones.length : 0;
+                
+                html += `
+                    <div class="goal-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl" data-aos="fade-up">
+                        <div class="flex justify-between items-start mb-3 sm:mb-4">
+                            ${getCategoryBadge(goal.category)}
+                            <button onclick="deleteGoal(${goal.id})" class="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition opacity-50 hover:opacity-100">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                            </button>
+                        </div>
+                        
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2">${goal.name}</h3>
+                        
+                        ${goal.deadline ? `
+                            <div class="flex flex-wrap items-center gap-1 sm:gap-2 text-xs sm:text-sm opacity-60 mb-3 sm:mb-4">
+                                <i data-lucide="calendar" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                                <span>Target: ${new Date(goal.deadline).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                                ${daysLeft > 0 ? `<span class="text-${goal.color}-400 text-xs">(${daysLeft} hari)</span>` : daysLeft < 0 ? '<span class="text-red-400 text-xs">(Terlewat)</span>' : ''}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="flex justify-between items-end mb-2 sm:mb-3">
+                            <div>
+                                <span class="text-xl sm:text-2xl md:text-3xl font-bold text-${goal.color}-400">${formatRupiah(goal.current)}</span>
+                                <span class="opacity-60 text-xs sm:text-sm"> / ${formatRupiah(goal.target)}</span>
+                            </div>
+                            <span class="text-lg sm:text-xl md:text-2xl font-bold">${progress}%</span>
+                        </div>
+                        
+                        <div class="progress-bar mb-4 sm:mb-5 md:mb-6">
+                            <div class="progress-fill" style="width: ${progress}%; background: linear-gradient(90deg, #${goal.color === 'violet' ? '8b5cf6' : goal.color === 'cyan' ? '06b6d4' : goal.color === 'emerald' ? '10b981' : goal.color === 'amber' ? 'f59e0b' : 'f43f5e'}, #06b6d4)"></div>
+                        </div>
+                        
+                        <!-- Milestones -->
+                        ${totalMilestones > 0 ? `
+                            <div class="border-t border-white/10 pt-3 sm:pt-4 mt-3 sm:mt-4">
+                                <div class="flex justify-between items-center mb-2 sm:mb-3">
+                                    <span class="text-xs sm:text-sm font-semibold">Milestones</span>
+                                    <span class="text-xs sm:text-sm opacity-60">${milestoneCompleted}/${totalMilestones}</span>
+                                </div>
+                                <div class="space-y-1 sm:space-y-2">
+                                    ${goal.milestones.map(milestone => `
+                                        <div class="milestone-item" onclick="toggleMilestone(${goal.id}, ${milestone.id})">
+                                            <div class="milestone-check ${milestone.completed ? 'checked' : ''}">
+                                                ${milestone.completed ? '<i data-lucide="check" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white"></i>' : ''}
+                                            </div>
+                                            <span class="flex-1 text-xs sm:text-sm ${milestone.completed ? 'line-through opacity-50' : ''}">${milestone.text}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <!-- Update Progress -->
+                        <div class="flex gap-2 mt-4 sm:mt-5 md:mt-6">
+                            <input type="number" id="update-${goal.id}" class="goal-input text-xs sm:text-sm" placeholder="Tambah tabungan" min="0" step="100000">
+                            <button onclick="updateProgress(${goal.id})" class="btn-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            lucide.createIcons();
+            updateRecentMilestones();
+            updateTips();
+        }
+
+        function updateProgress(goalId) {
+            const input = document.getElementById(`update-${goalId}`);
+            if (!input) return;
+            
+            const amount = Number(input.value);
+            
+            if (amount > 0) {
+                const goalIndex = goals.findIndex(g => g.id === goalId);
+                if (goalIndex !== -1) {
+                    const oldProgress = goals[goalIndex].current;
+                    goals[goalIndex].current += amount;
+                    
+                    // Check if goal achieved
+                    if (oldProgress < goals[goalIndex].target && goals[goalIndex].current >= goals[goalIndex].target) {
+                        celebrateGoal();
+                    }
+                    
+                    localStorage.setItem('goals', JSON.stringify(goals));
+                    renderGoals();
+                    input.value = '';
+                }
+            }
+        }
+
+        function toggleMilestone(goalId, milestoneId) {
+            const goal = goals.find(g => g.id === goalId);
+            if (goal && goal.milestones) {
+                const milestone = goal.milestones.find(m => m.id === milestoneId);
+                if (milestone) {
+                    milestone.completed = !milestone.completed;
+                    localStorage.setItem('goals', JSON.stringify(goals));
+                    renderGoals();
+                    
+                    // Check if all milestones completed
+                    const allCompleted = goal.milestones.every(m => m.completed);
+                    if (allCompleted) {
+                        showNotification('Semua milestone selesai! 🎉');
+                    }
+                }
+            }
+        }
+
+        function deleteGoal(goalId) {
+            if (confirm('Yakin ingin menghapus target ini?')) {
+                goals = goals.filter(g => g.id !== goalId);
+                localStorage.setItem('goals', JSON.stringify(goals));
+                renderGoals();
+            }
+        }
+
+        function celebrateGoal() {
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    if (confetti.parentNode) confetti.remove();
+                }, 3000);
+            }
+            
+            showNotification('Selamat! Target tercapai! 🎉');
+        }
+
+        function showNotification(message) {
+            alert(message);
+        }
+
+        function updateRecentMilestones() {
+            const container = document.getElementById('recentMilestones');
+            if (!container) return;
+            
+            const allMilestones = [];
+            
+            goals.forEach(goal => {
+                if (goal.milestones) {
+                    goal.milestones.forEach(milestone => {
+                        if (milestone.completed) {
+                            allMilestones.push({
+                                goalName: goal.name,
+                                milestoneText: milestone.text,
+                                date: new Date().toLocaleDateString()
+                            });
+                        }
+                    });
+                }
+            });
+            
+            const recent = allMilestones.slice(0, 5);
+            
+            if (recent.length === 0) {
+                container.innerHTML = '<p class="opacity-60 text-center py-6 sm:py-8 text-sm">Belum ada milestone yang dicapai</p>';
+                return;
+            }
+            
+            container.innerHTML = recent.map(m => `
+                <div class="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg sm:rounded-xl">
+                    <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-emerald-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs sm:text-sm font-medium">${m.milestoneText}</p>
+                        <p class="text-xxs sm:text-xs opacity-50">${m.goalName} • Hari ini</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        function updateTips() {
+            const container = document.getElementById('tipsContainer');
+            if (!container) return;
+            
+            const tips = [
+                {
+                    icon: 'zap',
+                    title: 'Konsisten Itu Kunci',
+                    text: 'Menabung rutin meski kecil lebih baik daripada besar tapi jarang.'
+                },
+                {
+                    icon: 'pie-chart',
+                    title: 'Gunakan Aturan 50/30/20',
+                    text: 'Alokasikan 20% pendapatan untuk tabungan dan investasi.'
+                },
+                {
+                    icon: 'trending-up',
+                    title: 'Investasi vs Tabungan',
+                    text: 'Untuk target jangka panjang, pertimbangkan instrumen investasi.'
+                },
+                {
+                    icon: 'shield',
+                    title: 'Dana Darurat Dulu',
+                    text: 'Pastikan punya dana darurat 3-6 bulan sebelum target lain.'
+                }
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            
+            container.innerHTML = `
+                <div class="flex items-start gap-2 sm:gap-3 md:gap-4">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="${randomTip.icon}" class="w-4 h-4 sm:w-5 sm:h-5 md:w-5.5 md:h-5.5 lg:w-6 lg:h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm sm:text-base font-bold mb-1">${randomTip.title}</h4>
+                        <p class="text-xs sm:text-sm opacity-60">${randomTip.text}</p>
+                    </div>
+                </div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        // Modal Functions
+        function openAddGoalModal() {
+            const modal = document.getElementById('addGoalModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAddGoalModal() {
+            const modal = document.getElementById('addGoalModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function selectColor(color) {
+            selectedColor = color;
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.style.borderColor = 'transparent';
+            });
+            if (event && event.currentTarget) {
+                event.currentTarget.style.borderColor = 'white';
+            }
+        }
+
+        function addNewGoal() {
+            const nameInput = document.getElementById('goalName');
+            const targetInput = document.getElementById('goalTarget');
+            const currentInput = document.getElementById('goalCurrent');
+            const categoryInput = document.getElementById('goalCategory');
+            const deadlineInput = document.getElementById('goalDeadline');
+            
+            if (!nameInput || !targetInput) return;
+            
+            const name = nameInput.value;
+            const target = Number(targetInput.value);
+            const current = Number(currentInput ? currentInput.value : 0);
+            const category = categoryInput ? categoryInput.value : 'vacation';
+            const deadline = deadlineInput ? deadlineInput.value : null;
+            
+            if (!name || !target) {
+                alert('Nama target dan nominal harus diisi!');
+                return;
+            }
+            
+            const newGoal = {
+                id: Date.now(),
+                name: name,
+                category: category,
+                target: target,
+                current: current || 0,
+                deadline: deadline || null,
+                color: selectedColor,
+                milestones: []
+            };
+            
+            goals.push(newGoal);
+            localStorage.setItem('goals', JSON.stringify(goals));
+            
+            renderGoals();
+            closeAddGoalModal();
+            
+            // Clear form
+            if (nameInput) nameInput.value = '';
+            if (targetInput) targetInput.value = '';
+            if (currentInput) currentInput.value = '0';
+            if (deadlineInput) deadlineInput.value = '';
+        }
+
+        // Initialize
+        renderGoals();
+
+        // Refresh tips every 30 seconds
+        setInterval(updateTips, 30000);
+
+        // Make functions global
+        window.openAddGoalModal = openAddGoalModal;
+        window.closeAddGoalModal = closeAddGoalModal;
+        window.selectColor = selectColor;
+        window.addNewGoal = addNewGoal;
+        window.updateProgress = updateProgress;
+        window.toggleMilestone = toggleMilestone;
+        window.deleteGoal = deleteGoal;
+    </script>
+</body>
+</html>
