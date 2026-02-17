@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tes Kepribadian Finansial - Monetra</title>
+    <link rel="shortcut icon" href="image.jpeg" type="image/x-icon">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,8 +21,6 @@
         }
     </script>
     
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -62,7 +61,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen */
+        /* Loading Screen - Slower */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -75,7 +74,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
         
         .loader-wrapper.slide-up {
@@ -89,7 +88,7 @@
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
             opacity: 0;
-            animation: logoReveal 1s ease forwards 0.5s;
+            animation: logoReveal 1.5s ease forwards 0.8s;
         }
 
         @keyframes logoReveal {
@@ -104,7 +103,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
+            animation: fadeIn 1.2s ease forwards 2s;
         }
 
         .loader-subtext {
@@ -114,7 +113,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             opacity: 0;
-            animation: fadeIn 1s ease forwards 1.8s;
+            animation: fadeIn 1.2s ease forwards 2.8s;
         }
 
         @keyframes fadeIn {
@@ -154,13 +153,13 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Cards */
+        /* Cards - Removed animations */
         .personality-card {
             position: relative;
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: border 0.2s ease;
             overflow: hidden;
             cursor: pointer;
         }
@@ -173,26 +172,23 @@
 
         .personality-card.selected {
             border: 2px solid #8b5cf6;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
-            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
         }
 
-        /* Buttons */
+        /* Buttons - Minimal animation */
         .btn-primary {
             background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
             color: #ffffff !important;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            opacity: 0.9;
         }
 
         .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         .btn-primary *,
@@ -213,7 +209,7 @@
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #8b5cf6, #06b6d4);
-            transition: width 0.5s ease;
+            transition: width 0.3s ease;
         }
 
         /* Question Container */
@@ -235,14 +231,14 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Result Cards */
+        /* Result Cards - Minimal hover */
         .result-card {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 2rem;
             padding: 2rem;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s ease;
         }
 
         html.light .result-card {
@@ -251,9 +247,7 @@
         }
 
         .result-card:hover {
-            transform: translateY(-4px);
             border-color: #8b5cf6;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
         }
 
         /* CRITICAL LIGHT MODE FIXES */
@@ -416,6 +410,12 @@
             background: #334155;
             border-radius: 4px;
         }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -476,7 +476,7 @@
                 </button>
                 
                 <a href="personality-test.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold">
-                    Mulai Tes
+                    Mulai Sekarang
                 </a>
             </div>
             
@@ -531,7 +531,7 @@
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
             
             <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4">
-                Mulai Tes
+                Mulai Sekarang
             </a>
         </div>
     </div>
@@ -540,7 +540,7 @@
     <section class="pt-40 pb-20 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center" data-aos="fade-down">
+            <div class="text-center">
                 <div class="inline-block mb-6">
                     <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
                         Tes Psikologi Finansial
@@ -558,7 +558,7 @@
     <section class="pb-32" id="testSection">
         <div class="max-w-4xl mx-auto px-6">
             <!-- Progress Bar -->
-            <div class="mb-12" data-aos="fade-up">
+            <div class="mb-12">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-sm font-medium opacity-60">Progress Tes</span>
                     <span class="text-sm font-bold text-violet-400" id="questionCounter">1/10</span>
@@ -574,7 +574,7 @@
             </div>
 
             <!-- Navigation Buttons -->
-            <div class="flex justify-between items-center mt-8" data-aos="fade-up">
+            <div class="flex justify-between items-center mt-8">
                 <button id="prevBtn" class="px-8 py-3 rounded-full border border-white/20 font-medium hover:bg-white/5 transition disabled:opacity-30 disabled:cursor-not-allowed" disabled>
                     <i data-lucide="arrow-left" class="w-4 h-4 inline mr-2"></i>
                     Sebelumnya
@@ -593,7 +593,7 @@
     <!-- Result Section (Hidden by default) -->
     <section class="pb-32 hidden" id="resultSection">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-down">
+            <div class="text-center mb-16">
                 <div class="inline-block mb-6">
                     <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
                         Hasil Tes Kamu
@@ -607,7 +607,7 @@
 
             <div class="grid md:grid-cols-3 gap-8 mb-16">
                 <!-- Strengths -->
-                <div class="result-card" data-aos="fade-up">
+                <div class="result-card">
                     <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="star" class="w-8 h-8 text-white"></i>
                     </div>
@@ -621,7 +621,7 @@
                 </div>
 
                 <!-- Weaknesses -->
-                <div class="result-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="result-card">
                     <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="alert-triangle" class="w-8 h-8 text-white"></i>
                     </div>
@@ -635,7 +635,7 @@
                 </div>
 
                 <!-- Recommendations -->
-                <div class="result-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="result-card">
                     <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="lightbulb" class="w-8 h-8 text-white"></i>
                     </div>
@@ -649,10 +649,10 @@
                 </div>
             </div>
 
-            <div class="text-center" data-aos="fade-up">
-                <a href="budget-simulator.html" class="btn-primary px-12 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3 group">
+            <div class="text-center">
+                <a href="budget-simulator.html" class="btn-primary px-12 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
                     Mulai Simulasi Budget
-                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
                 <button onclick="restartTest()" class="ml-4 px-12 py-4 rounded-full border border-white/20 font-bold text-lg hover:bg-white/5 transition">
                     Ulangi Tes
@@ -718,16 +718,9 @@
     <script>
         lucide.createIcons();
         
-        // Loading
+        // Loading - Increased to 4 seconds
         window.addEventListener('load', function() {
-            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
-        });
-        
-        // AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 50
+            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 4000);
         });
         
         // Theme Toggle
@@ -998,7 +991,7 @@
             const selectedAnswer = answers[currentQuestion];
             
             let html = `
-                <div class="question-card" data-aos="fade-up">
+                <div class="question-card">
                     <div class="mb-8">
                         <span class="text-sm font-medium text-violet-400 mb-2 block">Pertanyaan ${currentQuestion + 1}</span>
                         <h3 class="text-2xl md:text-3xl font-bold">${q.question}</h3>

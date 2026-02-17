@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Saving Challenge - Monetra</title>
+        <link rel="shortcut icon" href="image.jpeg" type="image/x-icon">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -71,7 +72,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen */
+        /* Loading Screen - LONGER DURATION */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -84,10 +85,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
         
         .loader-wrapper.slide-up {
+            opacity: 0;
             transform: translateY(-100%);
         }
 
@@ -98,7 +100,7 @@
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
             opacity: 0;
-            animation: logoReveal 1s ease forwards 0.5s;
+            animation: logoReveal 1.5s ease forwards 0.5s;
         }
 
         @media (min-width: 640px) {
@@ -120,7 +122,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
+            animation: fadeIn 1s ease forwards 1.5s;
         }
 
         @media (min-width: 640px) {
@@ -137,7 +139,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             opacity: 0;
-            animation: fadeIn 1s ease forwards 1.8s;
+            animation: fadeIn 1.2s ease forwards 1.8s;
         }
 
         @media (min-width: 640px) {
@@ -232,6 +234,10 @@
             .progress-bar {
                 height: 10px;
             }
+        }
+
+        html.light .progress-bar {
+            background: rgba(0, 0, 0, 0.1);
         }
 
         .progress-fill {
@@ -758,6 +764,17 @@
         .toast.info {
             border-left: 4px solid #8b5cf6;
         }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-state-icon {
+            opacity: 0.2;
+            margin: 0 auto 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -901,75 +918,16 @@
         </div>
     </section>
 
-    <!-- Active Challenge Section -->
-    <section class="pb-16 sm:pb-20 md:pb-24">
+    <!-- Active Challenge Section (EMPTY STATE) -->
+    <section class="pb-16 sm:pb-20 md:pb-24" id="activeChallengeSection">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="challenge-card p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl" data-aos="fade-up">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
-                    <div>
-                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-2" id="challengeTitle">Challenge 30 Hari Hemat</h2>
-                        <p class="text-sm sm:text-base opacity-60" id="challengeStartDate">Mulai tanggal 1 Maret 2026</p>
+                <div class="empty-state">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 empty-state-icon mx-auto">
+                        <i data-lucide="trophy" class="w-full h-full"></i>
                     </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="challenge-badge badge-easy" id="challengeLevel">
-                            <i data-lucide="smile" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
-                            Pemula
-                        </span>
-                        <span class="challenge-badge bg-white/10 text-white border-white/20" id="challengeDay">
-                            <i data-lucide="clock" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
-                            Hari ke-7
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Progress Overview -->
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
-                    <div class="stat-card">
-                        <div class="text-2xl sm:text-3xl font-bold text-green-400 mb-1" id="collectedAmount">Rp 350.000</div>
-                        <p class="text-xs sm:text-sm opacity-60">Terkumpul</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-1" id="targetAmount">Rp 1.500.000</div>
-                        <p class="text-xs sm:text-sm opacity-60">Target</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-2xl sm:text-3xl font-bold text-violet-400 mb-1" id="progressPercentage">23%</div>
-                        <p class="text-xs sm:text-sm opacity-60">Progress</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-2xl sm:text-3xl font-bold text-amber-400 mb-1" id="daysLeft">23 hari</div>
-                        <p class="text-xs sm:text-sm opacity-60">Sisa waktu</p>
-                    </div>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="mb-8 sm:mb-10">
-                    <div class="flex justify-between text-xs sm:text-sm mb-2">
-                        <span>Progress</span>
-                        <span class="font-bold" id="progressText">23%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressBar" style="width: 23%"></div>
-                    </div>
-                </div>
-
-                <!-- Daily Tracker -->
-                <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Daily Tracker</h3>
-                <div class="grid grid-cols-5 xs:grid-cols-7 sm:grid-cols-10 md:grid-cols-15 gap-2 sm:gap-3 mb-8 sm:mb-10">
-                    <!-- Generate 30 days dynamically with JavaScript -->
-                    <div id="dailyTracker" class="col-span-full grid grid-cols-5 xs:grid-cols-7 sm:grid-cols-10 md:grid-cols-15 gap-2 sm:gap-3"></div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <button class="btn-primary flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="markToday()">
-                        <i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                        Tandai Hari Ini
-                    </button>
-                    <button class="btn-outline flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="shareProgress()">
-                        <i data-lucide="share-2" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                        Bagikan Progress
-                    </button>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Belum Ada Challenge Aktif</h3>
+                    <p class="text-sm sm:text-base opacity-60 mb-6 sm:mb-8 max-w-md mx-auto">Pilih challenge di bawah untuk memulai perjalanan menabungmu!</p>
                 </div>
             </div>
         </div>
@@ -1031,27 +989,6 @@
         </div>
     </section>
 
-    <!-- Leaderboard Preview -->
-    <section class="pb-16 sm:pb-20 md:pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="challenge-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl" data-aos="fade-up">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <h2 class="text-xl sm:text-2xl font-bold flex items-center gap-2">
-                        <i data-lucide="trophy" class="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400"></i>
-                        Leaderboard
-                    </h2>
-                    <button class="text-sm text-violet-400 hover:text-violet-300 transition" onclick="showAllLeaderboard()">
-                        Lihat Semua
-                    </button>
-                </div>
-
-                <div class="space-y-3" id="leaderboardContainer">
-                    <!-- Leaderboard will be dynamically generated -->
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -1100,7 +1037,7 @@
                 </div>
             </div>
             
-            <div class="border-t border-white/5 pt-6 sm:pt-7 md:pt-8 text-center opacity-40 text-xxs sm:text-xs">
+            <div class="border-t border-white/5 pt-6 sm:pt-7 md:pt-8 text-center opacity-40 text-xs">
                 <p>&copy; 2026 Monetra. All rights reserved.</p>
             </div>
         </div>
@@ -1110,9 +1047,9 @@
         // ==================== INITIALIZATION ====================
         lucide.createIcons();
         
-        // Loading
+        // Loading - LONGER DURATION (4 seconds)
         window.addEventListener('load', function() {
-            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
+            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 4000);
         });
         
         // AOS
@@ -1213,28 +1150,12 @@
             }, duration);
         }
 
-        // ==================== CHALLENGE DATA ====================
-        let currentChallenge = {
-            id: 1,
-            title: 'Challenge 30 Hari Hemat',
-            level: 'Pemula',
-            levelIcon: 'smile',
-            levelBadge: 'badge-easy',
-            startDate: '2026-03-01',
-            targetAmount: 1500000,
-            collectedAmount: 350000,
-            currentDay: 7,
-            dailyAmount: 50000,
-            days: []
-        };
+        // ==================== CHALLENGE DATA (START EMPTY) ====================
+        let currentChallenge = null;
 
-        // Initialize days
-        for (let i = 1; i <= 30; i++) {
-            currentChallenge.days.push({
-                day: i,
-                status: i < currentChallenge.currentDay ? 'completed' : (i === currentChallenge.currentDay ? 'current' : 'upcoming'),
-                amount: i <= currentChallenge.currentDay ? 50000 : 0
-            });
+        // Load from localStorage
+        if (localStorage.getItem('activeChallenge')) {
+            currentChallenge = JSON.parse(localStorage.getItem('activeChallenge'));
         }
 
         // Available challenges
@@ -1246,6 +1167,7 @@
                 levelIcon: 'smile',
                 levelBadge: 'badge-easy',
                 targetAmount: 500000,
+                dailyAmount: 16700,
                 participants: 1234,
                 color: 'text-green-400',
                 icon: 'smile'
@@ -1257,6 +1179,7 @@
                 levelIcon: 'zap',
                 levelBadge: 'badge-medium',
                 targetAmount: 1500000,
+                dailyAmount: 50000,
                 participants: 892,
                 color: 'text-amber-400',
                 icon: 'zap'
@@ -1268,6 +1191,7 @@
                 levelIcon: 'flame',
                 levelBadge: 'badge-hard',
                 targetAmount: 3000000,
+                dailyAmount: 100000,
                 participants: 456,
                 color: 'text-red-400',
                 icon: 'flame'
@@ -1279,6 +1203,7 @@
                 levelIcon: 'heart',
                 levelBadge: 'badge-easy',
                 targetAmount: 1000000,
+                dailyAmount: 33333,
                 participants: 2100,
                 color: 'text-green-400',
                 icon: 'heart'
@@ -1290,6 +1215,7 @@
                 levelIcon: 'coffee',
                 levelBadge: 'badge-medium',
                 targetAmount: 800000,
+                dailyAmount: 26667,
                 participants: 1800,
                 color: 'text-amber-400',
                 icon: 'coffee'
@@ -1301,17 +1227,11 @@
                 levelIcon: 'users',
                 levelBadge: 'badge-hard',
                 targetAmount: 5000000,
+                dailyAmount: 166667,
                 participants: 234,
                 color: 'text-red-400',
                 icon: 'users'
             }
-        ];
-
-        // Leaderboard data
-        const leaderboard = [
-            { rank: 1, name: 'Andi Pratama', initial: 'A', challenge: '30 Hari Hemat', amount: 450000, progress: 90, color: 'text-yellow-400' },
-            { rank: 2, name: 'Siti Nurhaliza', initial: 'S', challenge: '30 Hari Konsisten', amount: 1200000, progress: 80, color: 'text-gray-400' },
-            { rank: 3, name: 'Budi Santoso', initial: 'B', challenge: 'Weekend Saver', amount: 650000, progress: 81, color: 'text-amber-700' }
         ];
 
         // ==================== RENDER FUNCTIONS ====================
@@ -1320,37 +1240,123 @@
         }
 
         function updateChallengeDisplay() {
-            document.getElementById('challengeTitle').textContent = currentChallenge.title;
-            document.getElementById('challengeStartDate').textContent = `Mulai tanggal ${new Date(currentChallenge.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
-            document.getElementById('challengeDay').innerHTML = `<i data-lucide="clock" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i> Hari ke-${currentChallenge.currentDay}`;
-            
-            document.getElementById('collectedAmount').textContent = formatRupiah(currentChallenge.collectedAmount);
-            document.getElementById('targetAmount').textContent = formatRupiah(currentChallenge.targetAmount);
-            
+            const section = document.getElementById('activeChallengeSection');
+            if (!section) return;
+
+            if (!currentChallenge) {
+                // Show empty state
+                section.innerHTML = `
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                        <div class="challenge-card p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl" data-aos="fade-up">
+                            <div class="empty-state">
+                                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 empty-state-icon mx-auto">
+                                    <i data-lucide="trophy" class="w-full h-full"></i>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Belum Ada Challenge Aktif</h3>
+                                <p class="text-sm sm:text-base opacity-60 mb-6 sm:mb-8 max-w-md mx-auto">Pilih challenge di bawah untuk memulai perjalanan menabungmu!</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            // Show active challenge
             const progress = Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100);
-            document.getElementById('progressPercentage').textContent = progress + '%';
-            document.getElementById('progressText').textContent = progress + '%';
-            document.getElementById('progressBar').style.width = progress + '%';
-            
             const daysRemaining = 30 - currentChallenge.currentDay;
-            document.getElementById('daysLeft').textContent = daysRemaining + ' hari';
-            
-            generateDailyTracker();
-            lucide.createIcons();
+
+            section.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div class="challenge-card p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
+                            <div>
+                                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-2">${currentChallenge.title}</h2>
+                                <p class="text-sm sm:text-base opacity-60">Mulai tanggal ${new Date(currentChallenge.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="challenge-badge ${currentChallenge.levelBadge}">
+                                    <i data-lucide="${currentChallenge.levelIcon}" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
+                                    ${currentChallenge.level}
+                                </span>
+                                <span class="challenge-badge bg-white/10 text-white border-white/20">
+                                    <i data-lucide="clock" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
+                                    Hari ke-${currentChallenge.currentDay}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Overview -->
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
+                            <div class="stat-card">
+                                <div class="text-2xl sm:text-3xl font-bold text-green-400 mb-1">${formatRupiah(currentChallenge.collectedAmount)}</div>
+                                <p class="text-xs sm:text-sm opacity-60">Terkumpul</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-1">${formatRupiah(currentChallenge.targetAmount)}</div>
+                                <p class="text-xs sm:text-sm opacity-60">Target</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="text-2xl sm:text-3xl font-bold text-violet-400 mb-1">${progress}%</div>
+                                <p class="text-xs sm:text-sm opacity-60">Progress</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="text-2xl sm:text-3xl font-bold text-amber-400 mb-1">${daysRemaining} hari</div>
+                                <p class="text-xs sm:text-sm opacity-60">Sisa waktu</p>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="mb-8 sm:mb-10">
+                            <div class="flex justify-between text-xs sm:text-sm mb-2">
+                                <span>Progress</span>
+                                <span class="font-bold">${progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Daily Tracker -->
+                        <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Daily Tracker</h3>
+                        <div class="grid grid-cols-5 xs:grid-cols-7 sm:grid-cols-10 gap-2 sm:gap-3 mb-8 sm:mb-10">
+                            ${generateDailyTrackerHTML()}
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <button class="btn-primary flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="markToday()">
+                                <i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                Tandai Hari Ini
+                            </button>
+                            <button class="btn-outline flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="shareProgress()">
+                                <i data-lucide="share-2" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                Bagikan Progress
+                            </button>
+                            <button class="btn-outline py-3 sm:py-4 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="resetChallenge()">
+                                <i data-lucide="refresh-cw" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Re-initialize lucide icons after DOM update
+            setTimeout(() => {
+                lucide.createIcons();
+            }, 0);
         }
 
-        function generateDailyTracker() {
-            const tracker = document.getElementById('dailyTracker');
-            if (!tracker) return;
+        function generateDailyTrackerHTML() {
+            if (!currentChallenge || !currentChallenge.days) return '';
             
             let html = '';
-            
             for (let i = 1; i <= 30; i++) {
                 const day = currentChallenge.days.find(d => d.day === i);
                 html += `<div class="day-circle ${day.status}" onclick="markDay(${i})">${i}</div>`;
             }
-            
-            tracker.innerHTML = html;
+            return html;
         }
 
         function renderChallenges() {
@@ -1376,7 +1382,11 @@
                                 <span>Target: ${formatRupiah(challenge.targetAmount)}</span>
                             </div>
                             <div class="flex items-center gap-2 text-xs sm:text-sm">
-                                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i>
+                                <i data-lucide="calendar" class="w-4 h-4 text-blue-400"></i>
+                                <span>${formatRupiah(challenge.dailyAmount)}/hari</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs sm:text-sm">
+                                <i data-lucide="users" class="w-4 h-4 text-violet-400"></i>
                                 <span>${challenge.participants.toLocaleString()} peserta</span>
                             </div>
                         </div>
@@ -1391,36 +1401,57 @@
             lucide.createIcons();
         }
 
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboardContainer');
-            if (!container) return;
+        // ==================== INTERACTIVE FUNCTIONS ====================
+        function startChallenge(challengeId) {
+            const challenge = challenges.find(c => c.id === challengeId);
+            if (!challenge) return;
+
+            // Create new challenge
+            currentChallenge = {
+                id: challenge.id,
+                title: challenge.title,
+                level: challenge.level,
+                levelIcon: challenge.levelIcon,
+                levelBadge: challenge.levelBadge,
+                startDate: new Date().toISOString().split('T')[0],
+                targetAmount: challenge.targetAmount,
+                collectedAmount: 0,
+                currentDay: 1,
+                dailyAmount: challenge.dailyAmount,
+                days: []
+            };
+
+            // Initialize 30 days
+            for (let i = 1; i <= 30; i++) {
+                currentChallenge.days.push({
+                    day: i,
+                    status: i === 1 ? 'current' : 'upcoming',
+                    amount: 0
+                });
+            }
+
+            // Save to localStorage
+            localStorage.setItem('activeChallenge', JSON.stringify(currentChallenge));
+
+            showToast(`Challenge "${challenge.title}" berhasil dimulai!`, 'success');
             
-            let html = '';
-            leaderboard.forEach(rank => {
-                html += `
-                    <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
-                        <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-${rank.color.split('-')[1]}-500/20 flex items-center justify-center text-xs sm:text-sm font-bold ${rank.color}">${rank.rank}</div>
-                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white font-bold text-sm sm:text-base">
-                            ${rank.initial}
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-sm sm:text-base">${rank.name}</p>
-                            <p class="text-xs opacity-50">${rank.challenge}</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-green-400 text-sm sm:text-base">${formatRupiah(rank.amount)}</p>
-                            <p class="text-xs opacity-50">${rank.progress}%</p>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-            lucide.createIcons();
+            // Update display immediately
+            setTimeout(() => {
+                updateChallengeDisplay();
+                
+                // Scroll to active challenge
+                setTimeout(() => {
+                    const section = document.getElementById('activeChallengeSection');
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }, 100);
         }
 
-        // ==================== INTERACTIVE FUNCTIONS ====================
         function markDay(day) {
+            if (!currentChallenge) return;
+            
             const dayObj = currentChallenge.days.find(d => d.day === day);
             
             if (dayObj.status === 'upcoming') {
@@ -1436,6 +1467,7 @@
             if (dayObj.status === 'current') {
                 // Mark as completed
                 dayObj.status = 'completed';
+                dayObj.amount = currentChallenge.dailyAmount;
                 currentChallenge.collectedAmount += currentChallenge.dailyAmount;
                 
                 // Move to next day if not the last day
@@ -1447,36 +1479,43 @@
                     }
                 }
                 
-                updateChallengeDisplay();
+                // Save to localStorage
+                localStorage.setItem('activeChallenge', JSON.stringify(currentChallenge));
+                
+                // Update display immediately
+                setTimeout(() => {
+                    updateChallengeDisplay();
+                }, 0);
+                
                 showToast(`Hari ke-${day} berhasil ditandai! +${formatRupiah(currentChallenge.dailyAmount)}`, 'success');
                 
                 // Check if challenge completed
                 if (currentChallenge.currentDay > 30 || currentChallenge.collectedAmount >= currentChallenge.targetAmount) {
-                    celebrateCompletion();
+                    setTimeout(() => {
+                        celebrateCompletion();
+                    }, 500);
                 }
             }
         }
 
         function markToday() {
+            if (!currentChallenge) {
+                showToast('Belum ada challenge aktif!', 'error');
+                return;
+            }
             markDay(currentChallenge.currentDay);
         }
 
-        function startChallenge(challengeId) {
-            const challenge = challenges.find(c => c.id === challengeId);
-            if (challenge) {
-                showToast(`Memulai challenge: ${challenge.title}`, 'success');
-                
-                // In a real app, this would set up a new challenge
-                setTimeout(() => {
-                    window.location.href = 'challenge.html';
-                }, 1500);
-            }
-        }
-
         function shareProgress() {
+            if (!currentChallenge) {
+                showToast('Belum ada challenge aktif!', 'error');
+                return;
+            }
+
+            const progress = Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100);
             const text = `Saya sudah menabung ${formatRupiah(currentChallenge.collectedAmount)} dari target ${formatRupiah(currentChallenge.targetAmount)} di challenge ${currentChallenge.title}!
-            
-Progress: ${Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100)}%
+
+Progress: ${progress}%
 Hari ke-${currentChallenge.currentDay}/30
 
 Ayo ikutan saving challenge di Monetra! 🏆`;
@@ -1502,53 +1541,67 @@ Ayo ikutan saving challenge di Monetra! 🏆`;
             });
         }
 
-        function showAllLeaderboard() {
-            showToast('Menampilkan semua leaderboard', 'info');
-            // In a real app, this would open a modal or navigate to leaderboard page
+        function resetChallenge() {
+            if (!currentChallenge) return;
+            
+            if (confirm('Yakin ingin mereset challenge ini? Progress akan hilang.')) {
+                currentChallenge = null;
+                localStorage.removeItem('activeChallenge');
+                
+                setTimeout(() => {
+                    updateChallengeDisplay();
+                }, 0);
+                
+                showToast('Challenge berhasil direset', 'info');
+            }
         }
 
         function celebrateCompletion() {
             // Create confetti
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
-                confetti.className = 'confetti';
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
                 confetti.style.left = Math.random() * 100 + '%';
                 confetti.style.top = '-10px';
-                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.borderRadius = '50%';
+                confetti.style.zIndex = '10002';
+                confetti.style.animation = `confettiFall 3s ease-in-out forwards`;
                 confetti.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(confetti);
                 
                 setTimeout(() => {
                     if (confetti.parentNode) confetti.remove();
-                }, 3000);
+                }, 5000);
             }
             
-            showToast('Selamat! Challenge selesai! 🎉', 'success');
+            // Add confetti animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes confettiFall {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                showToast('🎉 Selamat! Challenge selesai! 🎉', 'success', 5000);
+            }, 500);
         }
 
         // ==================== INITIAL RENDER ====================
         updateChallengeDisplay();
         renderChallenges();
-        renderLeaderboard();
-
-        // Refresh tips every 30 seconds (simulated)
-        setInterval(() => {
-            const tips = [
-                'Konsisten Itu Kunci - Menabung rutin meski kecil lebih baik.',
-                'Gunakan Aturan 50/30/20 - Alokasikan 20% untuk tabungan.',
-                'Investasi vs Tabungan - Untuk jangka panjang, pertimbangkan investasi.',
-                'Dana Darurat Dulu - Pastikan punya dana darurat 3-6 bulan.'
-            ];
-            const randomTip = tips[Math.floor(Math.random() * tips.length)];
-            // This would update a tip in the UI if we had a dynamic tip section
-        }, 30000);
 
         // ==================== MAKE FUNCTIONS GLOBAL ====================
+        window.startChallenge = startChallenge;
         window.markDay = markDay;
         window.markToday = markToday;
-        window.startChallenge = startChallenge;
         window.shareProgress = shareProgress;
-        window.showAllLeaderboard = showAllLeaderboard;
+        window.resetChallenge = resetChallenge;
     </script>
 </body>
 </html>
