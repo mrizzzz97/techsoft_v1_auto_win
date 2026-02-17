@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Tentang Monetra - Platform Edukasi Finansial</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                        secondary: '#06b6d4',
+                    },
+                    screens: {
+                        'xs': '480px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html.dark body {
+            background-color: #020617;
+            color: #f8fafc;
+        }
+        
+        html.light body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        /* Noise texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Loading Screen */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #020617;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .loader-wrapper.slide-up {
+            transform: translateY(-100%);
+        }
+
+        .loader-logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+            opacity: 0;
+            animation: logoReveal 1s ease forwards 0.5s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-logo-img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @keyframes logoReveal {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1.2s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-text {
+                font-size: 2rem;
+                margin-top: 24px;
+            }
+        }
+
+        .loader-subtext {
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: #64748b;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.8s;
+        }
+
+        @media (min-width: 640px) {
+            .loader-subtext {
+                font-size: 0.875rem;
+                margin-top: 8px;
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Floating Rounded Header */
+        .navbar {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        
+        @media (min-width: 768px) {
+            .navbar {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+        }
+        
+        .navbar .navbar-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .navbar.floating {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .navbar.floating .navbar-container {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            max-width: 1200px;
+        }
+        
+        @media (min-width: 768px) {
+            .navbar.floating .navbar-container {
+                padding: 0.75rem 2rem;
+            }
+        }
+        
+        html.light .navbar.floating .navbar-container {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cards */
+        .about-card {
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        html.light .about-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-card:hover {
+            transform: translateY(-4px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary *,
+        .btn-primary i,
+        .btn-primary span {
+            color: #ffffff !important;
+        }
+
+        /* Team Member Card */
+        .team-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .team-card {
+                padding: 2rem;
+                border-radius: 2rem;
+            }
+        }
+
+        html.light .team-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        @media (min-width: 640px) {
+            .team-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #8b5cf6, #06b6d4);
+            border-radius: 999px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            background: #8b5cf6;
+            border-radius: 999px;
+            border: 2px solid #06b6d4;
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #8b5cf6;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .timeline-date {
+                font-size: 1rem;
+            }
+        }
+
+        .timeline-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .timeline-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Stat Card */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        html.light .stat-card {
+            background: #f8fafc;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+
+        /* Mobile Menu - Improved */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: #0f172a;
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.light .mobile-menu {
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        #closeMobileMenu {
+            position: relative;
+            z-index: 10000;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        #closeMobileMenu:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #closeMobileMenu:active {
+            transform: scale(0.95);
+        }
+
+        #mobileMenuBtn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        #mobileMenuBtn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #mobileMenuBtn:active {
+            transform: scale(0.95);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        html.light .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            color: #f8fafc;
+        }
+
+        html.light .dropdown-item {
+            color: #0f172a;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Hero Section Responsive */
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 5rem;
+            }
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Light Mode Fixes */
+        html.light h1,
+        html.light h2,
+        html.light h3,
+        html.light h4,
+        html.light h5 {
+            color: #0f172a !important;
+        }
+        
+        html.light p,
+        html.light span,
+        html.light li,
+        html.light a {
+            color: #334155 !important;
+        }
+        
+        html.light .text-gray-300,
+        html.light .text-gray-400,
+        html.light .text-gray-500 {
+            color: #64748b !important;
+        }
+
+        /* Footer - Always White Text */
+        footer,
+        footer h4,
+        footer p,
+        footer a,
+        footer span,
+        footer li,
+        footer div {
+            color: #ffffff !important;
+        }
+
+        html.light footer,
+        html.light footer h4,
+        html.light footer p,
+        html.light footer a,
+        html.light footer span,
+        html.light footer li,
+        html.light footer div {
+            color: #ffffff !important;
+        }
+        
+        html.light footer .opacity-50,
+        html.light footer .opacity-60,
+        html.light footer .opacity-40 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        @media (min-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        html.light ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        /* Value Cards */
+        .value-card {
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        html.light .value-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .value-card:hover {
+            border-color: #8b5cf6;
+            transform: translateY(-4px);
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .value-icon {
+                width: 56px;
+                height: 56px;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-size: 0.875rem;
+            z-index: 10002;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        html.light .toast {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.info {
+            border-left: 4px solid #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader-wrapper" id="loader">
+        <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
+        <div class="loader-text">MONETRA</div>
+        <div class="loader-subtext">Tentang Kami</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Floating Rounded Header -->
+    <nav class="navbar fixed w-full top-0 z-50 px-4 sm:px-6">
+        <div class="navbar-container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
+                <div class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+                    <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
+                </div>
+                <span class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
+                <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
+                
+                <!-- Features Dropdown -->
+                <div class="dropdown">
+                    <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
+                        Features
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="personality-test.html" class="dropdown-item">
+                            <i data-lucide="user-circle" class="w-4 h-4"></i>
+                            <span>Tes Kepribadian</span>
+                        </a>
+                        <a href="budget-simulator.html" class="dropdown-item">
+                            <i data-lucide="wallet" class="w-4 h-4"></i>
+                            <span>Simulasi Budget</span>
+                        </a>
+                        <a href="goal-tracker.html" class="dropdown-item">
+                            <i data-lucide="target" class="w-4 h-4"></i>
+                            <span>Target Tabungan</span>
+                        </a>
+                        <a href="challenge.html" class="dropdown-item">
+                            <i data-lucide="trophy" class="w-4 h-4"></i>
+                            <span>Saving Challenge</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="insight-dashboard.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Dashboard</a>
+                <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
+                
+                <button class="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
+                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-yellow-300"></i>
+                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                </button>
+                
+                <a href="personality-test.html" class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">
+                    Mulai Tes
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center space-x-2 sm:space-x-3">
+                <button class="p-2" id="themeToggleMobile">
+                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                </button>
+                <button id="mobileMenuBtn" class="p-2">
+                    <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-end mb-6 sm:mb-8">
+            <button id="closeMobileMenu">
+                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-3 sm:space-y-4">
+            <a href="index.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Home</a>
+            <a href="about.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
+            
+            <div class="border-t border-white/10 pt-4 sm:pt-6">
+                <div class="text-xs uppercase tracking-wider opacity-50 mb-2 sm:mb-3">Features</div>
+                <div class="space-y-2 sm:space-y-3">
+                    <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="user-circle" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Tes Kepribadian</span>
+                    </a>
+                    <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Simulasi Budget</span>
+                    </a>
+                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="target" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Target Tabungan</span>
+                    </a>
+                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                        <i data-lucide="trophy" class="w-4 h-4"></i>
+                        <span class="text-sm sm:text-base">Saving Challenge</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="insight-dashboard.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Dashboard</a>
+            <a href="contact.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
+            
+            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">
+                Mulai Tes
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-16 md:pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center" data-aos="fade-down">
+                <div class="inline-block mb-4 sm:mb-6">
+                    <span class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                        Tentang Monetra
+                    </span>
+                </div>
+                <h1 class="hero-title font-black mb-4 sm:mb-6">Kisah <span class="gradient-text">Kami</span></h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl opacity-70 max-w-3xl mx-auto leading-relaxed px-4">
+                    Misi kami adalah membantu generasi muda Indonesia mencapai kebebasan finansial melalui edukasi yang menyenangkan dan mudah dipahami.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Awal Mula <span class="gradient-text">Monetra</span></h2>
+                    <div class="space-y-3 sm:space-y-4 text-sm sm:text-base opacity-80 leading-relaxed">
+                        <p>
+                            Monetra lahir di awal tahun 2026 dari kegelisahan dua orang founder terhadap rendahnya literasi finansial di kalangan generasi muda Indonesia. Kami sadar, banyak teman-teman seusia kami yang kesulitan mengatur keuangan karena tidak pernah mendapat edukasi yang tepat.
+                        </p>
+                        <p>
+                            Berawal dari obrolan santai di sebuah kedai kopi, kami memutuskan untuk membuat sesuatu yang berbeda. Platform yang tidak hanya memberikan teori, tapi juga alat interaktif yang bisa langsung dipakai. Maka lahirlah Monetra.
+                        </p>
+                        <p>
+                            Dalam waktu singkat, Monetra telah berkembang dan membantu ratusan pengguna memahami kepribadian finansial mereka, membuat anggaran bulanan, dan mencapai target tabungan.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 sm:gap-6 mt-6 sm:mt-8">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                <i data-lucide="users" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400"></i>
+                            </div>
+                            <div>
+                                <span class="text-lg sm:text-xl font-bold">500+</span>
+                                <p class="text-xs opacity-60">Pengguna</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                <i data-lucide="target" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <span class="text-lg sm:text-xl font-bold">200+</span>
+                                <p class="text-xs opacity-60">Target Tercapai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3 sm:gap-4" data-aos="fade-left">
+                    <div class="about-card p-4 sm:p-6 rounded-xl sm:rounded-2xl text-center">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                            <i data-lucide="calendar" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                        </div>
+                        <div class="text-lg sm:text-xl font-bold">2025</div>
+                        <p class="text-xs opacity-60">Berdiri</p>
+                    </div>
+                    <div class="about-card p-4 sm:p-6 rounded-xl sm:rounded-2xl text-center">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                            <i data-lucide="smile" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                        </div>
+                        <div class="text-lg sm:text-xl font-bold">500+</div>
+                        <p class="text-xs opacity-60">Pengguna</p>
+                    </div>
+                    <div class="about-card p-4 sm:p-6 rounded-xl sm:rounded-2xl text-center">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-600 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                            <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                        </div>
+                        <div class="text-lg sm:text-xl font-bold">2</div>
+                        <p class="text-xs opacity-60">Founder</p>
+                    </div>
+                    <div class="about-card p-4 sm:p-6 rounded-xl sm:rounded-2xl text-center">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-600 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                        </div>
+                        <div class="text-lg sm:text-xl font-bold">5</div>
+                        <p class="text-xs opacity-60">Kota</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+                <!-- Mission -->
+                <div class="about-card p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl" data-aos="fade-right">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                        <i data-lucide="flag" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Misi Kami</h3>
+                    <p class="text-sm sm:text-base md:text-lg opacity-80 leading-relaxed">
+                        Memberdayakan generasi muda Indonesia dengan pengetahuan dan alat yang mereka butuhkan untuk mencapai kebebasan finansial, melalui pendekatan yang personal, interaktif, dan menyenangkan.
+                    </p>
+                    <ul class="mt-4 sm:mt-6 space-y-2 sm:space-y-3">
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">Edukasi finansial untuk semua kalangan</span>
+                        </li>
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">Pendekatan personal berdasarkan kepribadian</span>
+                        </li>
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">Fitur interaktif yang memudahkan belajar</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Vision -->
+                <div class="about-card p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl" data-aos="fade-left">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                        <i data-lucide="eye" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Visi Kami</h3>
+                    <p class="text-sm sm:text-base md:text-lg opacity-80 leading-relaxed">
+                        Menjadi platform edukasi finansial terdepan di Indonesia yang membantu 100.000 generasi muda mencapai kemandirian finansial pada tahun 2028.
+                    </p>
+                    <ul class="mt-4 sm:mt-6 space-y-2 sm:space-y-3">
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">100.000 pengguna aktif pada 2028</span>
+                        </li>
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">Hadir di 50 kota di Indonesia</span>
+                        </li>
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-xs sm:text-sm">Kolaborasi dengan 20+ institusi pendidikan</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12" data-aos="fade-up">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Nilai-Nilai <span class="gradient-text">Kami</span></h2>
+                <div class="w-16 sm:w-20 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-3 sm:mb-4"></div>
+                <p class="text-sm sm:text-base md:text-lg opacity-70 max-w-2xl mx-auto">
+                    Prinsip yang menjadi fondasi setiap langkah kami
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div class="value-card" data-aos="fade-up">
+                    <div class="value-icon">
+                        <i data-lucide="heart" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold mb-2">Edukasi untuk Semua</h3>
+                    <p class="text-xs sm:text-sm opacity-60">Kami percaya edukasi finansial adalah hak semua orang, tanpa terkecuali.</p>
+                </div>
+
+                <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="value-icon">
+                        <i data-lucide="zap" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold mb-2">Inovatif</h3>
+                    <p class="text-xs sm:text-sm opacity-60">Terus berinovasi menciptakan cara belajar yang menyenangkan.</p>
+                </div>
+
+                <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="value-icon">
+                        <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold mb-2">Komunitas</h3>
+                    <p class="text-xs sm:text-sm opacity-60">Membangun komunitas yang saling mendukung dan menginspirasi.</p>
+                </div>
+
+                <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="value-icon">
+                        <i data-lucide="shield" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold mb-2">Terpercaya</h3>
+                    <p class="text-xs sm:text-sm opacity-60">Informasi akurat dan dapat diandalkan untuk masa depanmu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section (Singkat) -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12" data-aos="fade-up">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Perjalanan <span class="gradient-text">Kami</span></h2>
+                <div class="w-16 sm:w-20 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-3 sm:mb-4"></div>
+                <p class="text-sm sm:text-base md:text-lg opacity-70 max-w-2xl mx-auto">
+                    Jejak langkah Monetra dari awal hingga sekarang
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="timeline">
+                    <div class="timeline-item" data-aos="fade-up">
+                        <div class="timeline-date">Januari 2025</div>
+                        <div class="timeline-title">Monetra resmi didirikan</div>
+                        <p class="text-xs sm:text-sm opacity-60">Dua orang founder memulai perjalanan Monetra dari sebuah kedai kopi di Jakarta.</p>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="timeline-date">Maret 2025</div>
+                        <div class="timeline-title">Peluncuran website pertama</div>
+                        <p class="text-xs sm:text-sm opacity-60">Website Monetra diluncurkan dengan fitur Tes Kepribadian Finansial.</p>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-date">Juni 2025</div>
+                        <div class="timeline-title">100 pengguna pertama</div>
+                        <p class="text-xs sm:text-sm opacity-60">Mencapai milestone 100 pengguna yang aktif menggunakan platform.</p>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="timeline-date">September 2025</div>
+                        <div class="timeline-title">Peluncuran fitur Simulasi Budget</div>
+                        <p class="text-xs sm:text-sm opacity-60">Fitur baru untuk membantu pengguna mengatur anggaran bulanan.</p>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="timeline-date">Januari 2026</div>
+                        <div class="timeline-title">500+ pengguna</div>
+                        <p class="text-xs sm:text-sm opacity-60">Monetra kini digunakan oleh lebih dari 500 pengguna di 5 kota.</p>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="500">
+                        <div class="timeline-date">Sekarang</div>
+                        <div class="timeline-title">Terus berkembang</div>
+                        <p class="text-xs sm:text-sm opacity-60">Bersama 500+ pengguna, kami terus berinovasi untuk masa depan finansial yang lebih cerah.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section (2 Orang) -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12" data-aos="fade-up">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Tim <span class="gradient-text">Kami</span></h2>
+                <div class="w-16 sm:w-20 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-3 sm:mb-4"></div>
+                <p class="text-sm sm:text-base md:text-lg opacity-70 max-w-2xl mx-auto">
+                    Dua orang di balik Monetra yang berdedikasi untuk edukasi finansial
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 max-w-3xl mx-auto gap-4 sm:gap-6 md:gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card" data-aos="fade-up">
+                    <div class="team-avatar overflow-hidden">
+                        <img src="assets/img/IMG_20260211_091513.jpg" alt="Daffi Nafeeza" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold">Daffi Nafeeza</h3>
+                    <p class="text-xs sm:text-sm text-violet-400 mb-2">Full Stack Developer</p>
+                    <p class="text-xs opacity-60 mb-3">A young full-stack developer focused on building modern, meaningful, and impactful digital solutions.</p>
+                    <div class="flex justify-center gap-2">
+                        <a href="https://www.linkedin.com/in/daffi-nafeeza-036601376/" class="p-2 bg-white/5 rounded-lg hover:bg-violet-600 transition">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://github.com/D4FF1" class="p-2 bg-white/5 rounded-lg hover:bg-violet-600 transition">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-avatar overflow-hidden">
+                        <img src="assets/img/WhatsApp Image 2026-02-17 at 14.07.22.jpeg" alt="M Rizki Suryapratama" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold">M Rizki Suryapratama</h3>
+                    <p class="text-xs sm:text-sm text-violet-400 mb-2">Full Stack Developer</p>
+                    <p class="text-xs opacity-60 mb-3">Focused on creating clean, efficient, and meaningful web solutions through collaboration and innovation.</p>
+                    <div class="flex justify-center gap-2">
+                        <a href="https://github.com/mrizzzz97" class="p-2 bg-white/5 rounded-lg hover:bg-violet-600 transition">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/muhammad-rizki-suryapratama/" class="p-2 bg-white/5 rounded-lg hover:bg-violet-600 transition">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+                <div class="stat-card" data-aos="zoom-in">
+                    <div class="stat-number">500+</div>
+                    <p class="text-xs sm:text-sm opacity-60">Pengguna Aktif</p>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-number">200+</div>
+                    <p class="text-xs sm:text-sm opacity-60">Target Tercapai</p>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-number">95%</div>
+                    <p class="text-xs sm:text-sm opacity-60">Kepuasan</p>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-number">5</div>
+                    <p class="text-xs sm:text-sm opacity-60">Kota</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="pb-16 sm:pb-20 md:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="about-card p-8 sm:p-10 md:p-12 lg:p-16 rounded-3xl sm:rounded-4xl text-center relative overflow-hidden" data-aos="zoom-in">
+                <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-cyan-600/20"></div>
+                <div class="relative z-10">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-6">Mulai Perjalanan Finansialmu</h2>
+                    <p class="text-sm sm:text-base md:text-lg lg:text-xl opacity-80 max-w-2xl mx-auto mb-6 sm:mb-8">
+                        Bergabunglah dengan 500+ pengguna lain yang sudah merasakan manfaat Monetra
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                        <a href="personality-test.html" class="btn-primary px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base">
+                            Mulai Sekarang
+                        </a>
+                        <a href="contact.html" class="px-8 sm:px-10 py-3 sm:py-4 rounded-full border border-white/20 font-bold text-sm sm:text-base hover:bg-white/5 transition">
+                            Hubungi Kami
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
+                <div>
+                    <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
+                            <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xl sm:text-2xl font-bold">Monetra</span>
+                    </div>
+                    <p class="opacity-50 text-xs sm:text-sm">Platform edukasi finansial untuk generasi muda Indonesia.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Produk</h4>
+                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
+                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
+                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
+                        <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Perusahaan</h4>
+                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
+                        <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
+                        <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
+                        <li><a href="insight-dashboard.html" class="hover:text-violet-400 transition">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Ikuti Kami</h4>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                            <i data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-6 sm:pt-7 md:pt-8 text-center opacity-40 text-xxs sm:text-xs">
+                <p>&copy; 2026 Monetra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== INITIALIZATION ====================
+        lucide.createIcons();
+        
+        // Loading
+        window.addEventListener('load', function() {
+            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
+        });
+        
+        // AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 30,
+            disable: window.innerWidth < 768
+        });
+        
+        // ==================== THEME TOGGLE ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        const html = document.documentElement;
+        
+        function toggleTheme() {
+            html.classList.toggle('dark');
+            html.classList.toggle('light');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            lucide.createIcons();
+        }
+        
+        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            html.classList.remove('dark');
+            html.classList.add('light');
+        } else if (!savedTheme) {
+            html.classList.add('dark');
+        }
+        
+        // ==================== FLOATING NAVBAR ====================
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('floating');
+            } else {
+                navbar.classList.remove('floating');
+            }
+        });
+        
+        // ==================== MOBILE MENU ====================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        
+        function openMobileMenu() {
+            if (mobileMenu && mobileMenuOverlay) {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeMobileMenuFunc() {
+            if (mobileMenu && mobileMenuOverlay) {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+        }
+        
+        if (closeMobileMenu) {
+            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        }
+        
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
+        }
+        
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMobileMenuFunc);
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+                closeMobileMenuFunc();
+            }
+        });
+
+        // ==================== TOAST NOTIFICATION ====================
+        const toast = document.getElementById('toast');
+        
+        function showToast(message, type = 'info', duration = 3000) {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // ==================== INTERACTIVE FUNCTIONS ====================
+        function showAllLeaderboard() {
+            showToast('Menampilkan semua leaderboard', 'info');
+        }
+
+        function startChallenge() {
+            showToast('Memulai challenge...', 'success');
+        }
+
+        function shareProgress() {
+            const text = `Saya sedang belajar tentang Monetra, platform edukasi finansial yang keren! 🚀\n\nYuk join di monetra.com`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Monetra - Edukasi Finansial',
+                    text: text,
+                    url: window.location.href
+                }).catch(() => {
+                    copyToClipboard(text);
+                });
+            } else {
+                copyToClipboard(text);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Teks berhasil disalin!', 'success');
+            }).catch(() => {
+                showToast('Gagal menyalin teks', 'error');
+            });
+        }
+
+        // ==================== MAKE FUNCTIONS GLOBAL ====================
+        window.showToast = showToast;
+        window.showAllLeaderboard = showAllLeaderboard;
+        window.startChallenge = startChallenge;
+        window.shareProgress = shareProgress;
+    </script>
+</body>
+</html>
