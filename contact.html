@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monetra - Hubungi Kami</title>
+    <title>Monetra - Kontak Kami</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,689 +23,599 @@
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM Sans', 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.3s ease;
         }
         
-        html.dark body {
-            background-color: #020617;
-            color: #f8fafc;
-        }
-        
-        html.light body {
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
+        html.dark body { background-color: #020617; color: #f8fafc; }
+        html.light body { background-color: #f8fafc; color: #0f172a; }
 
-        /* Noise texture */
         body::before {
             content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.03;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; opacity: 0.025;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen */
+        /* ── LOADING SCREEN (UNCHANGED) ── */
         .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #020617;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #020617; z-index: 10000;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        
-        .loader-wrapper.slide-up {
-            transform: translateY(-100%);
-        }
-
+        .loader-wrapper.slide-up { transform: translateY(-100%); }
         .loader-logo-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
-            opacity: 0;
-            animation: logoReveal 1s ease forwards 0.5s;
+            width: 100px; height: 100px; object-fit: contain;
+            border-radius: 20px; box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+            opacity: 0; animation: logoReveal 1s ease forwards 0.5s;
         }
+        @keyframes logoReveal { to { opacity: 1; transform: scale(1); } }
 
-        @keyframes logoReveal {
-            to { opacity: 1; transform: scale(1); }
-        }
-
+        /* ── LOADER TEXT: MONETRA BOLD ── */
         .loader-text {
-            margin-top: 24px;
-            font-size: 2rem;
-            font-weight: 800;
+            margin-top: 24px; font-size: 2.2rem; font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0; animation: fadeIn 0.8s ease forwards 1.2s;
+            letter-spacing: 0.08em;
         }
 
         .loader-subtext {
-            margin-top: 8px;
-            font-size: 0.875rem;
-            color: #64748b;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.8s;
+            margin-top: 8px; font-size: 0.875rem; color: #64748b;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            opacity: 0; animation: fadeIn 1s ease forwards 1.8s;
         }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* Floating Rounded Header */
-        .navbar {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-        }
-        
-        .navbar .navbar-container {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
-        }
-        
-        .navbar.floating {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-        
+        /* ── NAVBAR (UNCHANGED) ── */
+        .navbar { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding-top: 1.25rem; padding-bottom: 1.25rem; }
+        .navbar .navbar-container { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 0; }
+        .navbar.floating { padding-top: 0.5rem; padding-bottom: 0.5rem; }
         .navbar.floating .navbar-container {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9999px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            padding: 0.75rem 2rem;
-            max-width: 1200px;
+            padding: 0.75rem 2rem; max-width: 1200px;
         }
-        
         html.light .navbar.floating .navbar-container {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Hero Background */
-        .hero-bg {
+        /* ── PAGE HERO — BIGGER ── */
+        .page-hero {
             position: relative;
-            background: radial-gradient(circle at 15% 50%, #1e1b4b 0%, transparent 50%),
-                        radial-gradient(circle at 85% 30%, #312e81 0%, transparent 50%),
-                        linear-gradient(180deg, #020617 0%, #0f172a 100%);
+            background: radial-gradient(ellipse 80% 60% at 50% -10%, #1e1b4b 0%, transparent 70%),
+                        linear-gradient(180deg, #020617 0%, #0a0f1e 100%);
             overflow: hidden;
+            padding-bottom: 0;
         }
-        
-        html.light .hero-bg {
-            background: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #f8fafc 100%);
+        html.light .page-hero {
+            background: radial-gradient(ellipse 80% 50% at 50% -10%, #ede9fe 0%, #f8fafc 70%);
         }
 
         #network-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.3;
-            pointer-events: none;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1; opacity: 0.25; pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.45rem 1.1rem; border-radius: 9999px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.07);
+            backdrop-filter: blur(12px);
+            color: #a78bfa; font-size: 0.7rem;
+            font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .hero-badge:hover {
+            background: rgba(139,92,246,0.13);
+            border-color: rgba(139,92,246,0.5);
+            transform: translateY(-1px);
+        }
+        html.light .hero-badge { color: #7c3aed; background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.25); }
+
+        .pulse-dot {
+            width: 7px; height: 7px; background: #22d3ee;
+            border-radius: 50%; animation: pulseGlow 2.2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5); transform: scale(1); }
+            50% { box-shadow: 0 0 0 6px rgba(34, 211, 238, 0); transform: scale(1.1); }
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: gradientMove 5s linear infinite;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 55%, #818cf8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: gradientMove 6s linear infinite;
         }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
+        @keyframes gradientMove { 0%{background-position:0%} 100%{background-position:200%} }
         html.light .gradient-text {
-            background: linear-gradient(135deg, #7c3aed 0%, #0369a1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: none;
         }
 
-        /* Cards */
-        .feature-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
+        .stat-chip {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1.25rem; border-radius: 9999px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            font-size: 0.8rem; color: #94a3b8;
+            transition: all 0.3s ease; cursor: default;
         }
-        
-        html.light .feature-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        .stat-chip:hover {
+            background: rgba(139,92,246,0.08);
+            border-color: rgba(139,92,246,0.25);
+            color: #c4b5fd; transform: translateY(-2px);
+        }
+        html.light .stat-chip { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); color: #475569; }
+        html.light .stat-chip:hover { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.2); color: #6d28d9; }
+
+        /* BUG FIX: stat-chip icons in light mode */
+        html.light .stat-chip .lucide { color: inherit !important; }
+
+        .hero-wave {
+            position: relative; z-index: 2; width: 100%; overflow: hidden; line-height: 0; margin-top: -2px;
+        }
+        .hero-wave svg { display: block; width: 100%; height: 80px; }
+
+        .orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(90px); pointer-events: none;
+            animation: floatOrb 10s ease-in-out infinite;
+        }
+        @keyframes floatOrb {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-25px) scale(1.06); }
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: #8b5cf6;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        /* ── CARDS ── */
+        .cards-section {
+            position: relative; background: #0a0f1e; padding: 5rem 0 6rem;
         }
-        
-        html.light .feature-card:hover {
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+        html.light .cards-section { background: #f1f5ff; }
+
+        .section-line {
+            width: 48px; height: 3px;
+            background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+            border-radius: 9999px; margin-bottom: 1.25rem;
         }
 
-        /* Contact Form */
+        .contact-card {
+            position: relative; border-radius: 1.5rem;
+            padding: 2rem 1.75rem; overflow: hidden;
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.45s ease, border-color 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px); cursor: pointer;
+        }
+        html.light .contact-card {
+            background: #fff; border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+        }
+        .contact-card .card-glow {
+            position: absolute; inset: 0; border-radius: inherit;
+            opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
+        }
+        .contact-card:hover { transform: translateY(-12px) scale(1.01); }
+        .contact-card:hover .card-glow { opacity: 1; }
+        html.dark .contact-card:hover { box-shadow: 0 28px 56px rgba(0,0,0,0.4), 0 0 0 1px rgba(139,92,246,0.25); border-color: rgba(139,92,246,0.3); }
+        html.light .contact-card:hover { box-shadow: 0 28px 56px rgba(139,92,246,0.1), 0 0 0 1px rgba(139,92,246,0.2); border-color: rgba(139,92,246,0.25); }
+
+        .contact-card .card-accent-line {
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
+        }
+        .contact-card:hover .card-accent-line { opacity: 1; }
+
+        .card-icon-wrap {
+            width: 54px; height: 54px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem; position: relative; z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .contact-card:hover .card-icon-wrap { transform: scale(1.12) rotate(-3deg); }
+
+        .card-arrow {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            font-size: 0.72rem; font-weight: 700; margin-top: 1.25rem;
+            transition: gap 0.3s ease; font-family: 'DM Sans', sans-serif;
+        }
+        .contact-card:hover .card-arrow { gap: 0.6rem; }
+
+        /* ── MAIN FORM SECTION ── */
+        .main-section {
+            position: relative; background: #0f172a; padding: 6rem 0; overflow: hidden;
+        }
+        html.light .main-section { background: #f8fafc; }
+        .main-section::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(139,92,246,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139,92,246,0.03) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse 80% 100% at 50% 0%, black 0%, transparent 80%);
+        }
+
         .contact-form-wrapper {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem;
-            transition: all 0.3s ease;
+            background: rgba(11, 17, 32, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.07); border-radius: 2rem;
+            transition: all 0.3s ease; position: relative;
         }
-
         html.light .contact-form-wrapper {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.07);
+            background: #fff; border: 1px solid #e2e8f0; box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+        }
+        .contact-form-wrapper::after {
+            content: ''; position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139,92,246,0.6), rgba(34,211,238,0.4), transparent);
+            border-radius: 9999px; pointer-events: none;
         }
 
         .form-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.875rem;
-            padding: 0.875rem 1.25rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            color: #f8fafc;
-            transition: all 0.3s ease;
-            outline: none;
+            width: 100%; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 0.875rem;
+            padding: 0.875rem 1.2rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: 0.9rem; color: #f1f5f9; transition: all 0.25s ease; outline: none;
         }
-
-        html.light .form-input {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            color: #0f172a;
-        }
-
+        html.light .form-input { background: #f8fafc; border: 1px solid #dde1ef; color: #0f172a; }
         .form-input:focus {
-            border-color: #8b5cf6;
-            background: rgba(139, 92, 246, 0.05);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            border-color: rgba(139,92,246,0.6); background: rgba(139,92,246,0.03);
+            box-shadow: 0 0 0 4px rgba(139,92,246,0.08), 0 0 16px rgba(139,92,246,0.05);
         }
-
-        html.light .form-input:focus {
-            background: #fdf4ff;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.08);
-        }
-
-        .form-input::placeholder {
-            color: #64748b;
-        }
+        html.light .form-input:focus { background: #fdf4ff; box-shadow: 0 0 0 4px rgba(139,92,246,0.08); }
+        .form-input::placeholder { color: #334155; }
+        html.light .form-input::placeholder { color: #94a3b8; }
+        textarea.form-input { resize: none; min-height: 140px; }
 
         .form-label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: #94a3b8;
-            margin-bottom: 0.5rem;
+            display: block; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: #475569; margin-bottom: 0.5rem; font-family: 'DM Sans', sans-serif;
         }
 
-        html.light .form-label {
-            color: #64748b;
-        }
-
-        textarea.form-input {
-            resize: none;
-            min-height: 140px;
-        }
-
-        /* Contact Cards */
-        .contact-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.5rem;
-            padding: 1.75rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
-
-        html.light .contact-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #7c3aed, #0891b2);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
-        }
-
-        .contact-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Why cards */
+        /* ── WHY CARDS ── */
         .why-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1.25rem 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 1rem;
-            transition: all 0.3s ease;
+            display: flex; align-items: flex-start; gap: 1rem;
+            padding: 1.1rem 1.35rem;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.055);
+            border-radius: 1rem; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
         }
-
-        html.light .why-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-        }
-
+        html.light .why-card { background: #fff; border: 1px solid #e8ecf4; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
         .why-card:hover {
-            background: rgba(139, 92, 246, 0.06);
-            border-color: rgba(139, 92, 246, 0.2);
+            background: rgba(139,92,246,0.05); border-color: rgba(139,92,246,0.2);
+            transform: translateX(6px); box-shadow: -4px 0 20px rgba(139,92,246,0.07);
         }
-
-        html.light .why-card:hover {
-            background: #fdf4ff;
-            border-color: rgba(139, 92, 246, 0.2);
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn-primary *,
-        .btn-primary i,
-        .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        html.light .btn-primary,
-        html.light .btn-primary *,
-        html.light .btn-primary i,
-        html.light .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        /* Submit button */
-        .btn-submit {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            border: none;
-            width: 100%;
-            padding: 1rem 2rem;
-            border-radius: 0.875rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        /* Send success state */
-        .btn-submit.sent {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-        }
-
-        /* CRITICAL LIGHT MODE FIXES */
-        html.light h1,
-        html.light h2,
-        html.light h3,
-        html.light h4,
-        html.light h5 {
-            color: #0f172a !important;
-        }
-        
-        html.light p,
-        html.light span,
-        html.light li,
-        html.light a {
-            color: #334155 !important;
-        }
-
-        /* Always keep button text white regardless of theme */
-        html.light .btn-primary,
-        html.light a.btn-primary,
-        html.light .btn-primary span,
-        html.light .btn-primary i,
-        html.light .btn-submit,
-        html.light .btn-submit span,
-        html.light .btn-submit i,
-        .btn-primary,
-        .btn-submit {
-            color: #ffffff !important;
-        }
-        
-        html.light .text-gray-300,
-        html.light .text-gray-400,
-        html.light .text-gray-500 {
-            color: #64748b !important;
-        }
-
-        html.light .navbar a {
-            color: #1e293b !important;
-        }
-
-        html.light .opacity-60 {
-            color: #475569 !important;
-        }
-
-        html.light .opacity-70 {
-            color: #475569 !important;
-        }
-
-        html.light .opacity-80 {
-            color: #334155 !important;
-        }
-
-        /* CTA Section - Always White Text */
-        .cta-section h2,
-        .cta-section p,
-        .cta-section a,
-        .cta-section span,
-        .cta-section div {
-            color: #ffffff !important;
-        }
-
-        .cta-section .btn-white {
-            color: #7c3aed !important;
-        }
-
-        html.light .cta-section h2,
-        html.light .cta-section p,
-        html.light .cta-section a:not(.btn-white),
-        html.light .cta-section span,
-        html.light .cta-section div {
-            color: #ffffff !important;
-        }
-
-        /* Footer - Always White Text */
-        footer,
-        footer h4,
-        footer p,
-        footer a,
-        footer span,
-        footer li,
-        footer div {
-            color: #ffffff !important;
-        }
-
-        html.light footer,
-        html.light footer h4,
-        html.light footer p,
-        html.light footer a,
-        html.light footer span,
-        html.light footer li,
-        html.light footer div {
-            color: #ffffff !important;
-        }
-        
-        html.light footer .opacity-50,
-        html.light footer .opacity-60,
-        html.light footer .opacity-40 {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        html.light .dropdown-menu {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-            color: #f8fafc;
-        }
-
-        html.light .dropdown-item {
-            color: #0f172a;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            transform: translateX(100%);
+        html.light .why-card:hover { background: #fdf4ff; border-color: rgba(139,92,246,0.2); box-shadow: none; }
+        .why-icon-wrap {
+            width: 44px; height: 44px; border-radius: 13px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
             transition: transform 0.3s ease;
-            background: #0f172a;
-            z-index: 9999;
         }
-        
-        html.light .mobile-menu {
-            background: #ffffff;
-            border-left: 1px solid #e2e8f0;
-        }
-        
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
+        .why-card:hover .why-icon-wrap { transform: rotate(-5deg) scale(1.08); }
 
-        #closeMobileMenu {
-            position: relative;
-            z-index: 10000;
-            cursor: pointer;
+        /* ── SUPPORT BOX ── */
+        .support-box {
+            position: relative; background: rgba(11,17,32,0.75);
+            backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 1.75rem; padding: 2rem 2.25rem; overflow: hidden;
         }
+        html.light .support-box { background: #fff; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
 
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
+        /* ── BUTTONS — ALL white text ── */
+        .btn-submit {
+            background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
+            color: #ffffff !important; border: none; width: 100%;
+            padding: 1rem 2rem; border-radius: 0.875rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
             transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            position: relative; overflow: hidden; letter-spacing: 0.01em;
+        }
+        .btn-submit::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .btn-submit:hover::before { opacity: 1; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(109,40,217,0.45), 0 4px 12px rgba(0,0,0,0.2); }
+        .btn-submit:active { transform: translateY(-1px); }
+        /* BUG FIX: Semua anak elemen btn-submit pakai warna putih */
+        .btn-submit > *, .btn-submit span, .btn-submit i, .btn-submit svg, .btn-submit svg * { position: relative; z-index: 1; color: #ffffff !important; stroke: #ffffff !important; }
+        .btn-submit.sent { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+
+        /* ── CTA SECTION ── */
+        .cta-section {
+            position: relative; overflow: hidden; padding: 10rem 0; background: #020617;
+        }
+        html.light .cta-section { background: #f8fafc; }
+
+        .cta-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 20% 50%, rgba(109,40,217,0.42) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 70% at 80% 30%, rgba(8,145,178,0.32) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(139,92,246,0.18) 0%, transparent 60%);
+            animation: meshMove 14s ease-in-out infinite alternate;
+        }
+        html.light .cta-bg {
+            background:
+                radial-gradient(ellipse 70% 60% at 20% 50%, rgba(109,40,217,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 70% at 80% 30%, rgba(8,145,178,0.08) 0%, transparent 60%);
+        }
+        @keyframes meshMove {
+            0% { filter: hue-rotate(0deg); transform: scale(1); }
+            100% { filter: hue-rotate(12deg); transform: scale(1.04); }
         }
 
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .cta-dots {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 100%);
+        }
+        html.light .cta-dots {
+            background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .cta-shape {
+            position: absolute; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.07); pointer-events: none;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
+        html.light .cta-shape { border-color: rgba(124,58,237,0.09); }
+
+        .cta-card { position: relative; z-index: 10; text-align: center; }
+
+        .cta-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.625rem;
+            padding: 0.45rem 1.35rem; border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04); backdrop-filter: blur(12px);
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+            color: #c4b5fd; margin-bottom: 2.5rem; font-family: 'DM Sans', sans-serif;
         }
-        
-        html.light ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+        html.light .cta-eyebrow { color: #6d28d9; border-color: rgba(109,40,217,0.18); background: rgba(109,40,217,0.05); }
+        /* BUG FIX: icon di cta-eyebrow light mode */
+        html.light .cta-eyebrow svg { color: #6d28d9 !important; stroke: #6d28d9 !important; }
+
+        .cta-title {
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.75rem);
+            font-weight: 900; line-height: 1.06; letter-spacing: -0.03em;
+            color: #fff; margin-bottom: 1.5rem;
         }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
+        html.light .cta-title { color: #0f172a; }
+
+        .cta-title .accent-word { position: relative; display: inline-block; }
+        .cta-title .accent-word::after {
+            content: ''; position: absolute; bottom: 4px; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #22d3ee); border-radius: 9999px;
         }
 
-        /* Page Hero */
-        .page-hero {
-            position: relative;
-            background: radial-gradient(circle at 20% 60%, #1e1b4b 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, #164e63 0%, transparent 50%),
-                        linear-gradient(180deg, #020617 0%, #0f172a 100%);
-            overflow: hidden;
+        .cta-subtitle {
+            font-size: 1.05rem; color: rgba(255,255,255,0.58);
+            max-width: 500px; margin: 0 auto 3.5rem; line-height: 1.8;
+            font-family: 'DM Sans', sans-serif;
+        }
+        html.light .cta-subtitle { color: #475569; }
+
+        .cta-buttons { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; }
+
+        .btn-cta-primary {
+            display: inline-flex; align-items: center; gap: 0.625rem;
+            padding: 1rem 2.25rem; border-radius: 9999px;
+            background: linear-gradient(135deg, #6d28d9 0%, #0891b2 100%);
+            color: #ffffff !important; font-weight: 700; font-size: 0.92rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            transition: all 0.3s ease; position: relative; overflow: hidden; letter-spacing: 0.01em;
+        }
+        .btn-cta-primary::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(135deg, #7c3aed, #0e7490); opacity: 0; transition: opacity 0.3s;
+        }
+        .btn-cta-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(109,40,217,0.45); }
+        .btn-cta-primary:hover::after { opacity: 1; }
+        /* BUG FIX: semua elemen dalam btn-cta-primary pakai putih */
+        .btn-cta-primary > *, .btn-cta-primary span, .btn-cta-primary i, .btn-cta-primary svg, .btn-cta-primary svg * { position: relative; z-index: 1; color: #ffffff !important; stroke: #ffffff !important; }
+
+        .btn-cta-secondary {
+            display: inline-flex; align-items: center; gap: 0.625rem;
+            padding: 1rem 2.25rem; border-radius: 9999px;
+            border: 1.5px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.04); backdrop-filter: blur(10px);
+            color: #ffffff !important; font-weight: 600; font-size: 0.92rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+            transition: all 0.3s ease; letter-spacing: 0.01em;
+        }
+        html.light .btn-cta-secondary {
+            border-color: rgba(109,40,217,0.25); background: rgba(109,40,217,0.04); color: #6d28d9 !important;
+        }
+        .btn-cta-secondary:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+        html.light .btn-cta-secondary:hover { border-color: rgba(109,40,217,0.4); background: rgba(109,40,217,0.08); }
+        /* BUG FIX: icon di btn-cta-secondary harus ikut warna teks parent */
+        html.dark .btn-cta-secondary svg { color: #ffffff !important; stroke: #ffffff !important; }
+        html.light .btn-cta-secondary svg { color: #6d28d9 !important; stroke: #6d28d9 !important; }
+        html.dark .btn-cta-secondary span { color: #ffffff !important; }
+        html.light .btn-cta-secondary span { color: #6d28d9 !important; }
+
+        .cta-proof {
+            display: flex; align-items: center; justify-content: center;
+            gap: 1.75rem; margin-top: 3.5rem; flex-wrap: wrap;
+        }
+        .proof-item {
+            display: flex; align-items: center; gap: 0.45rem;
+            font-size: 0.78rem; color: rgba(255,255,255,0.4); font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+        }
+        html.light .proof-item { color: #94a3b8; }
+        /* BUG FIX: proof-item icons */
+        html.light .proof-item svg { color: #94a3b8 !important; stroke: #94a3b8 !important; }
+        .proof-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+        html.light .proof-dot { background: #cbd5e1; }
+
+        .cta-icon-wrap {
+            width: 76px; height: 76px;
+            background: linear-gradient(135deg, rgba(109,40,217,0.3), rgba(8,145,178,0.2));
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 22px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 2.5rem; box-shadow: 0 0 40px rgba(139,92,246,0.28);
+            backdrop-filter: blur(10px); animation: iconFloat 4s ease-in-out infinite;
+        }
+        html.light .cta-icon-wrap {
+            background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(8,145,178,0.1));
+            border-color: rgba(109,40,217,0.25); box-shadow: 0 0 40px rgba(139,92,246,0.15);
+        }
+        /* BUG FIX: icon di cta-icon-wrap dark mode putih, light mode ungu */
+        html.dark .cta-icon-wrap svg { color: #ffffff !important; stroke: #ffffff !important; }
+        html.light .cta-icon-wrap svg { color: #6d28d9 !important; stroke: #6d28d9 !important; }
+
+        @keyframes iconFloat {
+            0%, 100% { box-shadow: 0 0 40px rgba(139,92,246,0.28); transform: translateY(0); }
+            50% { box-shadow: 0 0 64px rgba(139,92,246,0.45); transform: translateY(-6px); }
         }
 
-        html.light .page-hero {
-            background: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #f8fafc 100%);
+        .cta-particle {
+            position: absolute; border-radius: 50%;
+            animation: particleFloat linear infinite; pointer-events: none;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
         }
 
-        /* Floating orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            animation: float 8s ease-in-out infinite;
+        .ripple-btn { position: relative; overflow: hidden; }
+        .ripple {
+            position: absolute; border-radius: 50%; background: rgba(255,255,255,0.2);
+            transform: scale(0); animation: rippleAnim 0.6s linear; pointer-events: none;
+        }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
-        }
+        /* ── LIGHT MODE FIXES ── */
+        html.light h1, html.light h2, html.light h3, html.light h4, html.light h5 { color: #0f172a !important; }
+        html.light p { color: #334155 !important; }
+        html.light li { color: #334155 !important; }
+        html.light span { color: #334155 !important; }
+        html.light .navbar a { color: #1e293b !important; }
+        html.light .opacity-60 { color: #475569 !important; }
 
-        /* Glow divider */
-        .glow-divider {
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #8b5cf6, #22d3ee, transparent);
-            margin: 1.5rem auto;
-            border-radius: 9999px;
-        }
+        /* ── BUTTON: override setelah global span, pakai html.light + class agar specificity menang ── */
+        html.light .btn-submit { color: #ffffff !important; }
+        html.light .btn-submit span { color: #ffffff !important; }
+        html.light .btn-submit svg, html.light .btn-submit svg * { color: #ffffff !important; stroke: #ffffff !important; }
+        html.dark  .btn-submit span { color: #ffffff !important; }
+        html.dark  .btn-submit svg, html.dark  .btn-submit svg * { color: #ffffff !important; stroke: #ffffff !important; }
 
-        /* Support badge */
-        .support-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.375rem 1rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            background: rgba(139, 92, 246, 0.1);
-            color: #a78bfa;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            backdrop-filter: blur(8px);
-        }
+        html.light .btn-cta-primary { color: #ffffff !important; }
+        html.light .btn-cta-primary span { color: #ffffff !important; }
+        html.light .btn-cta-primary svg, html.light .btn-cta-primary svg * { color: #ffffff !important; stroke: #ffffff !important; }
+        html.dark  .btn-cta-primary span { color: #ffffff !important; }
+        html.dark  .btn-cta-primary svg, html.dark  .btn-cta-primary svg * { color: #ffffff !important; stroke: #ffffff !important; }
 
-        /* Pulse dot */
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: #22d3ee;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
+        html.dark  .btn-cta-secondary span { color: #ffffff !important; }
+        html.dark  .btn-cta-secondary svg, html.dark .btn-cta-secondary svg * { color: #ffffff !important; stroke: #ffffff !important; }
+        html.light .btn-cta-secondary { color: #6d28d9 !important; }
+        html.light .btn-cta-secondary span { color: #6d28d9 !important; }
+        html.light .btn-cta-secondary svg, html.light .btn-cta-secondary svg * { color: #6d28d9 !important; stroke: #6d28d9 !important; }
 
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(34, 211, 238, 0); }
+        /* ── SECTION-TAG: override setelah global span ── */
+        html.light span.section-tag[style*="#a78bfa"] { color: #a78bfa !important; }
+        html.light span.section-tag[style*="#a78bfa"] svg { color: #a78bfa !important; stroke: #a78bfa !important; }
+        html.light span.section-tag[style*="#22d3ee"] { color: #22d3ee !important; }
+        html.light span.section-tag[style*="#22d3ee"] svg { color: #22d3ee !important; stroke: #22d3ee !important; }
+
+        /* ── CTA EYEBROW ── */
+        html.light .cta-eyebrow { color: #6d28d9 !important; }
+        html.light .cta-eyebrow span { color: #6d28d9 !important; }
+        html.light .cta-eyebrow svg { color: #6d28d9 !important; stroke: #6d28d9 !important; }
+
+        footer, footer h4, footer p, footer a, footer span, footer li, footer div { color: #fff !important; }
+        html.light footer, html.light footer h4, html.light footer p, html.light footer a,
+        html.light footer span, html.light footer li, html.light footer div { color: #fff !important; }
+        html.light footer .opacity-50, html.light footer .opacity-60, html.light footer .opacity-40 { color: rgba(255,255,255,0.6) !important; }
+
+        .btn-primary { background: linear-gradient(135deg, #6d28d9 0%, #0891b2 100%); color: #fff !important; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(109,40,217,0.4); }
+        .btn-primary *, .btn-primary i, .btn-primary span { color: #fff !important; }
+
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
+            background: rgba(15,23,42,0.95); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem;
+            padding: 0.5rem; min-width: 200px;
+            opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: all 0.3s ease; z-index: 100;
         }
+        html.light .dropdown-menu { background: rgba(255,255,255,0.95); border: 1px solid rgba(0,0,0,0.1); }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; transition: all 0.2s ease; color: #f8fafc; }
+        html.light .dropdown-item { color: #0f172a; }
+        .dropdown-item:hover { background: rgba(139,92,246,0.2); }
+
+        .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; background: #0f172a; z-index: 9999; }
+        html.light .mobile-menu { background: #fff; border-left: 1px solid #e2e8f0; }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.375rem 1rem; border-radius: 9999px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            font-family: 'DM Sans', sans-serif;
+        }
+        /* BUG FIX: section-tag icons di light mode harus ikut warna parent bukan kena override global span */
+        html.light .section-tag svg { color: inherit !important; stroke: inherit !important; }
+        html.light .section-tag span { color: inherit !important; }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen (UNCHANGED) -->
     <div class="loader-wrapper" id="loader">
         <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
         <div class="loader-text">MONETRA</div>
         <div class="loader-subtext">Kontak kami</div>
     </div>
 
-    <!-- Floating Rounded Header -->
+    <!-- Navbar (UNCHANGED) -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
         <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer group">
@@ -714,200 +624,185 @@
                 </div>
                 <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                
-                <!-- Features Dropdown -->
                 <div class="dropdown">
                     <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features
-                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        Features <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="personality-test.html" class="dropdown-item">
-                            <i data-lucide="user-circle" class="w-4 h-4"></i>
-                            <span>Tes Kepribadian</span>
-                        </a>
-                        <a href="budget-simulator.html" class="dropdown-item">
-                            <i data-lucide="wallet" class="w-4 h-4"></i>
-                            <span>Simulasi Budget</span>
-                        </a>
-                        <a href="goal-tracker.html" class="dropdown-item">
-                            <i data-lucide="target" class="w-4 h-4"></i>
-                            <span>Target Tabungan</span>
-                        </a>
-                        <a href="challenge.html" class="dropdown-item">
-                            <i data-lucide="trophy" class="w-4 h-4"></i>
-                            <span>Saving Challenge</span>
-                        </a>
+                        <a href="personality-test.html" class="dropdown-item"><i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
+                        <a href="budget-simulator.html" class="dropdown-item"><i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span></a>
+                        <a href="goal-tracker.html" class="dropdown-item"><i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span></a>
+                        <a href="challenge.html" class="dropdown-item"><i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span></a>
                     </div>
                 </div>
-
-                <a href="contact.html" class="text-sm font-medium text-violet-400 transition-colors">Contact</a>
-                
+                <a href="contact.html" class="text-sm font-medium transition-colors">Contact</a>
                 <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                
-                <a href="personality-test.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold" style="color:#ffffff !important">
-                    Mulai Sekarang
-                </a>
+                <a href="personality-test.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold" style="color:#ffffff !important">Mulai Sekarang</a>
             </div>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                <button id="mobileMenuBtn" class="p-2">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                <button id="mobileMenuBtn" class="p-2"><i data-lucide="menu" class="w-6 h-6"></i></button>
             </div>
         </div>
     </nav>
     
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
-    <!-- Mobile Menu -->
     <div class="mobile-menu fixed top-0 right-0 w-72 h-full p-6 md:hidden shadow-2xl">
         <div class="flex justify-end mb-8">
-            <button id="closeMobileMenu">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
+            <button id="closeMobileMenu"><i data-lucide="x" class="w-6 h-6"></i></button>
         </div>
         <div class="flex flex-col space-y-4">
             <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
             <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
-            
             <div class="border-t border-white/10 pt-4">
                 <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
-                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="user-circle" class="w-4 h-4"></i>
-                    <span>Tes Kepribadian</span>
-                </a>
-                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="wallet" class="w-4 h-4"></i>
-                    <span>Simulasi Budget</span>
-                </a>
-                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="target" class="w-4 h-4"></i>
-                    <span>Target Tabungan</span>
-                </a>
-                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="trophy" class="w-4 h-4"></i>
-                    <span>Saving Challenge</span>
-                </a>
+                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
+                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span></a>
+                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span></a>
+                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span></a>
             </div>
 
-            <a href="insight-dashboard.html" class="text-lg font-medium hover:text-violet-400 transition pt-2">Dashboard</a>
             <a href="contact.html" class="text-lg font-medium text-violet-400 transition">Contact</a>
-            
-            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4" style="color:#ffffff !important">
-                Mulai Sekarang
-            </a>
+            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4" style="color:#ffffff !important">Mulai Sekarang</a>
         </div>
     </div>
 
-    <!-- Page Hero -->
-    <section class="page-hero pt-36 pb-24 relative">
-        <canvas id="network-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;opacity:0.25;pointer-events:none;"></canvas>
-
-        <!-- Floating orbs -->
+    <!-- ═══ PAGE HERO — BIGGER ═══ -->
+    <section class="page-hero pt-52 pb-40 relative">
+        <canvas id="network-canvas"></canvas>
         <div class="orb w-96 h-96 bg-violet-700/20" style="top:-80px;left:-80px;animation-delay:0s;"></div>
-        <div class="orb w-64 h-64 bg-cyan-700/15" style="bottom:0;right:-40px;animation-delay:-4s;"></div>
+        <div class="orb w-64 h-64 bg-cyan-600/12" style="top:15%;right:-50px;animation-delay:-3s;"></div>
+        <div class="orb w-48 h-48 bg-indigo-600/15" style="bottom:5%;left:35%;animation-delay:-5s;"></div>
 
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 mb-8" data-aos="fade-down">
-                <span class="support-badge">
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-8" data-aos="fade-up" data-aos-duration="600">
+                <span class="hero-badge">
                     <span class="pulse-dot"></span>
-                    Tim Kami Online
+                    Hubungi Kami
                 </span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight" data-aos="fade-up">
+            <h1 class="mb-8 leading-tight"
+                style="font-family:'DM Sans',sans-serif;font-size:clamp(3.2rem,9vw,8rem);font-weight:900;letter-spacing:-0.04em;line-height:1.02;"
+                data-aos="fade-up" data-aos-duration="800" data-aos-delay="80">
                 Mari Terhubung<br/>
                 <span class="gradient-text">Bersama Monetra</span>
             </h1>
 
-            <div class="glow-divider" data-aos="fade-up" data-aos-delay="100"></div>
+            <div style="width:72px;height:3px;background:linear-gradient(90deg,transparent,#8b5cf6,#22d3ee,transparent);border-radius:9999px;margin:0 auto 2rem;" data-aos="fade-up" data-aos-delay="140"></div>
 
-            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed mt-6" data-aos="fade-up" data-aos-delay="200">
-                Kami terbuka untuk pertanyaan, saran, kerja sama, maupun diskusi seputar literasi finansial. 
-                <span class="text-violet-300 font-medium">Suaramu berarti</span> untuk perkembangan platform ini.
+            <p class="max-w-2xl mx-auto leading-relaxed mb-14"
+               style="font-family:'DM Sans',sans-serif;font-size:clamp(1rem,2.2vw,1.25rem);color:#94a3b8;line-height:1.8;"
+               data-aos="fade-up" data-aos-delay="200">
+                Kami terbuka untuk pertanyaan, saran, kerja sama, maupun diskusi seputar literasi finansial.
+                <span style="color:#c4b5fd;font-weight:600;"> Suaramu berarti</span> untuk perkembangan platform ini.
             </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3" data-aos="fade-up" data-aos-delay="280">
+                <div class="stat-chip">
+                    <i data-lucide="clock" class="w-4 h-4 text-violet-400"></i>
+                    Respons 1–2 hari kerja
+                </div>
+                <div class="stat-chip">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
+                    Pesan kamu aman & privat
+                </div>
+                <div class="stat-chip">
+                    <i data-lucide="heart" class="w-4 h-4 text-pink-400"></i>
+                    Dibalas dengan penuh perhatian
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-wave" style="margin-top:5rem;">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="dark-wave" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0a0f1e"/>
+                <path class="light-wave" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f1f5ff" style="display:none"/>
+            </svg>
         </div>
     </section>
 
-    <!-- Contact Cards Row -->
-    <section class="py-16 bg-slate-50 dark:bg-[#0a0f1e]">
+    <!-- ═══ CARDS ═══ -->
+    <section class="cards-section">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Email -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="section-line mx-auto"></div>
+                <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#475569;font-family:'DM Sans',sans-serif;">Hubungi Langsung</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-5">
                 <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="w-14 h-14 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
-                        <i data-lucide="mail" class="w-7 h-7 text-white"></i>
+                    <div class="card-glow" style="background:radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.08) 0%, transparent 70%);"></div>
+                    <div class="card-accent-line" style="background:linear-gradient(90deg,#7c3aed,#a855f7,transparent);"></div>
+                    <div class="card-icon-wrap" style="background:linear-gradient(135deg,#6d28d9,#9333ea);box-shadow:0 8px 24px rgba(109,40,217,0.4);">
+                        <i data-lucide="mail" class="w-6 h-6 text-white"></i>
                     </div>
-                    <div class="text-xs font-bold uppercase tracking-widest text-violet-400 mb-2">Email Resmi</div>
-                    <h3 class="text-base font-bold mb-1">Dukungan Umum</h3>
-                    <a href="mailto:support@monetra.id" class="text-sm text-cyan-400 hover:text-cyan-300 transition font-medium break-all">
-                        support@monetra.id
+                    <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#a78bfa;margin-bottom:0.5rem;font-family:'DM Sans',sans-serif;">Email Resmi</div>
+                    <h3 style="font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;margin-bottom:0.75rem;">Dukungan Umum</h3>
+                    <a href="mailto:support@monetra.id" style="font-size:0.85rem;color:#22d3ee;font-weight:600;word-break:break-all;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color='#22d3ee'">support@monetra.id</a>
+                    <p style="font-size:0.75rem;margin-top:0.875rem;opacity:0.4;line-height:1.6;font-family:'DM Sans',sans-serif;">Untuk pertanyaan umum & bantuan platform</p>
+                    <a href="mailto:support@monetra.id" class="card-arrow" style="color:#9333ea;">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> Kirim email
                     </a>
-                    <p class="text-xs mt-3 opacity-50">Untuk pertanyaan umum & bantuan platform</p>
                 </div>
-
-                <!-- Sosmed -->
-                <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-14 h-14 bg-gradient-to-br from-pink-600 to-rose-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
-                        <i data-lucide="instagram" class="w-7 h-7 text-white"></i>
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="90">
+                    <div class="card-glow" style="background:radial-gradient(ellipse at 30% 20%, rgba(236,72,153,0.07) 0%, transparent 70%);"></div>
+                    <div class="card-accent-line" style="background:linear-gradient(90deg,#ec4899,#f43f5e,transparent);"></div>
+                    <div class="card-icon-wrap" style="background:linear-gradient(135deg,#db2777,#f43f5e);box-shadow:0 8px 24px rgba(219,39,119,0.4);">
+                        <i data-lucide="instagram" class="w-6 h-6 text-white"></i>
                     </div>
-                    <div class="text-xs font-bold uppercase tracking-widest text-pink-400 mb-2">Media Sosial</div>
-                    <h3 class="text-base font-bold mb-1">Instagram Resmi</h3>
-                    <a href="https://instagram.com/monetra.id" target="_blank" class="text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
-                        @monetra.id
+                    <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#f472b6;margin-bottom:0.5rem;font-family:'DM Sans',sans-serif;">Media Sosial</div>
+                    <h3 style="font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;margin-bottom:0.75rem;">Instagram Resmi</h3>
+                    <a href="https://instagram.com/monetra.id" target="_blank" style="font-size:0.85rem;color:#22d3ee;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color='#22d3ee'">@monetra.id</a>
+                    <p style="font-size:0.75rem;margin-top:0.875rem;opacity:0.4;line-height:1.6;font-family:'DM Sans',sans-serif;">Tips finansial, update fitur & konten edukasi</p>
+                    <a href="https://instagram.com/monetra.id" target="_blank" class="card-arrow" style="color:#db2777;">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> Kunjungi profil
                     </a>
-                    <p class="text-xs mt-3 opacity-50">Tips finansial, update fitur & konten edukasi</p>
                 </div>
-
-                <!-- Kolaborasi -->
-                <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-600 to-cyan-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
-                        <i data-lucide="handshake" class="w-7 h-7 text-white"></i>
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="180">
+                    <div class="card-glow" style="background:radial-gradient(ellipse at 30% 20%, rgba(16,185,129,0.07) 0%, transparent 70%);"></div>
+                    <div class="card-accent-line" style="background:linear-gradient(90deg,#10b981,#0891b2,transparent);"></div>
+                    <div class="card-icon-wrap" style="background:linear-gradient(135deg,#059669,#0891b2);box-shadow:0 8px 24px rgba(8,145,178,0.4);">
+                        <i data-lucide="handshake" class="w-6 h-6 text-white"></i>
                     </div>
-                    <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Kerja Sama & Kolaborasi</div>
-                    <h3 class="text-base font-bold mb-1">Partnership</h3>
-                    <a href="mailto:partnership@monetra.id" class="text-sm text-cyan-400 hover:text-cyan-300 transition font-medium break-all">
-                        partnership@monetra.id
+                    <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#34d399;margin-bottom:0.5rem;font-family:'DM Sans',sans-serif;">Kolaborasi</div>
+                    <h3 style="font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;margin-bottom:0.75rem;">Partnership</h3>
+                    <a href="mailto:partnership@monetra.id" style="font-size:0.85rem;color:#22d3ee;font-weight:600;word-break:break-all;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color='#22d3ee'">partnership@monetra.id</a>
+                    <p style="font-size:0.75rem;margin-top:0.875rem;opacity:0.4;line-height:1.6;font-family:'DM Sans',sans-serif;">Program edukasi, event & kerja sama institusi</p>
+                    <a href="mailto:partnership@monetra.id" class="card-arrow" style="color:#10b981;">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i> Ajukan kerja sama
                     </a>
-                    <p class="text-xs mt-3 opacity-50">Program edukasi, event, & kerja sama institusi</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Contact Section: Form + Why -->
-    <section class="py-24 bg-slate-50 dark:bg-[#0f172a]">
-        <div class="max-w-7xl mx-auto px-6">
+    <!-- ═══ FORM + WHY ═══ -->
+    <section class="main-section">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid lg:grid-cols-2 gap-16 items-start">
 
-                <!-- Left: Form -->
-                <div data-aos="fade-right">
+                <div data-aos="fade-right" data-aos-duration="800">
                     <div class="mb-10">
-                        <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase">
-                            Kirim Pesan
+                        <span class="section-tag" style="border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.07);color:#a78bfa;">
+                            <i data-lucide="send" class="w-3.5 h-3.5"></i> Kirim Pesan
                         </span>
-                        <h2 class="text-3xl md:text-4xl font-black mt-5 mb-4">Ada yang ingin<br/><span class="gradient-text">kamu sampaikan?</span></h2>
-                        <p class="opacity-60 text-sm leading-relaxed">Isi form di bawah dan tim kami akan segera menghubungimu kembali.</p>
+                        <h2 style="font-family:'DM Sans',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:900;margin-top:1.25rem;margin-bottom:0.875rem;line-height:1.12;letter-spacing:-0.025em;">
+                            Ada yang ingin<br/><span class="gradient-text">kamu sampaikan?</span>
+                        </h2>
+                        <p style="opacity:0.5;font-size:0.88rem;line-height:1.75;font-family:'DM Sans',sans-serif;">Isi form di bawah dan tim kami akan segera menghubungimu kembali dalam 1–2 hari kerja.</p>
                     </div>
 
                     <div class="contact-form-wrapper p-8 md:p-10">
                         <form id="contactForm" novalidate>
-                            <!-- Grid: Nama + Email -->
                             <div class="grid sm:grid-cols-2 gap-5 mb-5">
                                 <div>
                                     <label class="form-label">Nama Lengkap</label>
@@ -918,100 +813,82 @@
                                     <input type="email" id="emailInput" class="form-input" placeholder="email@kamu.com" required>
                                 </div>
                             </div>
-
-                            <!-- Subjek -->
                             <div class="mb-5">
                                 <label class="form-label">Subjek</label>
                                 <input type="text" id="subjekInput" class="form-input" placeholder="Topik pesan kamu..." required>
                             </div>
-
-                            <!-- Pesan -->
                             <div class="mb-7">
                                 <label class="form-label">Pesan</label>
                                 <textarea id="pesanInput" class="form-input" placeholder="Ceritakan lebih detail..." required></textarea>
                             </div>
-
-                            <!-- Submit -->
-                            <button type="submit" class="btn-submit" id="submitBtn" style="color:#ffffff !important">
-                                <i data-lucide="send" class="w-5 h-5" style="color:#ffffff !important"></i>
-                                <span id="btnText" style="color:#ffffff !important">Kirim Pesan</span>
+                            <button type="submit" class="btn-submit ripple-btn" id="submitBtn">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                <span id="btnText">Kirim Pesan</span>
                             </button>
-
-                            <!-- Note -->
-                            <p class="text-center text-xs mt-4 opacity-40">
-                                Tim kami akan membalas pesanmu dalam <span class="font-semibold">1–2 hari kerja</span>.
+                            <p style="text-align:center;font-size:0.72rem;margin-top:1rem;opacity:0.3;font-family:'DM Sans',sans-serif;">
+                                Dibalas dalam <strong>1–2 hari kerja</strong> — data kamu aman bersama kami.
                             </p>
                         </form>
                     </div>
                 </div>
 
-                <!-- Right: Why + Support -->
-                <div class="flex flex-col gap-8" data-aos="fade-left">
-
-                    <!-- Why Contact Us -->
+                <div class="flex flex-col gap-8" data-aos="fade-left" data-aos-duration="800">
                     <div>
-                        <span class="px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs font-bold tracking-widest uppercase">
-                            Mengapa Menghubungi Kami?
+                        <span class="section-tag" style="border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:#22d3ee;">
+                            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Mengapa Menghubungi Kami?
                         </span>
-                        <h2 class="text-3xl md:text-4xl font-black mt-5 mb-6">Kenapa Menghubungi<br/><span class="gradient-text">Monetra?</span></h2>
-
-                        <div class="flex flex-col gap-4">
-                            <div class="why-card">
-                                <div class="w-10 h-10 bg-violet-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <h2 style="font-family:'DM Sans',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:900;margin-top:1.25rem;margin-bottom:1.5rem;line-height:1.12;letter-spacing:-0.025em;">
+                            Kenapa Menghubungi<br/><span class="gradient-text">Monetra?</span>
+                        </h2>
+                        <div class="flex flex-col gap-2.5">
+                            <div class="why-card" data-aos="fade-left" data-aos-delay="60">
+                                <div class="why-icon-wrap" style="background:rgba(139,92,246,0.1);">
                                     <i data-lucide="lightbulb" class="w-5 h-5 text-violet-400"></i>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-sm mb-0.5">Masukan Fitur</div>
-                                    <div class="text-xs opacity-50">Ingin memberi masukan atau ide fitur baru untuk platform</div>
+                                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;font-family:'DM Sans',sans-serif;">Masukan Fitur</div>
+                                    <div style="font-size:0.77rem;opacity:0.45;line-height:1.55;font-family:'DM Sans',sans-serif;">Ingin memberi masukan atau ide fitur baru untuk platform</div>
                                 </div>
                             </div>
-
-                            <div class="why-card">
-                                <div class="w-10 h-10 bg-cyan-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="why-card" data-aos="fade-left" data-aos-delay="120">
+                                <div class="why-icon-wrap" style="background:rgba(34,211,238,0.09);">
                                     <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400"></i>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-sm mb-0.5">Tanya Penggunaan Platform</div>
-                                    <div class="text-xs opacity-50">Bertanya tentang cara menggunakan fitur-fitur Monetra</div>
+                                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;font-family:'DM Sans',sans-serif;">Tanya Penggunaan Platform</div>
+                                    <div style="font-size:0.77rem;opacity:0.45;line-height:1.55;font-family:'DM Sans',sans-serif;">Bertanya tentang cara menggunakan fitur-fitur Monetra</div>
                                 </div>
                             </div>
-
-                            <div class="why-card">
-                                <div class="w-10 h-10 bg-emerald-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="why-card" data-aos="fade-left" data-aos-delay="180">
+                                <div class="why-icon-wrap" style="background:rgba(16,185,129,0.09);">
                                     <i data-lucide="users" class="w-5 h-5 text-emerald-400"></i>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-sm mb-0.5">Kerja Sama Edukasi</div>
-                                    <div class="text-xs opacity-50">Mengajukan kerja sama program literasi finansial</div>
+                                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;font-family:'DM Sans',sans-serif;">Kerja Sama Edukasi</div>
+                                    <div style="font-size:0.77rem;opacity:0.45;line-height:1.55;font-family:'DM Sans',sans-serif;">Mengajukan kerja sama program literasi finansial</div>
                                 </div>
                             </div>
-
-                            <div class="why-card">
-                                <div class="w-10 h-10 bg-orange-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="why-card" data-aos="fade-left" data-aos-delay="240">
+                                <div class="why-icon-wrap" style="background:rgba(249,115,22,0.09);">
                                     <i data-lucide="alert-triangle" class="w-5 h-5 text-orange-400"></i>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-sm mb-0.5">Kendala Teknis</div>
-                                    <div class="text-xs opacity-50">Melaporkan bug atau masalah yang kamu temukan</div>
+                                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;font-family:'DM Sans',sans-serif;">Kendala Teknis</div>
+                                    <div style="font-size:0.77rem;opacity:0.45;line-height:1.55;font-family:'DM Sans',sans-serif;">Melaporkan bug atau masalah yang kamu temukan</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Support & Edukasi -->
-                    <div class="feature-card p-8 rounded-3xl relative overflow-hidden">
-                        <!-- Subtle gradient accent -->
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-violet-600/20 to-cyan-600/10 rounded-bl-full pointer-events-none"></div>
-
-                        <div class="w-14 h-14 bg-gradient-to-br from-violet-600 to-cyan-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg relative z-10">
-                            <i data-lucide="book-open" class="w-7 h-7 text-white"></i>
+                    <div class="support-box" data-aos="fade-up" data-aos-delay="100">
+                        <div style="position:absolute;top:0;right:0;width:180px;height:180px;background:radial-gradient(ellipse at top right,rgba(139,92,246,0.12) 0%,transparent 70%);border-radius:0 1.75rem 0 0;pointer-events:none;"></div>
+                        <div style="width:50px;height:50px;background:linear-gradient(135deg,#6d28d9,#0891b2);border-radius:15px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;box-shadow:0 8px 24px rgba(109,40,217,0.35);position:relative;z-index:1;">
+                            <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
                         </div>
-                        <div class="relative z-10">
-                            <div class="text-xs font-bold uppercase tracking-widest text-violet-400 mb-2">Dukungan & Edukasi</div>
-                            <h3 class="text-xl font-bold mb-3">Lebih dari Sekadar Platform</h3>
-                            <p class="opacity-60 text-sm leading-relaxed">
-                                Monetra tidak hanya menyediakan platform, tetapi juga membuka ruang diskusi dan pengembangan literasi finansial untuk generasi muda Indonesia. Bersama kita tumbuh lebih bijak dalam mengelola keuangan.
-                            </p>
+                        <div style="position:relative;z-index:1;">
+                            <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#a78bfa;margin-bottom:0.5rem;font-family:'DM Sans',sans-serif;">Dukungan & Edukasi</div>
+                            <h3 style="font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:0.875rem;letter-spacing:-0.015em;">Lebih dari Sekadar Platform</h3>
+                            <p style="opacity:0.5;font-size:0.84rem;line-height:1.8;font-family:'DM Sans',sans-serif;">Monetra tidak hanya menyediakan platform, tetapi juga membuka ruang diskusi dan pengembangan literasi finansial untuk generasi muda Indonesia. Bersama kita tumbuh lebih bijak dalam mengelola keuangan.</p>
                         </div>
                     </div>
                 </div>
@@ -1020,45 +897,67 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section py-32 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-violet-700 via-indigo-800 to-cyan-900"></div>
-        
-        <!-- Decorative elements -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div class="absolute top-10 left-10 w-64 h-64 rounded-full border border-white/30"></div>
-            <div class="absolute bottom-10 right-10 w-96 h-96 rounded-full border border-white/20"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-white/40"></div>
-        </div>
+    <!-- ═══ CTA ═══ -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-dots"></div>
+        <div class="cta-shape" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;"></div>
+        <div class="cta-shape" style="width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.1;animation:floatOrb 8s ease-in-out infinite;"></div>
+        <div class="cta-shape" style="width:140px;height:140px;top:12%;right:14%;opacity:0.08;animation:floatOrb 6s ease-in-out infinite alternate;"></div>
+        <div class="cta-shape" style="width:90px;height:90px;bottom:14%;left:10%;opacity:0.08;animation:floatOrb 7s ease-in-out infinite alternate-reverse;"></div>
+        <div id="ctaParticles"></div>
 
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div data-aos="zoom-in">
-                <!-- Icon -->
-                <div class="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20">
-                    <i data-lucide="message-circle-heart" class="w-10 h-10 text-white"></i>
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="cta-card" data-aos="zoom-in" data-aos-duration="900">
+                <div style="display:flex;justify-content:center;margin-bottom:2.5rem;">
+                    <span class="cta-eyebrow">
+                        <i data-lucide="message-circle-heart" class="w-4 h-4"></i>
+                        Yuk, Sapa Kami
+                    </span>
                 </div>
-
-                <h2 class="text-4xl md:text-5xl font-black mb-6 tracking-tight leading-tight">
-                    Setiap Pesan adalah<br/>Langkah untuk Berkembang
+                <div class="cta-icon-wrap">
+                    <i data-lucide="send" class="w-9 h-9 text-white"></i>
+                </div>
+                <h2 class="cta-title">
+                    Setiap Pesan adalah<br/>
+                    Langkah untuk <span class="accent-word">Berkembang</span>
                 </h2>
-                <p class="text-lg mb-10 leading-relaxed max-w-xl mx-auto opacity-90">
-                    Kami siap mendengar dan bertumbuh bersama kamu. Jangan ragu untuk menyapa — suaramu penting bagi kami.
+                <p class="cta-subtitle">
+                    Kami siap mendengar dan bertumbuh bersama kamu. Jangan ragu untuk menyapa — suaramu penting bagi perkembangan Monetra.
                 </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                    <a href="#contactForm" onclick="document.getElementById('namaInput').focus()" class="bg-white/15 border-2 border-white px-10 py-4 rounded-full font-black text-base text-white hover:bg-white/25 hover:scale-105 transition flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4" style="color:#fff"></i>
-                        Kirim Pesan Sekarang
+                <div class="cta-buttons">
+                    <a href="#contactForm"
+                       onclick="setTimeout(()=>document.getElementById('namaInput').focus(),300)"
+                       class="btn-cta-primary ripple-btn">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>Kirim Pesan Sekarang</span>
                     </a>
-                    <a href="personality-test.html" class="px-10 py-4 rounded-full border-2 border-white/30 font-bold text-base text-white hover:bg-white/10 transition flex items-center gap-2">
-                        <i data-lucide="sparkles" class="w-4 h-4" style="color:#fff"></i>
-                        Coba Fitur Kami
+                    <a href="personality-test.html" class="btn-cta-secondary">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>Coba Fitur Kami</span>
                     </a>
+                </div>
+                <div class="cta-proof">
+                    <div class="proof-item">
+                        <i data-lucide="clock" class="w-3.5 h-3.5" style="opacity:0.3;"></i>
+                        Respons 1–2 hari kerja
+                    </div>
+                    <div class="proof-dot"></div>
+                    <div class="proof-item">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5" style="opacity:0.3;"></i>
+                        Data kamu aman
+                    </div>
+                    <div class="proof-dot"></div>
+                    <div class="proof-item">
+                        <i data-lucide="heart" class="w-3.5 h-3.5" style="opacity:0.3;"></i>
+                        Dibalas dengan tulus
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (UNCHANGED) -->
     <footer class="bg-[#020617] pt-24 pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
@@ -1071,7 +970,6 @@
                     </div>
                     <p class="opacity-50 text-sm">Platform edukasi finansial untuk generasi muda Indonesia.</p>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Produk</h4>
                     <ul class="space-y-4 text-sm opacity-60">
@@ -1080,32 +978,22 @@
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Perusahaan</h4>
                     <ul class="space-y-4 text-sm opacity-60">
                         <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
                         <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
-                        <li><a href="insight-dashboard.html" class="hover:text-violet-400 transition">Dashboard</a></li>
                     </ul>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Ikuti Kami</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="twitter" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        </a>
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
-            
             <div class="border-t border-white/5 pt-8 text-center opacity-40 text-sm">
                 <p>&copy; 2026 Monetra. All rights reserved.</p>
             </div>
@@ -1114,195 +1002,185 @@
 
     <script>
         lucide.createIcons();
-        
-        // Loading
+
         window.addEventListener('load', function() {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
-        
-        // AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 50
-        });
-        
-        // Theme Toggle
+
+        AOS.init({ duration: 900, once: true, offset: 50, easing: 'ease-out-cubic' });
+
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
         const html = document.documentElement;
-        
+
         function toggleTheme() {
             html.classList.toggle('dark');
             html.classList.toggle('light');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             lucide.createIcons();
+            updateWave();
         }
-        
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleMobile.addEventListener('click', toggleTheme);
-        
         if (localStorage.getItem('theme') === 'light') {
-            html.classList.remove('dark');
-            html.classList.add('light');
+            html.classList.remove('dark'); html.classList.add('light');
         }
-        
-        // Floating Navbar on Scroll
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                navbar.classList.add('floating');
+
+        function updateWave() {
+            const dw = document.querySelector('.dark-wave');
+            const lw = document.querySelector('.light-wave');
+            if (html.classList.contains('light')) {
+                dw.style.display = 'none'; lw.style.display = '';
             } else {
-                navbar.classList.remove('floating');
+                dw.style.display = ''; lw.style.display = 'none';
             }
+        }
+        updateWave();
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('floating', window.scrollY > 100);
         });
-        
-        // Mobile Menu
+
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        
-        function openMobileMenu() {
-            mobileMenu.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMobileMenuFunc() {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
+
+        function openMobileMenu() { mobileMenu.classList.add('active'); mobileMenuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenuFunc() { mobileMenu.classList.remove('active'); mobileMenuOverlay.classList.remove('active'); document.body.style.overflow = ''; }
         mobileMenuBtn.addEventListener('click', openMobileMenu);
         closeMobileMenuBtn.addEventListener('click', closeMobileMenuFunc);
         mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', closeMobileMenuFunc);
+        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', closeMobileMenuFunc));
+
+        document.querySelectorAll('.ripple-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height);
+                ripple.className = 'ripple';
+                ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`;
+                btn.appendChild(ripple);
+                ripple.addEventListener('animationend', () => ripple.remove());
+            });
         });
 
-        // Network Canvas (same as index)
+        (function() {
+            const container = document.getElementById('ctaParticles');
+            if (!container) return;
+            for (let i = 0; i < 12; i++) {
+                const p = document.createElement('div');
+                const size = Math.random() * 5 + 2;
+                const dur = Math.random() * 12 + 10;
+                const delay = Math.random() * 12;
+                p.className = 'cta-particle';
+                p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${dur}s;animation-delay:-${delay}s;background:${Math.random()>0.5?'rgba(139,92,246,0.45)':'rgba(34,211,238,0.45)'};`;
+                container.appendChild(p);
+            }
+        })();
+
         const canvas = document.getElementById('network-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
-        
+
         function resize() {
-            const section = canvas.parentElement;
-            width = canvas.width = section.offsetWidth;
-            height = canvas.height = section.offsetHeight;
+            const s = canvas.parentElement;
+            width = canvas.width = s.offsetWidth;
+            height = canvas.height = s.offsetHeight;
         }
-        
+
         class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2 + 1;
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random()*width; this.y = Math.random()*height;
+                this.vx = (Math.random()-.5)*.3; this.vy = (Math.random()-.5)*.3;
+                this.size = Math.random()*2+.5;
             }
-            
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+                this.x += this.vx; this.y += this.vy;
+                if(this.x<0||this.x>width) this.vx*=-1;
+                if(this.y<0||this.y>height) this.vy*=-1;
             }
-            
             draw() {
-                ctx.fillStyle = html.classList.contains('dark') ? '#8b5cf6' : '#7c3aed';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = html.classList.contains('dark')?'#8b5cf6':'#7c3aed';
+                ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();
             }
         }
-        
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 50; i++) particles.push(new Particle());
-        }
-        
+
+        function initParticles() { particles=[]; for(let i=0;i<55;i++) particles.push(new Particle()); }
         function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 160) {
-                        ctx.beginPath();
-                        const opacity = (1 - distance / 160) * 0.15;
-                        ctx.strokeStyle = html.classList.contains('dark') 
-                            ? `rgba(139, 92, 246, ${opacity})`
-                            : `rgba(124, 58, 237, ${opacity})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
+            ctx.clearRect(0,0,width,height);
+            for(let i=0;i<particles.length;i++) {
+                particles[i].update(); particles[i].draw();
+                for(let j=i+1;j<particles.length;j++) {
+                    const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+                    const d=Math.sqrt(dx*dx+dy*dy);
+                    if(d<150) {
+                        ctx.strokeStyle=`rgba(139,92,246,${(1-d/150)*.12})`;
+                        ctx.lineWidth=1;
+                        ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
                     }
                 }
             }
             requestAnimationFrame(animate);
         }
-        
-        window.addEventListener('resize', () => { resize(); initParticles(); });
-        resize();
-        initParticles();
-        animate();
+        window.addEventListener('resize',()=>{ resize(); initParticles(); });
+        resize(); initParticles(); animate();
 
-        // Contact Form Submit
         const form = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
-            const nama = document.getElementById('namaInput').value.trim();
-            const email = document.getElementById('emailInput').value.trim();
-            const subjek = document.getElementById('subjekInput').value.trim();
-            const pesan = document.getElementById('pesanInput').value.trim();
-
-            if (!nama || !email || !subjek || !pesan) {
-                // Shake animation on empty fields
-                [namaInput, emailInput, subjekInput, pesanInput].forEach(input => {
-                    if (!input.value.trim()) {
-                        input.style.borderColor = '#ef4444';
-                        input.style.boxShadow = '0 0 0 4px rgba(239,68,68,0.15)';
-                        setTimeout(() => {
-                            input.style.borderColor = '';
-                            input.style.boxShadow = '';
-                        }, 2000);
-                    }
-                });
+            const fields = [
+                document.getElementById('namaInput'),
+                document.getElementById('emailInput'),
+                document.getElementById('subjekInput'),
+                document.getElementById('pesanInput')
+            ];
+            let valid = true;
+            fields.forEach(f => {
+                if (!f.value.trim()) {
+                    valid = false;
+                    f.style.borderColor = 'rgba(239,68,68,0.7)';
+                    f.style.boxShadow = '0 0 0 4px rgba(239,68,68,0.12)';
+                    f.style.background = 'rgba(239,68,68,0.03)';
+                    f.addEventListener('input', function fix() {
+                        f.style.borderColor=''; f.style.boxShadow=''; f.style.background='';
+                        f.removeEventListener('input',fix);
+                    });
+                }
+            });
+            if (!valid) {
+                submitBtn.style.animation = 'shake 0.4s ease';
+                submitBtn.addEventListener('animationend', () => submitBtn.style.animation='', {once:true});
                 return;
             }
 
-            // Loading state
             submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
-            btnText.textContent = 'Mengirim...';
+            submitBtn.style.opacity = '0.8';
+            let dots = 0;
+            const di = setInterval(() => {
+                dots = (dots+1)%4;
+                btnText.textContent = 'Mengirim'+'.'.repeat(dots);
+            }, 400);
 
-            // Simulate send (2s)
             setTimeout(() => {
+                clearInterval(di);
                 submitBtn.classList.add('sent');
                 submitBtn.style.opacity = '1';
-                btnText.textContent = 'Pesan Terkirim! ✓';
-
-                // Reset form
+                btnText.textContent = 'Pesan Terkirim ✓';
                 form.reset();
-
                 setTimeout(() => {
                     submitBtn.classList.remove('sent');
                     submitBtn.disabled = false;
                     btnText.textContent = 'Kirim Pesan';
                     lucide.createIcons();
                 }, 3500);
-            }, 2000);
+            }, 1800);
         });
     </script>
 </body>
-</html>
+</html> 

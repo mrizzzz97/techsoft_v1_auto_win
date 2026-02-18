@@ -27,11 +27,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Inter', sans-serif;
@@ -39,123 +35,63 @@
             transition: background-color 0.3s ease;
         }
         
-        html.dark body {
-            background-color: #020617;
-            color: #f8fafc;
-        }
-        
-        html.light body {
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
+        html.dark body { background-color: #020617; color: #f8fafc; }
+        html.light body { background-color: #f8fafc; color: #0f172a; }
 
-        /* Noise texture */
         body::before {
             content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.03;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen */
+        /* ─── LOADER (unchanged) ─── */
         .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #020617;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: #020617; z-index: 10000;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        
-        .loader-wrapper.slide-up {
-            transform: translateY(-100%);
-        }
-
+        .loader-wrapper.slide-up { transform: translateY(-100%); }
         .loader-logo-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 20px;
+            width: 100px; height: 100px;
+            object-fit: contain; border-radius: 20px;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
             opacity: 0;
             animation: logoReveal 1s ease forwards 0.5s;
         }
-
-        @keyframes logoReveal {
-            to { opacity: 1; transform: scale(1); }
-        }
-
+        @keyframes logoReveal { to { opacity: 1; transform: scale(1); } }
         .loader-text {
-            margin-top: 24px;
-            font-size: 2rem;
-            font-weight: 800;
+            margin-top: 24px; font-size: 2rem; font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0; animation: fadeIn 0.8s ease forwards 1.2s;
         }
-
         .loader-subtext {
-            margin-top: 8px;
-            font-size: 0.875rem;
-            color: #64748b;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.8s;
+            margin-top: 8px; font-size: 0.875rem; color: #64748b;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            opacity: 0; animation: fadeIn 1s ease forwards 1.8s;
         }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* Floating Rounded Header */
-        .navbar {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-        }
-        
-        .navbar .navbar-container {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
-        }
-        
-        .navbar.floating {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-        
+        /* ─── NAVBAR (unchanged) ─── */
+        .navbar { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding-top: 1.25rem; padding-bottom: 1.25rem; }
+        .navbar .navbar-container { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 0; }
+        .navbar.floating { padding-top: 0.5rem; padding-bottom: 0.5rem; }
         .navbar.floating .navbar-container {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            padding: 0.75rem 2rem;
-            max-width: 1200px;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 0.75rem 2rem; max-width: 1200px;
         }
-        
         html.light .navbar.floating .navbar-container {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
 
-        /* Hero Background */
+        /* ─── HERO ─── */
         .hero-bg {
             position: relative;
             background: radial-gradient(circle at 15% 50%, #1e1b4b 0%, transparent 50%),
@@ -163,300 +99,265 @@
                         linear-gradient(180deg, #020617 0%, #0f172a 100%);
             overflow: hidden;
         }
-        
-        html.light .hero-bg {
-            background: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #f8fafc 100%);
-        }
+        html.light .hero-bg { background: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #f8fafc 100%); }
 
-        #network-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.3;
-            pointer-events: none;
-        }
+        #network-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.3; pointer-events: none; }
 
         .gradient-text {
             background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: gradientMove 5s linear infinite;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: gradientMove 5s linear infinite;
         }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        html.light .gradient-text { background: linear-gradient(135deg, #7c3aed 0%, #0369a1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        html.light .gradient-text {
-            background: linear-gradient(135deg, #7c3aed 0%, #0369a1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Cards */
-        .feature-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
-        
-        html.light .feature-card {
+        .cta-white-btn {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: #8b5cf6;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
-        }
-        
-        html.light .feature-card:hover {
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
+            font-weight: 900;
             transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn-primary *,
-        .btn-primary i,
-        .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        html.light .btn-primary,
-        html.light .btn-primary *,
-        html.light .btn-primary i,
-        html.light .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        /* CRITICAL LIGHT MODE FIXES */
-        html.light h1,
-        html.light h2,
-        html.light h3,
-        html.light h4,
-        html.light h5 {
-            color: #0f172a !important;
-        }
-        
-        html.light p,
-        html.light span,
-        html.light li,
-        html.light a {
-            color: #334155 !important;
-        }
-        
-        html.light .text-gray-300,
-        html.light .text-gray-400,
-        html.light .text-gray-500 {
-            color: #64748b !important;
-        }
-
-        html.light .navbar a {
-            color: #1e293b !important;
-        }
-
-        html.light .opacity-60 {
-            color: #475569 !important;
-        }
-
-        html.light .opacity-70 {
-            color: #475569 !important;
-        }
-
-        html.light .opacity-80 {
-            color: #334155 !important;
-        }
-
-        /* CTA Section - Always White Text */
-        .cta-section h2,
-        .cta-section p,
-        .cta-section a,
-        .cta-section span,
-        .cta-section div {
-            color: #ffffff !important;
-        }
-
-        .cta-section .btn-white {
             color: #7c3aed !important;
         }
+        .cta-white-btn:hover {
+            background: #f3f0ff;
+            color: #6d28d9 !important;
+        }
+        html.dark .cta-white-btn,
+        html.dark .cta-white-btn:hover { color: #7c3aed !important; }
 
-        html.light .cta-section h2,
-        html.light .cta-section p,
-        html.light .cta-section a:not(.btn-white),
-        html.light .cta-section span,
-        html.light .cta-section div {
+        /* ─── BUTTONS ─── */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(139, 92, 246, 0.45); color: #ffffff !important; }
+        .btn-primary, .btn-primary:hover, .btn-primary *, .btn-primary:hover *, .btn-primary i, .btn-primary span { color: #ffffff !important; position: relative; z-index: 1; }
+        .btn-primary > * { position: relative; z-index: 1; }
+        html.light .btn-primary,
+        html.light .btn-primary:hover,
+        html.light .btn-primary *,
+        html.light .btn-primary:hover *,
+        html.light .btn-primary span,
+        html.light .btn-primary i { color: #ffffff !important; }
+
+        /* Navbar CTA - always white text, no pseudo-element issue */
+        .navbar-cta {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .navbar-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.45);
+            background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
             color: #ffffff !important;
         }
+        html.light .navbar-cta,
+        html.light .navbar-cta:hover { color: #ffffff !important; }
 
-        /* Footer - Always White Text */
-        footer,
-        footer h4,
-        footer p,
-        footer a,
-        footer span,
-        footer li,
-        footer div {
+        .btn-ghost {
+            background: transparent;
+            border: 1.5px solid rgba(255,255,255,0.25);
             color: #ffffff !important;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
+        .btn-ghost:hover { border-color: rgba(139,92,246,0.7); background: rgba(139,92,246,0.12); transform: translateY(-2px); }
+        html.light .btn-ghost { border-color: rgba(15,23,42,0.25); color: #1e293b !important; }
+        html.light .btn-ghost:hover { border-color: #7c3aed; background: rgba(124,58,237,0.08); }
 
-        html.light footer,
-        html.light footer h4,
-        html.light footer p,
-        html.light footer a,
-        html.light footer span,
-        html.light footer li,
-        html.light footer div {
-            color: #ffffff !important;
+        /* ─── FEATURE CARDS ─── */
+        .feature-card {
+            position: relative; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden;
         }
-        
-        html.light footer .opacity-50,
-        html.light footer .opacity-60,
-        html.light footer .opacity-40 {
-            color: rgba(255, 255, 255, 0.6) !important;
+        html.light .feature-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .feature-card::before {
+            content: ''; position: absolute; inset: 0; opacity: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(139,92,246,0.15), transparent 70%);
+            transition: opacity 0.4s;
         }
+        .feature-card:hover { transform: translateY(-10px); border-color: rgba(139,92,246,0.5); box-shadow: 0 24px 48px rgba(139,92,246,0.2); }
+        .feature-card:hover::before { opacity: 1; }
+        html.light .feature-card:hover { box-shadow: 0 24px 48px rgba(139,92,246,0.15); }
 
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
+        /* ─── PROBLEM SECTION ─── */
+        .problem-item {
+            display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem;
+            border-radius: 1rem; border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(15,23,42,0.4); backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
         }
+        html.light .problem-item { background: #fff; border: 1px solid #e2e8f0; }
+        .problem-item:hover { border-color: rgba(239,68,68,0.4); transform: translateX(6px); background: rgba(239,68,68,0.05); }
+        html.light .problem-item:hover { background: rgba(239,68,68,0.04); }
 
+        /* ─── WHY SECTION ─── */
+        .why-card {
+            padding: 1.5rem 2rem; border-radius: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        html.light .why-card { background: #fff; border: 1px solid #e2e8f0; }
+        .why-card:hover { border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.06); }
+
+        /* ─── IMPACT SECTION ─── */
+        .impact-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1.25rem 1.5rem; border-radius: 1rem;
+            border: 1px solid rgba(255,255,255,0.06); background: rgba(15,23,42,0.4);
+            transition: all 0.3s ease;
+        }
+        html.light .impact-item { background: #fff; border-color: #e2e8f0; }
+        .impact-item:hover { border-color: rgba(16,185,129,0.4); transform: translateX(6px); }
+
+        /* ─── CTA ─── */
+        .cta-section { position: relative; overflow: hidden; }
+        .cta-section h2, .cta-section p, .cta-section a, .cta-section span, .cta-section div { color: #ffffff !important; }
+        .cta-section .btn-white { color: #7c3aed !important; }
+        html.light .cta-section h2, html.light .cta-section p, html.light .cta-section a:not(.btn-white), html.light .cta-section span, html.light .cta-section div { color: #ffffff !important; }
+
+        /* ─── FOOTER (unchanged) ─── */
+        footer * { color: #ffffff !important; }
+        html.light footer * { color: #ffffff !important; }
+
+        /* ─── LIGHT MODE ─── */
+        html.light h1, html.light h2, html.light h3, html.light h5 { color: #0f172a !important; }
+        html.light h4:not(footer h4) { color: #0f172a !important; }
+        html.light footer h4, html.light footer h1, html.light footer h2, html.light footer h3, html.light footer h5 { color: #ffffff !important; }
+        html.light p:not(footer p), html.light span:not(footer span), html.light li:not(footer li) { color: #334155 !important; }
+        html.light a:not(.btn-primary):not(.btn-ghost):not(footer a) { color: #334155 !important; }
+        html.light .btn-primary, html.light .btn-primary *, html.light .btn-primary span, html.light .btn-primary i { color: #ffffff !important; }
+        html.light .text-gray-300, html.light .text-gray-400, html.light .text-gray-500 { color: #64748b !important; }
+        html.light .navbar a { color: #1e293b !important; }
+        html.light .opacity-60 { color: #475569 !important; }
+        html.light .opacity-70 { color: #475569 !important; }
+        html.light .opacity-80 { color: #334155 !important; }
+
+        /* ─── DROPDOWN ─── */
+        .dropdown { position: relative; }
         .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 100;
+            position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
+            background: rgba(15,23,42,0.95); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem;
+            padding: 0.5rem; min-width: 200px;
+            opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: all 0.3s ease; z-index: 100;
         }
+        html.light .dropdown-menu { background: rgba(255,255,255,0.95); border: 1px solid rgba(0,0,0,0.1); }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; transition: all 0.2s ease; color: #f8fafc; }
+        html.light .dropdown-item { color: #0f172a; }
+        .dropdown-item:hover { background: rgba(139,92,246,0.2); }
 
-        html.light .dropdown-menu {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
+        /* ─── MOBILE MENU ─── */
+        .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; background: #0f172a; z-index: 9999; }
+        html.light .mobile-menu { background: #ffffff; border-left: 1px solid #e2e8f0; }
+        .mobile-menu.active { transform: translateX(0); }
+        #closeMobileMenu { position: relative; z-index: 10000; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
 
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
 
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-            color: #f8fafc;
+        /* ─── CUSTOM ANIMATIONS ─── */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
         }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        @keyframes slide-in-right {
+            from { transform: translateX(40px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes count-up { from { opacity: 0; } to { opacity: 1; } }
 
-        html.light .dropdown-item {
-            color: #0f172a;
-        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 6s ease-in-out infinite 2s; }
 
-        .dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            background: #0f172a;
-            z-index: 9999;
-        }
-        
-        html.light .mobile-menu {
-            background: #ffffff;
-            border-left: 1px solid #e2e8f0;
-        }
-        
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        #closeMobileMenu {
+        .icon-ring {
             position: relative;
-            z-index: 10000;
-            cursor: pointer;
+        }
+        .icon-ring::before, .icon-ring::after {
+            content: ''; position: absolute; inset: -4px;
+            border-radius: inherit; border: 2px solid rgba(139,92,246,0.3);
+            animation: pulse-ring 2.5s ease-out infinite;
+        }
+        .icon-ring::after { animation-delay: 1.25s; }
+
+        /* Marquee strip */
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-track { display: flex; animation: marquee 30s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        /* Section divider */
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.35rem 1rem; border-radius: 9999px;
+            border: 1px solid rgba(139,92,246,0.3); background: rgba(139,92,246,0.08);
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+            color: #a78bfa;
+        }
+        html.light .section-tag { color: #7c3aed; background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.3); }
+
+        /* Highlight underline */
+        .underline-accent {
+            position: relative; display: inline-block;
+        }
+        .underline-accent::after {
+            content: ''; position: absolute; left: 0; bottom: -4px;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, #a78bfa, #22d3ee);
+            border-radius: 2px; transform: scaleX(0); transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .underline-accent.visible::after, .aos-animate .underline-accent::after { transform: scaleX(1); }
+
+        /* Glow blob */
+        .glow-blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); pointer-events: none;
         }
 
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+        /* Number circle */
+        .num-circle {
+            width: 2.5rem; height: 2.5rem; border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #0891b2);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.85rem; color: #fff; flex-shrink: 0;
         }
 
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        
-        html.light ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
+        /* CTA Orb */
+        .cta-orb {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen (unchanged) -->
     <div class="loader-wrapper" id="loader">
         <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
         <div class="loader-text">MONETRA</div>
         <div class="loader-subtext">Platform Edukasi Finansial</div>
     </div>
 
-    <!-- Floating Rounded Header -->
+    <!-- Navbar (unchanged) -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
         <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer group">
@@ -465,228 +366,434 @@
                 </div>
                 <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                
-                <!-- Features Dropdown -->
                 <div class="dropdown">
                     <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features
-                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        Features <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="personality-test.html" class="dropdown-item">
-                            <i data-lucide="user-circle" class="w-4 h-4"></i>
-                            <span>Tes Kepribadian</span>
-                        </a>
-                        <a href="budget-simulator.html" class="dropdown-item">
-                            <i data-lucide="wallet" class="w-4 h-4"></i>
-                            <span>Simulasi Budget</span>
-                        </a>
-                        <a href="goal-tracker.html" class="dropdown-item">
-                            <i data-lucide="target" class="w-4 h-4"></i>
-                            <span>Target Tabungan</span>
-                        </a>
-                        <a href="challenge.html" class="dropdown-item">
-                            <i data-lucide="trophy" class="w-4 h-4"></i>
-                            <span>Saving Challenge</span>
-                        </a>
+                        <a href="personality-test.html" class="dropdown-item"><i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
+                        <a href="budget-simulator.html" class="dropdown-item"><i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span></a>
+                        <a href="goal-tracker.html" class="dropdown-item"><i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span></a>
+                        <a href="challenge.html" class="dropdown-item"><i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span></a>
                     </div>
                 </div>
-
-
                 <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
-                
                 <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                
-                <a href="personality-test.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold">
-                    Mulai Sekarang
-                </a>
+                <a href="personality-test.html" class="navbar-cta px-6 py-2.5 rounded-full text-sm font-semibold">Mulai Sekarang</a>
             </div>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                <button id="mobileMenuBtn" class="p-2">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                <button id="mobileMenuBtn" class="p-2"><i data-lucide="menu" class="w-6 h-6"></i></button>
             </div>
         </div>
     </nav>
-    
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
-    <!-- Mobile Menu -->
     <div class="mobile-menu fixed top-0 right-0 w-72 h-full p-6 md:hidden shadow-2xl">
-        <div class="flex justify-end mb-8">
-            <button id="closeMobileMenu">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
+        <div class="flex justify-end mb-8"><button id="closeMobileMenu"><i data-lucide="x" class="w-6 h-6"></i></button></div>
         <div class="flex flex-col space-y-4">
             <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
             <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
-            
             <div class="border-t border-white/10 pt-4">
                 <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
-                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="user-circle" class="w-4 h-4"></i>
-                    <span>Tes Kepribadian</span>
-                </a>
-                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="wallet" class="w-4 h-4"></i>
-                    <span>Simulasi Budget</span>
-                </a>
-                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="target" class="w-4 h-4"></i>
-                    <span>Target Tabungan</span>
-                </a>
-                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="trophy" class="w-4 h-4"></i>
-                    <span>Saving Challenge</span>
-                </a>
+                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
+                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span></a>
+                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span></a>
+                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span></a>
             </div>
-
-            <a href="insight-dashboard.html" class="text-lg font-medium hover:text-violet-400 transition pt-2">Dashboard</a>
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
-            
-            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4">
-                Mulai Sekarang
-            </a>
+            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4" style="color:#ffffff!important;">Mulai Sekarang</a>
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════════════════════════ -->
     <section id="home" class="hero-bg min-h-screen flex items-center justify-center pt-28 relative">
         <canvas id="network-canvas"></canvas>
+
+        <!-- Glow blobs -->
+        <div class="glow-blob w-96 h-96 bg-violet-700/20 -top-20 -left-20" style="position:absolute;"></div>
+        <div class="glow-blob w-80 h-80 bg-cyan-700/15 top-1/3 right-0" style="position:absolute;"></div>
         
         <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
-            <div class="inline-block mb-8" data-aos="fade-down">
-                <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
-                    Platform Edukasi Finansial
-                </span>
+            <div class="inline-block mb-6" data-aos="fade-down" data-aos-duration="800">
             </div>
             
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight" data-aos="fade-up">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight" data-aos="fade-up" data-aos-delay="100">
                 Kelola Uang dengan<br/>
-                <span class="gradient-text">Lebih Bijak</span>
+                <span class="gradient-text">Lebih Terarah,</span><br/>
+                <span class="text-3xl md:text-4xl lg:text-5xl font-semibold opacity-70 tracking-normal">Bukan Sekadar Hemat.</span>
             </h1>
             
-            <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-                Pahami Kepribadian Finansialmu, Rencanakan Masa Depan,<br/>
-                Dan Capai Impian Dengan Pendekatan Yang Personal
+            <p class="text-base md:text-lg text-gray-300 mb-10 max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                Pahami pola keuanganmu, rancang strategi yang sesuai dengan kepribadianmu, dan wujudkan target finansialmu dengan sistem yang terstruktur dan mudah dipahami.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24" data-aos="fade-up" data-aos-delay="400">
-                <a href="personality-test.html" class="btn-primary px-10 py-4 rounded-full font-bold text-lg flex items-center gap-2 group">
-                    Mulai Sekarang
-                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20" data-aos="fade-up" data-aos-delay="350">
+                <a href="personality-test.html" class="btn-primary px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group">
+                    <span>Mulai Sekarang</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10"></i>
                 </a>
-                <a href="about.html" class="px-10 py-4 rounded-full border border-white/20 font-bold text-lg hover:bg-white/5 transition">
-                    Pelajari Lebih Lanjut
+                <a href="about.html" class="btn-ghost px-9 py-4 rounded-full font-bold text-base flex items-center gap-2">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
+                    Lihat Demo
                 </a>
             </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-3 gap-12 max-w-5xl mx-auto border-t border-white/10 pt-12" data-aos="fade-up" data-aos-delay="600">
-                <div class="text-center group">
-                    <div class="text-sm uppercase tracking-widest text-gray-500 mb-3 group-hover:text-violet-400 transition-colors">Pengguna Aktif</div>
-                    <div class="text-4xl md:text-5xl font-bold gradient-text">2,500+</div>
+
+
+        </div>
+
+        <!-- Scroll indicator -->
+         
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40 mt-100">
+            <span class="text-xs tracking-widest uppercase">Scroll</span>
+            <div class="w-px h-10 bg-gradient-to-b from-violet-400 to-transparent animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         MARQUEE STRIP
+    ═══════════════════════════════════════════════════════════════ -->
+    <div class="py-5 border-y border-white/5 bg-white/[0.02] overflow-hidden">
+        <div class="marquee-track">
+            <div class="flex items-center gap-12 px-6 whitespace-nowrap">
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="brain-circuit" class="w-4 h-4 text-violet-400 opacity-100"></i>Tes Kepribadian Finansial</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="bar-chart-2" class="w-4 h-4 text-cyan-400 opacity-100"></i>Simulasi Budget Interaktif</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="target" class="w-4 h-4 text-emerald-400 opacity-100"></i>Target Tabungan Terstruktur</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="trophy" class="w-4 h-4 text-orange-400 opacity-100"></i>30-Day Saving Challenge</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="shield-check" class="w-4 h-4 text-pink-400 opacity-100"></i>Edukasi Berbasis Perilaku</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="zap" class="w-4 h-4 text-yellow-400 opacity-100"></i>Insight Finansial Real-time</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="flex items-center gap-12 px-6 whitespace-nowrap">
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="brain-circuit" class="w-4 h-4 text-violet-400 opacity-100"></i>Tes Kepribadian Finansial</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="bar-chart-2" class="w-4 h-4 text-cyan-400 opacity-100"></i>Simulasi Budget Interaktif</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="target" class="w-4 h-4 text-emerald-400 opacity-100"></i>Target Tabungan Terstruktur</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="trophy" class="w-4 h-4 text-orange-400 opacity-100"></i>30-Day Saving Challenge</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="shield-check" class="w-4 h-4 text-pink-400 opacity-100"></i>Edukasi Berbasis Perilaku</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+                <span class="text-sm font-semibold opacity-30 flex items-center gap-3"><i data-lucide="zap" class="w-4 h-4 text-yellow-400 opacity-100"></i>Insight Finansial Real-time</span>
+                <span class="w-1 h-1 rounded-full bg-violet-500/40 inline-block"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PROBLEM SECTION
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="py-28 relative overflow-hidden dark:bg-[#050d1a] bg-slate-50">
+        <div class="glow-blob w-72 h-72 bg-red-700/10 top-20 right-20" style="position:absolute;"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Left -->
+                <div data-aos="fade-right">
+                    <span class="section-tag mb-6 inline-flex">
+                        <i data-lucide="message-circle" class="w-3 h-3"></i> Pernah Merasa Seperti Ini?
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
+                        Masalah yang <span class="gradient-text">Kebanyakan</span> Orang Alami
+                    </h2>
+                    <p class="opacity-60 text-base leading-relaxed mb-8">
+                        Monetra hadir untuk membantu kamu memahami kebiasaan finansialmu dan mengubahnya menjadi rencana yang nyata.
+                    </p>
+                    <a href="personality-test.html" class="btn-primary inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm">
+                        <span>Temukan Solusinya</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 relative z-10"></i>
+                    </a>
                 </div>
-                <div class="text-center group">
-                    <div class="text-sm uppercase tracking-widest text-gray-500 mb-3 group-hover:text-violet-400 transition-colors">Tingkat Kepuasan</div>
-                    <div class="text-4xl md:text-5xl font-bold gradient-text">95%</div>
-                </div>
-                <div class="text-center group">
-                    <div class="text-sm uppercase tracking-widest text-gray-500 mb-3 group-hover:text-violet-400 transition-colors">Dukungan</div>
-                    <div class="text-4xl md:text-5xl font-bold gradient-text">24/7</div>
+                <!-- Right — Problem items -->
+                <div class="flex flex-col gap-4" data-aos="fade-left" data-aos-delay="100">
+                    <div class="problem-item" data-aos="fade-left" data-aos-delay="0">
+                        <div class="w-10 h-10 rounded-xl bg-red-500/15 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="trending-down" class="w-5 h-5 text-red-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm mb-0.5">Uang habis tanpa jejak</div>
+                            <div class="text-xs opacity-50">Nggak tahu uang kemarin ke mana perginya</div>
+                        </div>
+                    </div>
+                    <div class="problem-item" data-aos="fade-left" data-aos-delay="80">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/15 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 text-orange-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm mb-0.5">Susah konsisten menabung</div>
+                            <div class="text-xs opacity-50">Niat ada, tapi eksekusinya selalu gagal</div>
+                        </div>
+                    </div>
+                    <div class="problem-item" data-aos="fade-left" data-aos-delay="160">
+                        <div class="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="help-circle" class="w-5 h-5 text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm mb-0.5">Bingung menyusun budget</div>
+                            <div class="text-xs opacity-50">Angkanya ada, tapi nggak realistis</div>
+                        </div>
+                    </div>
+                    <div class="problem-item" data-aos="fade-left" data-aos-delay="240">
+                        <div class="w-10 h-10 rounded-xl bg-violet-500/15 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="flag" class="w-5 h-5 text-violet-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm mb-0.5">Punya impian, tapi buntu</div>
+                            <div class="text-xs opacity-50">Nggak tahu harus mulai dari mana</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Preview -->
-    <section id="features" class="py-32 bg-slate-50 dark:bg-[#0f172a]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Fitur Unggulan</h2>
-                <div class="w-24 h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-6"></div>
-                <p class="text-lg opacity-70 max-w-2xl mx-auto">
-                    Berbagai fitur interaktif untuk membantumu mengelola keuangan
+    <!-- ═══════════════════════════════════════════════════════════════
+         WHY MONETRA SECTION
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="py-28 dark:bg-[#020617] bg-white relative overflow-hidden">
+        <div class="glow-blob w-96 h-96 bg-violet-700/10 -bottom-20 -left-20" style="position:absolute;"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="section-tag mb-5 inline-flex">
+                    <i data-lucide="sparkles" class="w-3 h-3"></i> Kenapa Monetra?
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black mb-5">Bukan Sekadar <span class="gradient-text">Catatan Keuangan.</span></h2>
+                <p class="opacity-60 max-w-xl mx-auto text-base leading-relaxed">
+                    Monetra dirancang dengan pendekatan berbasis perilaku dan edukasi — kamu tidak hanya mencatat pengeluaran, tetapi memahami pola dan menemukan solusi yang tepat.
                 </p>
             </div>
+
+            <div class="grid md:grid-cols-2 gap-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="why-card flex items-start gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="brain" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold mb-1">Berbasis Tes Kepribadian Finansial</div>
+                        <div class="text-sm opacity-55 leading-relaxed">Solusi yang disesuaikan dengan tipe dan kebiasaan keuanganmu secara personal.</div>
+                    </div>
+                </div>
+                <div class="why-card flex items-start gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="activity" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold mb-1">Visualisasi Progres Interaktif</div>
+                        <div class="text-sm opacity-55 leading-relaxed">Lihat perkembangan finansialmu secara visual — bukan sekadar angka di spreadsheet.</div>
+                    </div>
+                </div>
+                <div class="why-card flex items-start gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-green-600 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold mb-1">Dirancang untuk Pelajar & Mahasiswa</div>
+                        <div class="text-sm opacity-55 leading-relaxed">Antarmuka sederhana, konteks relevan, bahasa yang mudah dipahami semua kalangan.</div>
+                    </div>
+                </div>
+                <div class="why-card flex items-start gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-600 to-red-500 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="smartphone" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold mb-1">Mudah di Berbagai Perangkat</div>
+                        <div class="text-sm opacity-55 leading-relaxed">Akses kapan saja dan di mana saja — dari laptop, tablet, hingga HP-mu.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FEATURES SECTION
+    ═══════════════════════════════════════════════════════════════ -->
+    <section id="features" class="py-28 dark:bg-[#0a1120] bg-slate-50 relative overflow-hidden">
+        <div class="glow-blob w-72 h-72 bg-cyan-700/10 top-10 right-10" style="position:absolute;"></div>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="section-tag mb-5 inline-flex">
+                    <i data-lucide="layers" class="w-3 h-3"></i> Fitur Unggulan
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black mb-5">Semua yang Kamu <span class="gradient-text">Butuhkan</span></h2>
+                <p class="opacity-60 max-w-lg mx-auto text-base">Fitur-fitur interaktif yang dirancang khusus untuk membantumu mengelola dan memahami keuangan.</p>
+            </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <a href="personality-test.html" class="feature-card p-8 rounded-3xl group" data-aos="fade-up">
-                    <div class="w-16 h-16 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                        <i data-lucide="user-circle" class="w-8 h-8 text-white"></i>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="personality-test.html" class="feature-card p-7 rounded-3xl group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="icon-ring w-14 h-14 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="brain" class="w-7 h-7 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Tes Kepribadian</h3>
-                    <p class="opacity-60 text-sm">Temukan tipe finansialmu</p>
+                    <h3 class="text-lg font-bold mb-2">Tes Kepribadian Finansial</h3>
+                    <p class="opacity-55 text-sm leading-relaxed mb-4">Temukan tipe keuanganmu dan pahami bagaimana kebiasaanmu memengaruhi keputusan finansial.</p>
+                    <div class="flex items-center gap-1 text-xs text-violet-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        Mulai Tes <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
                 </a>
                 
-                <a href="budget-simulator.html" class="feature-card p-8 rounded-3xl group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                        <i data-lucide="wallet" class="w-8 h-8 text-white"></i>
+                <a href="budget-simulator.html" class="feature-card p-7 rounded-3xl group" data-aos="fade-up" data-aos-delay="80">
+                    <div class="icon-ring w-14 h-14 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="pie-chart" class="w-7 h-7 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Simulasi Budget</h3>
-                    <p class="opacity-60 text-sm">Atur pengeluaran bulanan</p>
+                    <h3 class="text-lg font-bold mb-2">Simulasi Budget</h3>
+                    <p class="opacity-55 text-sm leading-relaxed mb-4">Atur pengeluaran bulanan dengan sistem yang terstruktur dan realistis sesuai kondisimu.</p>
+                    <div class="flex items-center gap-1 text-xs text-cyan-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        Coba Sekarang <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
                 </a>
                 
-                <a href="goal-tracker.html" class="feature-card p-8 rounded-3xl group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                        <i data-lucide="target" class="w-8 h-8 text-white"></i>
+                <a href="goal-tracker.html" class="feature-card p-7 rounded-3xl group" data-aos="fade-up" data-aos-delay="160">
+                    <div class="icon-ring w-14 h-14 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="target" class="w-7 h-7 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Target Tabungan</h3>
-                    <p class="opacity-60 text-sm">Capai impianmu</p>
+                    <h3 class="text-lg font-bold mb-2">Target Tabungan</h3>
+                    <p class="opacity-55 text-sm leading-relaxed mb-4">Tetapkan impianmu dan pantau progresnya secara bertahap dengan visualisasi yang jelas.</p>
+                    <div class="flex items-center gap-1 text-xs text-emerald-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        Set Target <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
                 </a>
                 
-                <a href="challenge.html" class="feature-card p-8 rounded-3xl group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-600 to-red-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                        <i data-lucide="trophy" class="w-8 h-8 text-white"></i>
+                <a href="challenge.html" class="feature-card p-7 rounded-3xl group" data-aos="fade-up" data-aos-delay="240">
+                    <div class="icon-ring w-14 h-14 bg-gradient-to-br from-orange-600 to-red-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="trophy" class="w-7 h-7 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Saving Challenge</h3>
-                    <p class="opacity-60 text-sm">30 hari menabung</p>
+                    <h3 class="text-lg font-bold mb-2">Saving Challenge</h3>
+                    <p class="opacity-55 text-sm leading-relaxed mb-4">Bangun konsistensi melalui tantangan menabung selama 30 hari yang menyenangkan.</p>
+                    <div class="flex items-center gap-1 text-xs text-orange-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        Ikuti Challenge <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         IMPACT SECTION
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="py-28 dark:bg-[#020617] bg-white relative overflow-hidden">
+        <div class="glow-blob w-80 h-80 bg-emerald-700/10 top-10 left-0" style="position:absolute;"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Left — Visual -->
+                <div class="relative" data-aos="fade-right">
+                    <div class="relative z-10 dark:bg-slate-900/80 bg-white border dark:border-white/8 border-slate-200 rounded-3xl p-8 shadow-2xl float-anim">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="font-bold text-sm opacity-70">Progres Finansialmu</div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-bold">+24% ↑</span>
+                        </div>
+                        <!-- Fake bar chart -->
+                        <div class="flex items-end gap-3 h-28 mb-4">
+                            <div class="flex-1 rounded-lg bg-gradient-to-t from-violet-600 to-violet-400 opacity-60" style="height:40%"></div>
+                            <div class="flex-1 rounded-lg bg-gradient-to-t from-violet-600 to-violet-400 opacity-75" style="height:60%"></div>
+                            <div class="flex-1 rounded-lg bg-gradient-to-t from-violet-600 to-violet-400 opacity-85" style="height:50%"></div>
+                            <div class="flex-1 rounded-lg bg-gradient-to-t from-violet-600 to-violet-400" style="height:80%"></div>
+                            <div class="flex-1 rounded-lg bg-gradient-to-t from-cyan-600 to-cyan-400" style="height:100%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs opacity-40">
+                            <span>Mar</span><span>Apr</span><span>Mei</span><span>Jun</span><span>Jul</span>
+                        </div>
+                    </div>
+                    <!-- Badge float -->
+                    <div class="absolute -bottom-6 -right-6 z-20 dark:bg-slate-900 bg-white rounded-2xl border dark:border-white/10 border-slate-200 p-4 shadow-xl float-anim-delay flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs opacity-50">Target tercapai</div>
+                            <div class="font-bold text-sm">3 dari 4 Bulan</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right -->
+                <div data-aos="fade-left">
+                    <span class="section-tag mb-6 inline-flex">
+                        <i data-lucide="trending-up" class="w-3 h-3"></i> Dampak & Manfaat
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-black mb-4 leading-tight">
+                        Membantu Generasi Muda Lebih <span class="gradient-text">Sadar Finansial</span>
+                    </h2>
+                    <p class="opacity-60 text-sm mb-8 leading-relaxed">Bukan hanya aplikasi, Monetra adalah sistem yang membentuk pola pikir dan kebiasaan finansialmu secara berkelanjutan.</p>
+                    <div class="flex flex-col gap-3">
+                        <div class="impact-item">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="heart" class="w-4 h-4 text-emerald-400"></i>
+                            </div>
+                            <span class="text-sm font-medium">Membentuk kebiasaan keuangan yang lebih sehat</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="lock" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <span class="text-sm font-medium">Meningkatkan disiplin dalam mengelola uang</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="w-9 h-9 rounded-xl bg-violet-500/15 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="calendar" class="w-4 h-4 text-violet-400"></i>
+                            </div>
+                            <span class="text-sm font-medium">Membantu perencanaan jangka pendek dan panjang</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="bar-chart" class="w-4 h-4 text-cyan-400"></i>
+                            </div>
+                            <span class="text-sm font-medium">Memberikan insight berbasis hasil analisis pengguna</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CTA SECTION
+    ═══════════════════════════════════════════════════════════════ -->
     <section class="cta-section py-32 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-violet-700 via-indigo-800 to-cyan-900"></div>
+        <!-- Decorative orbs -->
+        <div class="cta-orb w-80 h-80 -top-20 -left-20" style="position:absolute;"></div>
+        <div class="cta-orb w-60 h-60 bottom-10 right-10" style="position:absolute;"></div>
+        <div class="cta-orb w-40 h-40 top-1/2 left-1/3" style="position:absolute;"></div>
+        <!-- Dot grid overlay -->
+        <div style="position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);background-size:32px 32px;pointer-events:none;"></div>
         
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <div data-aos="zoom-in">
-                <h2 class="text-4xl md:text-6xl font-black mb-8 tracking-tight">
-                    Siap Mengenal Pola Keuanganmu?
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div data-aos="zoom-in" data-aos-duration="800">
+                <h2 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+                    Siap Mengubah Cara<br/>Kamu Mengelola Uang?
                 </h2>
-                <p class="text-xl mb-12 leading-relaxed max-w-2xl mx-auto">
-                    Mulai perjalanan finansialmu hari ini bersama Monetra dan bangun kebiasaan yang lebih baik untuk masa depan.
+                <p class="text-lg mb-10 leading-relaxed max-w-xl mx-auto opacity-80">
+                    Mulai perjalanan finansialmu hari ini dan bangun sistem yang membantumu mencapai tujuan — bukan hanya sekadar menabung.
                 </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <a href="personality-test.html" class="btn-white bg-white px-12 py-5 rounded-full font-black text-lg hover:scale-105 transition">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="personality-test.html" class="cta-white-btn px-10 py-4 rounded-full font-black text-base hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
                         Mulai Sekarang
                     </a>
-                    <a href="about.html" class="px-12 py-5 rounded-full border-2 border-white/30 font-bold text-lg hover:bg-white/10 transition">
-                        Lihat Demo
+                    <a href="budget-simulator.html" class="px-10 py-4 rounded-full border-2 border-white/30 font-bold text-base hover:bg-white/10 transition" style="color:#ffffff!important;">
+                        Coba Fitur
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         FOOTER (unchanged structure)
+    ═══════════════════════════════════════════════════════════════ -->
     <footer class="bg-[#020617] pt-24 pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
@@ -697,27 +804,24 @@
                         </div>
                         <span class="text-2xl font-bold">Monetra</span>
                     </div>
-                    <p class="opacity-50 text-sm">Platform edukasi finansial untuk generasi muda Indonesia.</p>
+                    <p class="opacity-50 text-sm leading-relaxed">Platform edukasi finansial interaktif yang membantu generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih bijak.</p>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Produk</h4>
                     <ul class="space-y-4 text-sm opacity-60">
                         <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
                         <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
+                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a></li>
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Perusahaan</h4>
                     <ul class="space-y-4 text-sm opacity-60">
                         <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
                         <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
-                        <li><a href="insight-dashboard.html" class="hover:text-violet-400 transition">Dashboard</a></li>
                     </ul>
                 </div>
-                
                 <div>
                     <h4 class="font-bold mb-6">Ikuti Kami</h4>
                     <div class="flex space-x-4">
@@ -733,7 +837,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="border-t border-white/5 pt-8 text-center opacity-40 text-sm">
                 <p>&copy; 2026 Monetra. All rights reserved.</p>
             </div>
@@ -742,146 +845,84 @@
 
     <script>
         lucide.createIcons();
-        
+
         // Loading
         window.addEventListener('load', function() {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
-        
+
         // AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 50
-        });
-        
+        AOS.init({ duration: 900, once: true, offset: 60, easing: 'ease-out-cubic' });
+
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
         const html = document.documentElement;
-        
         function toggleTheme() {
             html.classList.toggle('dark');
             html.classList.toggle('light');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             lucide.createIcons();
         }
-        
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleMobile.addEventListener('click', toggleTheme);
-        
-        if (localStorage.getItem('theme') === 'light') {
-            html.classList.remove('dark');
-            html.classList.add('light');
-        }
-        
-        // Floating Navbar on Scroll
+        if (localStorage.getItem('theme') === 'light') { html.classList.remove('dark'); html.classList.add('light'); }
+
+        // Floating Navbar
         const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                navbar.classList.add('floating');
-            } else {
-                navbar.classList.remove('floating');
-            }
+            navbar.classList.toggle('floating', window.scrollY > 100);
         });
-        
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        
-        function openMobileMenu() {
-            mobileMenu.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMobileMenuFunc() {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
+        function openMobileMenu() { mobileMenu.classList.add('active'); mobileMenuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenuFunc() { mobileMenu.classList.remove('active'); mobileMenuOverlay.classList.remove('active'); document.body.style.overflow = ''; }
         mobileMenuBtn.addEventListener('click', openMobileMenu);
-        closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        closeMobileMenuBtn.addEventListener('click', closeMobileMenuFunc);
         mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', closeMobileMenuFunc);
-        });
+        document.querySelectorAll('.mobile-menu a').forEach(link => link.addEventListener('click', closeMobileMenuFunc));
 
         // Network Canvas
         const canvas = document.getElementById('network-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
-        
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2 + 1;
-            }
-            
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            
-            draw() {
-                ctx.fillStyle = html.classList.contains('dark') ? '#8b5cf6' : '#7c3aed';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            constructor() { this.x = Math.random()*width; this.y = Math.random()*height; this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3; this.size = Math.random()*2+1; }
+            update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>width)this.vx*=-1; if(this.y<0||this.y>height)this.vy*=-1; }
+            draw() { ctx.fillStyle=html.classList.contains('dark')?'#8b5cf6':'#7c3aed'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
         }
-        
-        function init() {
-            particles = [];
-            for (let i = 0; i < 60; i++) particles.push(new Particle());
-        }
-        
+        function init() { particles=[]; for(let i=0;i<60;i++)particles.push(new Particle()); }
         function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 160) {
+            ctx.clearRect(0,0,width,height);
+            for(let i=0;i<particles.length;i++){
+                particles[i].update(); particles[i].draw();
+                for(let j=i;j<particles.length;j++){
+                    const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+                    const d=Math.sqrt(dx*dx+dy*dy);
+                    if(d<160){
                         ctx.beginPath();
-                        const opacity = (1 - distance / 160) * 0.15;
-                        ctx.strokeStyle = html.classList.contains('dark') 
-                            ? `rgba(139, 92, 246, ${opacity})`
-                            : `rgba(124, 58, 237, ${opacity})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
+                        const op=(1-d/160)*0.15;
+                        ctx.strokeStyle=html.classList.contains('dark')?`rgba(139,92,246,${op})`:`rgba(124,58,237,${op})`;
+                        ctx.lineWidth=1; ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
                     }
                 }
             }
             requestAnimationFrame(animate);
         }
-        
-        window.addEventListener('resize', () => { resize(); init(); });
-        resize();
-        init();
-        animate();
+        window.addEventListener('resize',()=>{ resize(); init(); });
+        resize(); init(); animate();
+
+        // Underline accent trigger on scroll
+        const underlines = document.querySelectorAll('.underline-accent');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.3 });
+        underlines.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
