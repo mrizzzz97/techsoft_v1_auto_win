@@ -261,9 +261,16 @@
         
         html.light p,
         html.light span,
-        html.light li,
-        html.light a {
+        html.light li {
             color: #334155 !important;
+        }
+
+        /* Button text fix - keep white in light mode */
+        html.light .btn-primary,
+        html.light .btn-primary:hover,
+        html.light .btn-primary *,
+        html.light .btn-primary span {
+            color: #ffffff !important;
         }
         
         html.light .text-gray-300,

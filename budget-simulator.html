@@ -32,6 +32,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <style>
         * {
@@ -71,7 +73,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen - Slower */
+        /* Loading Screen - Sama seperti index */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -84,7 +86,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
         
         .loader-wrapper.slide-up {
@@ -92,20 +94,13 @@
         }
 
         .loader-logo-img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             object-fit: contain;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
             opacity: 0;
-            animation: logoReveal 1.5s ease forwards 0.8s;
-        }
-
-        @media (min-width: 640px) {
-            .loader-logo-img {
-                width: 100px;
-                height: 100px;
-            }
+            animation: logoReveal 1s ease forwards 0.5s;
         }
 
         @keyframes logoReveal {
@@ -113,56 +108,35 @@
         }
 
         .loader-text {
-            margin-top: 20px;
-            font-size: 1.5rem;
+            margin-top: 24px;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: fadeIn 1.2s ease forwards 2s;
-        }
-
-        @media (min-width: 640px) {
-            .loader-text {
-                font-size: 2rem;
-                margin-top: 24px;
-            }
+            animation: fadeIn 0.8s ease forwards 1.2s;
         }
 
         .loader-subtext {
-            margin-top: 6px;
-            font-size: 0.7rem;
+            margin-top: 8px;
+            font-size: 0.875rem;
             color: #64748b;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             opacity: 0;
-            animation: fadeIn 1.2s ease forwards 2.8s;
-        }
-
-        @media (min-width: 640px) {
-            .loader-subtext {
-                font-size: 0.875rem;
-                margin-top: 8px;
-            }
+            animation: fadeIn 1s ease forwards 1.8s;
         }
 
         @keyframes fadeIn {
             to { opacity: 1; }
         }
 
-        /* Floating Rounded Header */
+        /* Navbar - Sama persis dengan index */
         .navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-        }
-        
-        @media (min-width: 768px) {
-            .navbar {
-                padding-top: 1.25rem;
-                padding-bottom: 1.25rem;
-            }
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
         }
         
         .navbar .navbar-container {
@@ -181,14 +155,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 9999px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 2rem;
             max-width: 1200px;
-        }
-        
-        @media (min-width: 768px) {
-            .navbar.floating .navbar-container {
-                padding: 0.75rem 2rem;
-            }
         }
         
         html.light .navbar.floating .navbar-container {
@@ -197,7 +165,104 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Cards - Minimal Animation */
+        /* Navbar CTA - Sama seperti index */
+        .navbar-cta {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .navbar-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.45);
+            background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
+            color: #ffffff !important;
+        }
+        html.light .navbar-cta,
+        html.light .navbar-cta:hover { color: #ffffff !important; }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            color: #ffffff !important;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary:active {
+            opacity: 0.8;
+        }
+
+        .btn-primary *,
+        .btn-primary i,
+        .btn-primary span {
+            color: #ffffff !important;
+        }
+
+        /* Light Mode Button Fix */
+        html.light .btn-primary,
+        html.light .btn-primary:hover,
+        html.light .btn-primary *,
+        html.light .btn-primary span {
+            color: #ffffff !important;
+        }
+
+        /* Dropdown Menu - Sama seperti index */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        html.light .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            color: #f8fafc;
+        }
+
+        html.light .dropdown-item {
+            color: #0f172a;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Cards */
         .budget-card {
             position: relative;
             background: rgba(15, 23, 42, 0.6);
@@ -253,27 +318,6 @@
             transform: scale(0.95);
         }
 
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            transition: opacity 0.2s ease;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        .btn-primary:active {
-            opacity: 0.8;
-        }
-
-        .btn-primary *,
-        .btn-primary i,
-        .btn-primary span {
-            color: #ffffff !important;
-        }
-
         /* Category Badges */
         .category-badge {
             padding: 0.25rem 0.75rem;
@@ -283,17 +327,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
-        }
-
-        @media (min-width: 640px) {
-            .category-badge {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-                gap: 0.5rem;
-            }
-        }
-
-        .badge-primary {
             background: rgba(139, 92, 246, 0.2);
             border: 1px solid rgba(139, 92, 246, 0.3);
             color: #8b5cf6;
@@ -306,12 +339,6 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 999px;
             overflow: hidden;
-        }
-
-        @media (min-width: 768px) {
-            .progress-bar {
-                height: 8px;
-            }
         }
 
         .progress-fill {
@@ -384,7 +411,7 @@
             }
         }
 
-        /* Mobile Menu - Improved */
+        /* Mobile Menu - Sama seperti index */
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -470,59 +497,7 @@
             transform: scale(0.95);
         }
 
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        html.light .dropdown-menu {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-            color: #f8fafc;
-        }
-
-        html.light .dropdown-item {
-            color: #0f172a;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        /* Hero Section Responsive */
+        /* Hero Section */
         .hero-title {
             font-size: 2rem;
             line-height: 1.2;
@@ -552,6 +527,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
         /* Light Mode Fixes */
@@ -566,7 +547,7 @@
         html.light p,
         html.light span,
         html.light li,
-        html.light a {
+        html.light a:not(.btn-primary):not(.navbar-cta):not(.dropdown-item) {
             color: #334155 !important;
         }
         
@@ -576,7 +557,7 @@
             color: #64748b !important;
         }
 
-        /* Footer - Always White Text & Responsive */
+        /* Footer - Always White Text */
         footer {
             background-color: #020617 !important;
         }
@@ -611,24 +592,9 @@
             color: rgba(255, 255, 255, 0.6) !important;
         }
 
-        /* Footer responsive grid */
-        @media (max-width: 639px) {
-            .footer-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
-            }
-        }
-
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        @media (min-width: 768px) {
-            ::-webkit-scrollbar {
-                width: 8px;
-            }
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -657,6 +623,27 @@
         .transition-all {
             transition: all 0.3s ease;
         }
+
+        /* Section tag */
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.08);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #a78bfa;
+        }
+        html.light .section-tag { 
+            color: #7c3aed; 
+            background: rgba(124, 58, 237, 0.08); 
+            border-color: rgba(124, 58, 237, 0.3); 
+        }
     </style>
 </head>
 <body>
@@ -667,25 +654,25 @@
         <div class="loader-subtext">Simulasi Budget</div>
     </div>
 
-    <!-- Floating Rounded Header -->
-    <nav class="navbar fixed w-full top-0 z-50 px-4 sm:px-6">
-        <div class="navbar-container mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
-                <div class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+    <!-- Navbar - Sama persis dengan index -->
+    <nav class="navbar fixed w-full top-0 z-50 px-6">
+        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
+                <div class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
                     <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+                <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
             
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+            <div class="hidden md:flex items-center space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
                 
                 <!-- Features Dropdown -->
                 <div class="dropdown">
                     <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features
+                        Features 
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -708,27 +695,26 @@
                     </div>
                 </div>
 
-
                 <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
                 
-                <button class="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
-                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-yellow-300"></i>
-                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
                 
-                <a href="personality-test.html" class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">
-                    Mulai Sekarang
+                <a href="personality-test.html" class="navbar-cta px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group">
+                    <span>Mulai Sekarang</span>
                 </a>
             </div>
             
             <!-- Mobile Menu Button -->
-            <div class="md:hidden flex items-center space-x-2 sm:space-x-3">
+            <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
-                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
                 <button id="mobileMenuBtn" class="p-2">
-                    <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
@@ -739,40 +725,38 @@
     
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <div class="flex justify-end mb-6 sm:mb-8">
+        <div class="flex justify-end mb-8">
             <button id="closeMobileMenu">
-                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <i data-lucide="x" class="w-6 h-6"></i>
             </button>
         </div>
-        <div class="flex flex-col space-y-3 sm:space-y-4">
-            <a href="index.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Home</a>
-            <a href="about.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
+            <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
             
-            <div class="border-t border-white/10 pt-4 sm:pt-6">
-                <div class="text-xs uppercase tracking-wider opacity-50 mb-2 sm:mb-3">Features</div>
-                <div class="space-y-2 sm:space-y-3">
-                    <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                        <i data-lucide="user-circle" class="w-4 h-4"></i>
-                        <span class="text-sm sm:text-base">Tes Kepribadian</span>
-                    </a>
-                    <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                        <i data-lucide="wallet" class="w-4 h-4"></i>
-                        <span class="text-sm sm:text-base">Simulasi Budget</span>
-                    </a>
-                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                        <i data-lucide="target" class="w-4 h-4"></i>
-                        <span class="text-sm sm:text-base">Target Tabungan</span>
-                    </a>
-                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                        <i data-lucide="trophy" class="w-4 h-4"></i>
-                        <span class="text-sm sm:text-base">Saving Challenge</span>
-                    </a>
-                </div>
+            <div class="border-t border-white/10 pt-4">
+                <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
+                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                    <i data-lucide="user-circle" class="w-4 h-4"></i>
+                    <span>Tes Kepribadian</span>
+                </a>
+                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                    <span>Simulasi Budget</span>
+                </a>
+                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                    <i data-lucide="target" class="w-4 h-4"></i>
+                    <span>Target Tabungan</span>
+                </a>
+                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
+                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                    <span>Saving Challenge</span>
+                </a>
             </div>
 
-            <a href="contact.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
+            <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
             
-            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">
+            <a href="personality-test.html" class="navbar-cta px-6 py-3 rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
         </div>
@@ -784,7 +768,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div class="text-center">
                 <div class="inline-block mb-4 sm:mb-6">
-                    <span class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                    <span class="section-tag">
                         Kalkulator Anggaran
                     </span>
                 </div>
@@ -1099,7 +1083,7 @@
     <!-- Footer -->
     <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="footer-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
                 <div>
                     <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                         <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
@@ -1115,6 +1099,7 @@
                     <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
                         <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
                         <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
+                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a></li>
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
@@ -1152,10 +1137,13 @@
     <script>
         lucide.createIcons();
         
-        // Loading - Increased to 4 seconds
+        // Loading
         window.addEventListener('load', function() {
-            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 4000);
+            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
+        
+        // AOS
+        AOS.init({ duration: 900, once: true, offset: 60, easing: 'ease-out-cubic' });
         
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
@@ -1185,7 +1173,7 @@
         // Floating Navbar on Scroll
         const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 100) {
                 navbar.classList.add('floating');
             } else {
                 navbar.classList.remove('floating');
