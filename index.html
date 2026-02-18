@@ -233,7 +233,7 @@
         html.light h1, html.light h2, html.light h3, html.light h5 { color: #0f172a !important; }
         html.light h4:not(footer h4) { color: #0f172a !important; }
         html.light footer h4, html.light footer h1, html.light footer h2, html.light footer h3, html.light footer h5 { color: #ffffff !important; }
-        html.light p:not(footer p), html.light span:not(footer span), html.light li:not(footer li) { color: #334155 !important; }
+        html.light p:not(footer p), html.light span:not(footer span):not(.btn-primary span), html.light li:not(footer li) { color: #334155 !important; }
         html.light a:not(.btn-primary):not(.btn-ghost):not(footer a) { color: #334155 !important; }
         html.light .btn-primary, html.light .btn-primary *, html.light .btn-primary span, html.light .btn-primary i { color: #ffffff !important; }
         html.light .text-gray-300, html.light .text-gray-400, html.light .text-gray-500 { color: #64748b !important; }
@@ -347,6 +347,12 @@
             position: absolute; border-radius: 50%;
             background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
         }
+
+        a.btn-primary, a.btn-primary span, a.btn-primary i,
+        html.light a.btn-primary, html.light a.btn-primary span, html.light a.btn-primary i,
+        html.dark a.btn-primary, html.dark a.btn-primary span, html.dark a.btn-primary i {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
@@ -385,7 +391,9 @@
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                <a href="personality-test.html" class="navbar-cta px-6 py-2.5 rounded-full text-sm font-semibold">Mulai Sekarang</a>
+                <a href="personality-test.html" class="btn-primary px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group" style="color:#ffffff!important;">
+                    <span style="color:#ffffff!important;">Mulai Sekarang</span>
+                </a>
             </div>
             <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
