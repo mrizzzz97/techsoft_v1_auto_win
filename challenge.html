@@ -72,7 +72,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen - Sama seperti index */
+        /* Loading Screen */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -131,7 +131,7 @@
             to { opacity: 1; }
         }
 
-        /* Navbar - Sama persis dengan index */
+        /* Navbar */
         .navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding-top: 1.25rem;
@@ -164,12 +164,18 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Navbar CTA - Sama seperti index */
+        /* =============================================
+           FIX 1: Navbar CTA - Ukuran wajar + teks selalu putih
+           ============================================= */
         .navbar-cta {
             background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
             color: #ffffff !important;
             display: inline-block;
             transition: all 0.3s ease;
+            /* FIX: ukuran proporsional */
+            padding: 0.6rem 1.5rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 700;
         }
         .navbar-cta:hover {
             transform: translateY(-2px);
@@ -177,8 +183,14 @@
             background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
             color: #ffffff !important;
         }
+        /* FIX: teks selalu putih di semua mode */
         html.light .navbar-cta,
-        html.light .navbar-cta:hover { color: #ffffff !important; }
+        html.light .navbar-cta:hover,
+        html.light .navbar-cta span,
+        html.light .navbar-cta * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
 
         /* Cards */
         .challenge-card {
@@ -251,7 +263,6 @@
             color: #ffffff !important;
         }
 
-        /* Light Mode Button Fix */
         html.light .btn-primary,
         html.light .btn-primary:hover,
         html.light .btn-primary *,
@@ -359,7 +370,7 @@
             100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
-        /* Mobile Menu - Sama seperti index */
+        /* Mobile Menu */
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -418,13 +429,8 @@
             transition: all 0.2s ease;
         }
 
-        #closeMobileMenu:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        #closeMobileMenu:active {
-            transform: scale(0.95);
-        }
+        #closeMobileMenu:hover { background: rgba(255, 255, 255, 0.2); }
+        #closeMobileMenu:active { transform: scale(0.95); }
 
         #mobileMenuBtn {
             width: 40px;
@@ -437,18 +443,11 @@
             transition: all 0.2s ease;
         }
 
-        #mobileMenuBtn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+        #mobileMenuBtn:hover { background: rgba(255, 255, 255, 0.2); }
+        #mobileMenuBtn:active { transform: scale(0.95); }
 
-        #mobileMenuBtn:active {
-            transform: scale(0.95);
-        }
-
-        /* Dropdown Menu - Sama seperti index */
-        .dropdown {
-            position: relative;
-        }
+        /* Dropdown Menu */
+        .dropdown { position: relative; }
 
         .dropdown-menu {
             position: absolute;
@@ -489,13 +488,8 @@
             color: #f8fafc;
         }
 
-        html.light .dropdown-item {
-            color: #0f172a;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
+        html.light .dropdown-item { color: #0f172a; }
+        .dropdown-item:hover { background: rgba(139, 92, 246, 0.2); }
 
         /* Hero Section */
         .hero-title {
@@ -503,23 +497,9 @@
             line-height: 1.2;
         }
 
-        @media (min-width: 640px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .hero-title {
-                font-size: 4rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .hero-title {
-                font-size: 5rem;
-            }
-        }
+        @media (min-width: 640px) { .hero-title { font-size: 3rem; } }
+        @media (min-width: 768px) { .hero-title { font-size: 4rem; } }
+        @media (min-width: 1024px) { .hero-title { font-size: 5rem; } }
 
         /* Gradient Text */
         .gradient-text {
@@ -578,8 +558,14 @@
             color: #64748b !important;
         }
 
-        /* Footer - Always White Text */
-        footer,
+        /* =============================================
+           FIX 2: Footer - selalu dark background, teks selalu putih
+           ============================================= */
+        footer {
+            background-color: #020617 !important;
+        }
+
+        footer *,
         footer h4,
         footer p,
         footer a,
@@ -589,7 +575,11 @@
             color: #ffffff !important;
         }
 
-        html.light footer,
+        html.light footer {
+            background-color: #020617 !important;
+        }
+
+        html.light footer *,
         html.light footer h4,
         html.light footer p,
         html.light footer a,
@@ -597,45 +587,25 @@
         html.light footer li,
         html.light footer div {
             color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
         }
-        
+
         html.light footer .opacity-50,
         html.light footer .opacity-60,
         html.light footer .opacity-40 {
             color: rgba(255, 255, 255, 0.6) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        
-        html.light ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
-        }
-
-        /* Touch-friendly buttons */
-        button, a {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Smooth transitions */
-        .transition-all {
-            transition: all 0.3s ease;
-        }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        .transition-all { transition: all 0.3s ease; }
 
         /* Challenge Stats */
         .stat-card {
@@ -652,9 +622,7 @@
             }
         }
 
-        html.light .stat-card {
-            background: #f8fafc;
-        }
+        html.light .stat-card { background: #f8fafc; }
 
         /* Modal */
         .modal {
@@ -675,10 +643,7 @@
             padding: 1rem;
         }
 
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal.active { opacity: 1; visibility: visible; }
 
         .modal-content {
             background: rgba(15, 23, 42, 0.95);
@@ -693,20 +658,11 @@
         }
 
         @media (min-width: 640px) {
-            .modal-content {
-                padding: 2rem;
-                border-radius: 2rem;
-            }
+            .modal-content { padding: 2rem; border-radius: 2rem; }
         }
 
-        html.light .modal-content {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-        }
-
-        .modal.active .modal-content {
-            transform: scale(1);
-        }
+        html.light .modal-content { background: #ffffff; border: 1px solid #e2e8f0; }
+        .modal.active .modal-content { transform: scale(1); }
 
         /* Toast Notification */
         .toast {
@@ -733,36 +689,18 @@
             border: 1px solid #e2e8f0;
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
-        .toast.error {
-            border-left: 4px solid #ef4444;
-        }
-
-        .toast.info {
-            border-left: 4px solid #8b5cf6;
-        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.info { border-left: 4px solid #8b5cf6; }
 
         /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-
-        .empty-state-icon {
-            opacity: 0.2;
-            margin: 0 auto 1.5rem;
-        }
+        .empty-state { text-align: center; padding: 3rem 1rem; }
+        .empty-state-icon { opacity: 0.2; margin: 0 auto 1.5rem; }
     </style>
 </head>
 <body>
-    <!-- Loading Screen - Sama seperti index -->
+    <!-- Loading Screen -->
     <div class="loader-wrapper" id="loader">
         <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
         <div class="loader-text">MONETRA</div>
@@ -772,7 +710,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
-    <!-- Navbar - Sama persis dengan index -->
+    <!-- Navbar -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
         <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
@@ -820,7 +758,8 @@
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
                 
-                <a href="personality-test.html" class="navbar-cta px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group">
+                <!-- FIX: Ukuran tombol diperkecil & teks selalu putih -->
+                <a href="personality-test.html" class="navbar-cta rounded-full font-bold flex items-center gap-2">
                     <span>Mulai Sekarang</span>
                 </a>
             </div>
@@ -874,7 +813,7 @@
 
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
             
-            <a href="personality-test.html" class="navbar-cta px-6 py-3 rounded-full text-center mt-4">
+            <a href="personality-test.html" class="navbar-cta rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
         </div>
@@ -886,9 +825,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div class="text-center" data-aos="fade-down">
                 <div class="inline-block mb-4 sm:mb-6">
-                    <span class="section-tag">
-                        30 Hari Menabung
-                    </span>
+                    <span class="section-tag">30 Hari Menabung</span>
                 </div>
                 <h1 class="hero-title font-black mb-4 sm:mb-6"><span class="gradient-text">Saving Challenge</span></h1>
                 <p class="text-sm sm:text-base md:text-lg lg:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed px-4">
@@ -1027,18 +964,11 @@
         // ==================== INITIALIZATION ====================
         lucide.createIcons();
         
-        // Loading - Sama seperti index (3 detik)
         window.addEventListener('load', function() {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
         
-        // AOS
-        AOS.init({
-            duration: 900,
-            once: true,
-            offset: 60,
-            easing: 'ease-out-cubic'
-        });
+        AOS.init({ duration: 900, once: true, offset: 60, easing: 'ease-out-cubic' });
         
         // ==================== THEME TOGGLE ====================
         const themeToggle = document.getElementById('themeToggle');
@@ -1055,7 +985,6 @@
         if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
         if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
         
-        // Load saved theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             html.classList.remove('dark');
@@ -1067,11 +996,7 @@
         // ==================== FLOATING NAVBAR ====================
         const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                navbar.classList.add('floating');
-            } else {
-                navbar.classList.remove('floating');
-            }
+            navbar.classList.toggle('floating', window.scrollY > 100);
         });
         
         // ==================== MOBILE MENU ====================
@@ -1096,17 +1021,9 @@
             }
         }
         
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', openMobileMenu);
-        }
-        
-        if (closeMobileMenu) {
-            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
-        }
-        
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        }
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+        if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
         
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMobileMenuFunc);
@@ -1124,21 +1041,16 @@
         function showToast(message, type = 'info', duration = 3000) {
             toast.textContent = message;
             toast.className = `toast ${type} show`;
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
+            setTimeout(() => { toast.classList.remove('show'); }, duration);
         }
 
         // ==================== CHALLENGE DATA ====================
         let currentChallenge = null;
 
-        // Load from localStorage
         if (localStorage.getItem('activeChallenge')) {
             currentChallenge = JSON.parse(localStorage.getItem('activeChallenge'));
         }
 
-        // Available challenges
         const challenges = [
             {
                 id: 1,
@@ -1224,7 +1136,6 @@
             if (!section) return;
 
             if (!currentChallenge) {
-                // Show empty state
                 section.innerHTML = `
                     <div class="max-w-7xl mx-auto px-4 sm:px-6">
                         <div class="challenge-card p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl" data-aos="fade-up">
@@ -1242,7 +1153,6 @@
                 return;
             }
 
-            // Show active challenge
             const progress = Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100);
             const daysRemaining = 30 - currentChallenge.currentDay;
 
@@ -1266,7 +1176,6 @@
                             </div>
                         </div>
 
-                        <!-- Progress Overview -->
                         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
                             <div class="stat-card">
                                 <div class="text-2xl sm:text-3xl font-bold text-green-400 mb-1">${formatRupiah(currentChallenge.collectedAmount)}</div>
@@ -1286,7 +1195,6 @@
                             </div>
                         </div>
 
-                        <!-- Progress Bar -->
                         <div class="mb-8 sm:mb-10">
                             <div class="flex justify-between text-xs sm:text-sm mb-2">
                                 <span>Progress</span>
@@ -1297,13 +1205,11 @@
                             </div>
                         </div>
 
-                        <!-- Daily Tracker -->
                         <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Daily Tracker</h3>
                         <div class="grid grid-cols-5 xs:grid-cols-7 sm:grid-cols-10 gap-2 sm:gap-3 mb-8 sm:mb-10">
                             ${generateDailyTrackerHTML()}
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                             <button class="btn-primary flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="markToday()">
                                 <i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
@@ -1322,15 +1228,11 @@
                 </div>
             `;
 
-            // Re-initialize lucide icons after DOM update
-            setTimeout(() => {
-                lucide.createIcons();
-            }, 0);
+            setTimeout(() => { lucide.createIcons(); }, 0);
         }
 
         function generateDailyTrackerHTML() {
             if (!currentChallenge || !currentChallenge.days) return '';
-            
             let html = '';
             for (let i = 1; i <= 30; i++) {
                 const day = currentChallenge.days.find(d => d.day === i);
@@ -1386,7 +1288,6 @@
             const challenge = challenges.find(c => c.id === challengeId);
             if (!challenge) return;
 
-            // Create new challenge
             currentChallenge = {
                 id: challenge.id,
                 title: challenge.title,
@@ -1401,7 +1302,6 @@
                 days: []
             };
 
-            // Initialize 30 days
             for (let i = 1; i <= 30; i++) {
                 currentChallenge.days.push({
                     day: i,
@@ -1410,21 +1310,14 @@
                 });
             }
 
-            // Save to localStorage
             localStorage.setItem('activeChallenge', JSON.stringify(currentChallenge));
-
             showToast(`Challenge "${challenge.title}" berhasil dimulai!`, 'success');
             
-            // Update display immediately
             setTimeout(() => {
                 updateChallengeDisplay();
-                
-                // Scroll to active challenge
                 setTimeout(() => {
                     const section = document.getElementById('activeChallengeSection');
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
             }, 100);
         }
@@ -1445,35 +1338,22 @@
             }
             
             if (dayObj.status === 'current') {
-                // Mark as completed
                 dayObj.status = 'completed';
                 dayObj.amount = currentChallenge.dailyAmount;
                 currentChallenge.collectedAmount += currentChallenge.dailyAmount;
                 
-                // Move to next day if not the last day
                 if (currentChallenge.currentDay < 30) {
                     currentChallenge.currentDay++;
                     const nextDay = currentChallenge.days.find(d => d.day === currentChallenge.currentDay);
-                    if (nextDay) {
-                        nextDay.status = 'current';
-                    }
+                    if (nextDay) nextDay.status = 'current';
                 }
                 
-                // Save to localStorage
                 localStorage.setItem('activeChallenge', JSON.stringify(currentChallenge));
-                
-                // Update display immediately
-                setTimeout(() => {
-                    updateChallengeDisplay();
-                }, 0);
-                
+                setTimeout(() => { updateChallengeDisplay(); }, 0);
                 showToast(`Hari ke-${day} berhasil ditandai! +${formatRupiah(currentChallenge.dailyAmount)}`, 'success');
                 
-                // Check if challenge completed
                 if (currentChallenge.currentDay > 30 || currentChallenge.collectedAmount >= currentChallenge.targetAmount) {
-                    setTimeout(() => {
-                        celebrateCompletion();
-                    }, 500);
+                    setTimeout(() => { celebrateCompletion(); }, 500);
                 }
             }
         }
@@ -1493,21 +1373,10 @@
             }
 
             const progress = Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100);
-            const text = `Saya sudah menabung ${formatRupiah(currentChallenge.collectedAmount)} dari target ${formatRupiah(currentChallenge.targetAmount)} di challenge ${currentChallenge.title}!
-
-Progress: ${progress}%
-Hari ke-${currentChallenge.currentDay}/30
-
-Ayo ikutan saving challenge di Monetra! 🏆`;
+            const text = `Saya sudah menabung ${formatRupiah(currentChallenge.collectedAmount)} dari target ${formatRupiah(currentChallenge.targetAmount)} di challenge ${currentChallenge.title}!\n\nProgress: ${progress}%\nHari ke-${currentChallenge.currentDay}/30\n\nAyo ikutan saving challenge di Monetra! 🏆`;
             
             if (navigator.share) {
-                navigator.share({
-                    title: 'Saving Challenge Progress',
-                    text: text,
-                    url: window.location.href
-                }).catch(() => {
-                    copyToClipboard(text);
-                });
+                navigator.share({ title: 'Saving Challenge Progress', text: text, url: window.location.href }).catch(() => copyToClipboard(text));
             } else {
                 copyToClipboard(text);
             }
@@ -1527,17 +1396,12 @@ Ayo ikutan saving challenge di Monetra! 🏆`;
             if (confirm('Yakin ingin mereset challenge ini? Progress akan hilang.')) {
                 currentChallenge = null;
                 localStorage.removeItem('activeChallenge');
-                
-                setTimeout(() => {
-                    updateChallengeDisplay();
-                }, 0);
-                
+                setTimeout(() => { updateChallengeDisplay(); }, 0);
                 showToast('Challenge berhasil direset', 'info');
             }
         }
 
         function celebrateCompletion() {
-            // Create confetti
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.position = 'fixed';
@@ -1551,25 +1415,14 @@ Ayo ikutan saving challenge di Monetra! 🏆`;
                 confetti.style.animation = `confettiFall 3s ease-in-out forwards`;
                 confetti.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    if (confetti.parentNode) confetti.remove();
-                }, 5000);
+                setTimeout(() => { if (confetti.parentNode) confetti.remove(); }, 5000);
             }
             
-            // Add confetti animation
             const style = document.createElement('style');
-            style.textContent = `
-                @keyframes confettiFall {
-                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-                }
-            `;
+            style.textContent = `@keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }`;
             document.head.appendChild(style);
             
-            setTimeout(() => {
-                showToast('🎉 Selamat! Challenge selesai! 🎉', 'success', 5000);
-            }, 500);
+            setTimeout(() => { showToast('🎉 Selamat! Challenge selesai! 🎉', 'success', 5000); }, 500);
         }
 
         // ==================== INITIAL RENDER ====================

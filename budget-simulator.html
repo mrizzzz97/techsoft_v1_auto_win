@@ -73,7 +73,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen - Sama seperti index */
+        /* Loading Screen */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -132,7 +132,7 @@
             to { opacity: 1; }
         }
 
-        /* Navbar - Sama persis dengan index */
+        /* Navbar */
         .navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding-top: 1.25rem;
@@ -165,12 +165,18 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Navbar CTA - Sama seperti index */
+        /* =============================================
+           FIX 1: Navbar CTA - Ukuran wajar + teks selalu putih
+           ============================================= */
         .navbar-cta {
             background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
             color: #ffffff !important;
             display: inline-block;
             transition: all 0.3s ease;
+            /* FIX: ukuran yang lebih proporsional */
+            padding: 0.6rem 1.5rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 700;
         }
         .navbar-cta:hover {
             transform: translateY(-2px);
@@ -178,8 +184,14 @@
             background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
             color: #ffffff !important;
         }
+        /* FIX: Pastikan teks selalu putih di semua mode */
         html.light .navbar-cta,
-        html.light .navbar-cta:hover { color: #ffffff !important; }
+        html.light .navbar-cta:hover,
+        html.light .navbar-cta span,
+        html.light .navbar-cta * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
 
         /* Buttons */
         .btn-primary {
@@ -202,7 +214,6 @@
             color: #ffffff !important;
         }
 
-        /* Light Mode Button Fix */
         html.light .btn-primary,
         html.light .btn-primary:hover,
         html.light .btn-primary *,
@@ -210,7 +221,7 @@
             color: #ffffff !important;
         }
 
-        /* Dropdown Menu - Sama seperti index */
+        /* Dropdown Menu */
         .dropdown {
             position: relative;
         }
@@ -411,7 +422,7 @@
             }
         }
 
-        /* Mobile Menu - Sama seperti index */
+        /* Mobile Menu */
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -557,12 +568,14 @@
             color: #64748b !important;
         }
 
-        /* Footer - Always White Text */
+        /* =============================================
+           FIX 2: Footer - selalu dark background, teks selalu putih
+           ============================================= */
         footer {
             background-color: #020617 !important;
         }
 
-        footer,
+        footer *,
         footer h4,
         footer p,
         footer a,
@@ -576,7 +589,7 @@
             background-color: #020617 !important;
         }
 
-        html.light footer,
+        html.light footer *,
         html.light footer h4,
         html.light footer p,
         html.light footer a,
@@ -584,12 +597,14 @@
         html.light footer li,
         html.light footer div {
             color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
         }
-        
+
         html.light footer .opacity-50,
         html.light footer .opacity-60,
         html.light footer .opacity-40 {
             color: rgba(255, 255, 255, 0.6) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
         }
 
         /* Scrollbar */
@@ -654,7 +669,7 @@
         <div class="loader-subtext">Simulasi Budget</div>
     </div>
 
-    <!-- Navbar - Sama persis dengan index -->
+    <!-- Navbar -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
         <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
@@ -702,7 +717,8 @@
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
                 
-                <a href="personality-test.html" class="navbar-cta px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group">
+                <!-- FIX: Ukuran tombol diperkecil & teks selalu putih -->
+                <a href="personality-test.html" class="navbar-cta rounded-full font-bold flex items-center gap-2">
                     <span>Mulai Sekarang</span>
                 </a>
             </div>
@@ -756,7 +772,7 @@
 
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
             
-            <a href="personality-test.html" class="navbar-cta px-6 py-3 rounded-full text-center mt-4">
+            <a href="personality-test.html" class="navbar-cta rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
         </div>
@@ -1214,12 +1230,10 @@
             mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
         }
         
-        // Close mobile menu when clicking on links
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMobileMenuFunc);
         });
         
-        // Handle escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
                 closeMobileMenuFunc();
@@ -1231,7 +1245,6 @@
             return 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         };
 
-        // Auto format input rupiah dengan pemisah ribuan
         const formatInputRupiah = (input) => {
             let value = input.value.replace(/\D/g, '');
             if (value) {
@@ -1241,12 +1254,10 @@
             }
         };
 
-        // Parse input rupiah kembali ke angka
         const parseInputRupiah = (input) => {
             return parseInt(input.value.replace(/\D/g, '') || '0');
         };
 
-        // Get input elements
         const mainIncome = document.getElementById('mainIncome');
         const additionalIncome = document.getElementById('additionalIncome');
         const passiveIncome = document.getElementById('passiveIncome');
@@ -1294,7 +1305,6 @@
         }
 
         function updateValues() {
-            // Update displayed values
             needsValue.textContent = formatRupiah(Number(needsSlider.value));
             transportValue.textContent = formatRupiah(Number(transportSlider.value));
             entertainmentValue.textContent = formatRupiah(Number(entertainmentSlider.value));
@@ -1312,7 +1322,6 @@
             budgetPercentage.style.width = percentageValue + '%';
             percentageText.textContent = Math.round(percentageValue) + '%';
 
-            // Calculate percentages for each category
             if (totalExpenses > 0) {
                 needsPercentage.textContent = ((Number(needsSlider.value) / totalExpenses) * 100).toFixed(1) + '%';
                 transportPercentage.textContent = ((Number(transportSlider.value) / totalExpenses) * 100).toFixed(1) + '%';
@@ -1327,7 +1336,6 @@
                 othersPercentage.textContent = '0%';
             }
 
-            // Update budget tip
             if (totalIncome === 0) {
                 budgetTip.textContent = 'Mulai dengan mengisi pemasukan dan pengeluaran bulananmu.';
             } else if (percentage > 90) {
@@ -1395,7 +1403,6 @@
             }
         }
 
-        // Add event listeners untuk income inputs dengan auto format
         [mainIncome, additionalIncome, passiveIncome].forEach(input => {
             if (input) {
                 input.addEventListener('input', function() {
@@ -1407,7 +1414,6 @@
                     formatInputRupiah(this);
                 });
                 
-                // Format saat load
                 formatInputRupiah(input);
             }
         });
@@ -1416,7 +1422,6 @@
             if (slider) slider.addEventListener('input', updateValues);
         });
 
-        // Initialize
         if (needsSlider && transportSlider && entertainmentSlider && savingsSlider && othersSlider) {
             updateValues();
             initChart();
@@ -1444,7 +1449,6 @@
             localStorage.setItem('lastSimulation', JSON.stringify(simulationData));
         }
 
-        // Make functions global
         window.saveSimulation = saveSimulation;
     </script>
 </body>

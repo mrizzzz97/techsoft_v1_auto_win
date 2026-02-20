@@ -73,7 +73,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Loading Screen - Sama seperti index */
+        /* Loading Screen */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -132,7 +132,7 @@
             to { opacity: 1; }
         }
 
-        /* Navbar - Sama persis dengan index */
+        /* Navbar */
         .navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding-top: 1.25rem;
@@ -165,12 +165,18 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Navbar CTA - Sama seperti index */
+        /* =============================================
+           FIX 1: Navbar CTA - Ukuran wajar + teks selalu putih
+           ============================================= */
         .navbar-cta {
             background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
             color: #ffffff !important;
             display: inline-block;
             transition: all 0.3s ease;
+            /* FIX: ukuran proporsional */
+            padding: 0.6rem 1.5rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 700;
         }
         .navbar-cta:hover {
             transform: translateY(-2px);
@@ -178,8 +184,14 @@
             background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
             color: #ffffff !important;
         }
+        /* FIX: teks selalu putih di semua mode */
         html.light .navbar-cta,
-        html.light .navbar-cta:hover { color: #ffffff !important; }
+        html.light .navbar-cta:hover,
+        html.light .navbar-cta span,
+        html.light .navbar-cta * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
 
         /* Cards */
         .goal-card {
@@ -251,7 +263,6 @@
             color: #ffffff !important;
         }
 
-        /* Light Mode Button Fix */
         html.light .btn-primary,
         html.light .btn-primary:hover,
         html.light .btn-primary *,
@@ -506,7 +517,7 @@
             }
         }
 
-        /* Mobile Menu - Sama seperti index */
+        /* Mobile Menu */
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -592,7 +603,7 @@
             transform: scale(0.95);
         }
 
-        /* Dropdown Menu - Sama seperti index */
+        /* Dropdown Menu */
         .dropdown {
             position: relative;
         }
@@ -725,8 +736,14 @@
             color: #64748b !important;
         }
 
-        /* Footer - Always White Text */
-        footer,
+        /* =============================================
+           FIX 2: Footer - selalu dark background, teks selalu putih
+           ============================================= */
+        footer {
+            background-color: #020617 !important;
+        }
+
+        footer *,
         footer h4,
         footer p,
         footer a,
@@ -736,7 +753,11 @@
             color: #ffffff !important;
         }
 
-        html.light footer,
+        html.light footer {
+            background-color: #020617 !important;
+        }
+
+        html.light footer *,
         html.light footer h4,
         html.light footer p,
         html.light footer a,
@@ -744,12 +765,14 @@
         html.light footer li,
         html.light footer div {
             color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
         }
-        
+
         html.light footer .opacity-50,
         html.light footer .opacity-60,
         html.light footer .opacity-40 {
             color: rgba(255, 255, 255, 0.6) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
         }
 
         /* Scrollbar */
@@ -813,14 +836,14 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen - Sama seperti index -->
+    <!-- Loading Screen -->
     <div class="loader-wrapper" id="loader">
         <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
         <div class="loader-text">MONETRA</div>
         <div class="loader-subtext">Target Tabungan</div>
     </div>
 
-    <!-- Navbar - Sama persis dengan index -->
+    <!-- Navbar -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
         <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
@@ -868,7 +891,8 @@
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
                 
-                <a href="personality-test.html" class="navbar-cta px-9 py-4 rounded-full font-bold text-base flex items-center gap-2 group">
+                <!-- FIX: Ukuran tombol diperkecil & teks selalu putih -->
+                <a href="personality-test.html" class="navbar-cta rounded-full font-bold flex items-center gap-2">
                     <span>Mulai Sekarang</span>
                 </a>
             </div>
@@ -922,7 +946,7 @@
 
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
             
-            <a href="personality-test.html" class="navbar-cta px-6 py-3 rounded-full text-center mt-4">
+            <a href="personality-test.html" class="navbar-cta rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
         </div>
@@ -1152,7 +1176,7 @@
     <script>
         lucide.createIcons();
         
-        // Loading - Sama seperti index (3 detik)
+        // Loading
         window.addEventListener('load', function() {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
@@ -1189,7 +1213,7 @@
             html.classList.add('dark');
         }
         
-        // Floating Navbar on Scroll - Sama seperti index (scrollY > 100)
+        // Floating Navbar on Scroll
         const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', function() {
             if (window.scrollY > 100) {
@@ -1221,17 +1245,9 @@
             }
         }
         
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', openMobileMenu);
-        }
-        
-        if (closeMobileMenu) {
-            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
-        }
-        
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        }
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+        if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
         
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMobileMenuFunc);
@@ -1249,11 +1265,9 @@
         let milestoneCounter = 0;
         let tempMilestones = [];
 
-        // Load goals from localStorage - START WITH EMPTY DATA
         if (localStorage.getItem('goals')) {
             goals = JSON.parse(localStorage.getItem('goals'));
         } else {
-            // START WITH EMPTY ARRAY - NO SAMPLE DATA
             goals = [];
             localStorage.setItem('goals', JSON.stringify(goals));
         }
@@ -1262,44 +1276,33 @@
             return 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         };
 
-        // Format number with thousand separators as user types
         function formatNumberInput(value) {
-            // Remove all non-digit characters
             const number = value.replace(/\D/g, '');
-            // Add thousand separators
             return number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
 
-        // Parse formatted number back to integer
         function parseFormattedNumber(value) {
             return parseInt(value.replace(/\./g, '') || '0');
         }
 
-        // Auto-format input fields
         function setupNumberFormatting(input) {
             if (!input) return;
             
             input.addEventListener('input', function(e) {
                 const cursorPosition = this.selectionStart;
                 const oldLength = this.value.length;
-                
-                // Format the value
                 this.value = formatNumberInput(this.value);
-                
-                // Adjust cursor position after formatting
                 const newLength = this.value.length;
                 const diff = newLength - oldLength;
                 this.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
             });
 
-            // Format on blur if empty
             input.addEventListener('blur', function() {
                 if (!this.value || this.value === '0') {
                     this.value = '0';
                 }
             });
 
-            // Clear placeholder zero on focus
             input.addEventListener('focus', function() {
                 if (this.value === '0') {
                     this.value = '';
@@ -1352,9 +1355,7 @@
 
         function clearMilestoneInputs() {
             const container = document.getElementById('milestonesContainer');
-            if (container) {
-                container.innerHTML = '';
-            }
+            if (container) container.innerHTML = '';
             milestoneCounter = 0;
         }
 
@@ -1492,7 +1493,6 @@
             container.innerHTML = html;
             lucide.createIcons();
             
-            // Setup formatting for all update amount inputs
             document.querySelectorAll('.update-amount-input').forEach(input => {
                 setupNumberFormatting(input);
             });
@@ -1531,7 +1531,6 @@
                 if (milestone) {
                     milestone.completed = !milestone.completed;
                     
-                    // Add timestamp when milestone is completed
                     if (milestone.completed) {
                         milestone.completedAt = new Date().toISOString();
                     } else {
@@ -1600,7 +1599,6 @@
                 }
             });
             
-            // Sort by completion time (most recent first)
             allMilestones.sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
             
             const recent = allMilestones.slice(0, 5);
@@ -1675,7 +1673,7 @@
             container.innerHTML = `
                 <div class="flex items-start gap-2 sm:gap-3 md:gap-4">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="${randomTip.icon}" class="w-4 h-4 sm:w-5 sm:h-5 md:w-5.5 md:h-5.5 lg:w-6 lg:h-6 text-white"></i>
+                        <i data-lucide="${randomTip.icon}" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white"></i>
                     </div>
                     <div>
                         <h4 class="text-sm sm:text-base font-bold mb-1">${randomTip.title}</h4>
@@ -1693,7 +1691,6 @@
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 
-                // Setup formatting for modal inputs
                 setTimeout(() => {
                     setupNumberFormatting(document.getElementById('goalTarget'));
                     setupNumberFormatting(document.getElementById('goalCurrent'));
@@ -1758,14 +1755,12 @@
             renderGoals();
             closeAddGoalModal();
             
-            // Clear all inputs
             if (nameInput) nameInput.value = '';
             if (targetInput) targetInput.value = '';
             if (currentInput) currentInput.value = '0';
             if (deadlineInput) deadlineInput.value = '';
             clearMilestoneInputs();
             
-            // Reset color selection
             selectedColor = 'violet';
             document.querySelectorAll('.color-option').forEach(btn => {
                 btn.style.borderColor = 'transparent';
