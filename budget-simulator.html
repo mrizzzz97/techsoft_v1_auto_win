@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Simulasi Budget - Monetra</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -29,31 +30,33 @@
             }
         }
     </script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="assets/css/clock.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         html.dark body {
             background-color: #020617;
             color: #f8fafc;
         }
-        
+
         html.light body {
             background-color: #f8fafc;
             color: #0f172a;
@@ -88,7 +91,7 @@
             align-items: center;
             transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        
+
         .loader-wrapper.slide-up {
             transform: translateY(-100%);
         }
@@ -104,7 +107,10 @@
         }
 
         @keyframes logoReveal {
-            to { opacity: 1; transform: scale(1); }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .loader-text {
@@ -129,7 +135,9 @@
         }
 
         @keyframes fadeIn {
-            to { opacity: 1; }
+            to {
+                opacity: 1;
+            }
         }
 
         /* Navbar */
@@ -138,17 +146,17 @@
             padding-top: 1.25rem;
             padding-bottom: 1.25rem;
         }
-        
+
         .navbar .navbar-container {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0;
         }
-        
+
         .navbar.floating {
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
-        
+
         .navbar.floating .navbar-container {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
@@ -158,7 +166,7 @@
             padding: 0.75rem 2rem;
             max-width: 1200px;
         }
-        
+
         html.light .navbar.floating .navbar-container {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -178,12 +186,14 @@
             font-size: 0.875rem !important;
             font-weight: 700;
         }
+
         .navbar-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 35px rgba(139, 92, 246, 0.45);
             background: linear-gradient(135deg, #6d28d9 0%, #0e7490 100%);
             color: #ffffff !important;
         }
+
         /* FIX: Pastikan teks selalu putih di semua mode */
         html.light .navbar-cta,
         html.light .navbar-cta:hover,
@@ -282,7 +292,7 @@
             transition: border-color 0.2s ease;
             overflow: hidden;
         }
-        
+
         html.light .budget-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -457,12 +467,12 @@
             padding: 1.5rem;
             box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
         }
-        
+
         html.light .mobile-menu {
             background: #ffffff;
             border-left: 1px solid #e2e8f0;
         }
-        
+
         .mobile-menu.active {
             transform: translateX(0);
         }
@@ -542,8 +552,13 @@
         }
 
         @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
 
         /* Light Mode Fixes */
@@ -554,14 +569,14 @@
         html.light h5 {
             color: #0f172a !important;
         }
-        
+
         html.light p,
         html.light span,
         html.light li,
         html.light a:not(.btn-primary):not(.navbar-cta):not(.dropdown-item) {
             color: #334155 !important;
         }
-        
+
         html.light .text-gray-300,
         html.light .text-gray-400,
         html.light .text-gray-500 {
@@ -611,15 +626,15 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: #0f172a;
         }
-        
+
         html.light ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: #334155;
             border-radius: 4px;
@@ -630,7 +645,8 @@
         }
 
         /* Touch-friendly buttons */
-        button, a {
+        button,
+        a {
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -654,13 +670,15 @@
             text-transform: uppercase;
             color: #a78bfa;
         }
-        html.light .section-tag { 
-            color: #7c3aed; 
-            background: rgba(124, 58, 237, 0.08); 
-            border-color: rgba(124, 58, 237, 0.3); 
+
+        html.light .section-tag {
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+            border-color: rgba(124, 58, 237, 0.3);
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div class="loader-wrapper" id="loader">
@@ -671,23 +689,25 @@
 
     <!-- Navbar -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
-        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
+        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between relative">
             <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
-                <div class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+                <div
+                    class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
                     <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+                <span
+                    class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
-            
+
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                
+
                 <!-- Features Dropdown -->
                 <div class="dropdown">
                     <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features 
+                        Features
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -710,20 +730,19 @@
                     </div>
                 </div>
 
+
                 <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
-                
+
                 <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                
+
                 <!-- FIX: Ukuran tombol diperkecil & teks selalu putih -->
                 <a href="personality-test.html" class="navbar-cta rounded-full font-bold flex items-center gap-2">
                     <span>Mulai Sekarang</span>
                 </a>
             </div>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
@@ -735,10 +754,10 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
+
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="flex justify-end mb-8">
@@ -749,7 +768,7 @@
         <div class="flex flex-col space-y-4">
             <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
             <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
-            
+
             <div class="border-t border-white/10 pt-4">
                 <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
                 <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
@@ -771,7 +790,7 @@
             </div>
 
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
-            
+
             <a href="personality-test.html" class="navbar-cta rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
@@ -788,9 +807,11 @@
                         Kalkulator Anggaran
                     </span>
                 </div>
-                <h1 class="hero-title font-black mb-4 sm:mb-6">Simulasi <span class="gradient-text">Budget Bulanan</span></h1>
+                <h1 class="hero-title font-black mb-4 sm:mb-6">Simulasi <span class="gradient-text">Budget
+                        Bulanan</span></h1>
                 <p class="text-sm sm:text-base md:text-lg lg:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed px-4">
-                    Atur pemasukan dan pengeluaranmu dengan mudah. Dapatkan gambaran jelas tentang kesehatan keuangan bulanan.
+                    Atur pemasukan dan pengeluaranmu dengan mudah. Dapatkan gambaran jelas tentang kesehatan keuangan
+                    bulanan.
                 </p>
             </div>
         </div>
@@ -804,7 +825,8 @@
                 <!-- Income Section -->
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl">
                     <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
                             <i data-lucide="trending-up" class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white"></i>
                         </div>
                         <div>
@@ -815,25 +837,31 @@
 
                     <div class="space-y-4 sm:space-y-5 md:space-y-6">
                         <div>
-                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan Utama</label>
+                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan
+                                Utama</label>
                             <div class="relative">
-                                <span class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
+                                <span
+                                    class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
                                 <input type="text" id="mainIncome" value="0" class="number-input pl-10 sm:pl-14">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan Tambahan</label>
+                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan
+                                Tambahan</label>
                             <div class="relative">
-                                <span class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
+                                <span
+                                    class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
                                 <input type="text" id="additionalIncome" value="0" class="number-input pl-10 sm:pl-14">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan Pasif</label>
+                            <label class="block text-xs sm:text-sm font-medium mb-1 sm:mb-2 opacity-70">Pendapatan
+                                Pasif</label>
                             <div class="relative">
-                                <span class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
+                                <span
+                                    class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-xs sm:text-sm opacity-60">Rp</span>
                                 <input type="text" id="passiveIncome" value="0" class="number-input pl-10 sm:pl-14">
                             </div>
                         </div>
@@ -841,7 +869,8 @@
                         <div class="summary-card mt-4 sm:mt-5 md:mt-6">
                             <div class="flex justify-between items-center">
                                 <span class="text-xs sm:text-sm font-semibold">Total Pemasukan:</span>
-                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-green-400" id="totalIncome">Rp 0</span>
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-green-400"
+                                    id="totalIncome">Rp 0</span>
                             </div>
                         </div>
                     </div>
@@ -850,7 +879,8 @@
                 <!-- Expenses Section -->
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl">
                     <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
                             <i data-lucide="trending-down" class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white"></i>
                         </div>
                         <div>
@@ -866,7 +896,8 @@
                                 <label class="text-xs sm:text-sm font-medium opacity-70">Kebutuhan Pokok</label>
                                 <span class="text-xs sm:text-sm font-bold text-cyan-400" id="needsValue">Rp 0</span>
                             </div>
-                            <input type="range" id="needsSlider" class="mb-1 sm:mb-2" min="0" max="10000000" value="0" step="100000">
+                            <input type="range" id="needsSlider" class="mb-1 sm:mb-2" min="0" max="10000000" value="0"
+                                step="100000">
                             <div class="flex justify-between text-xxs sm:text-xs opacity-50">
                                 <span>Rp 0</span>
                                 <span>Rp 10 Jt</span>
@@ -893,7 +924,8 @@
                                 <label class="text-xs sm:text-sm font-medium opacity-70">Transportasi</label>
                                 <span class="text-xs sm:text-sm font-bold text-cyan-400" id="transportValue">Rp 0</span>
                             </div>
-                            <input type="range" id="transportSlider" class="mb-1 sm:mb-2" min="0" max="5000000" value="0" step="50000">
+                            <input type="range" id="transportSlider" class="mb-1 sm:mb-2" min="0" max="5000000"
+                                value="0" step="50000">
                             <div class="flex justify-between text-xxs sm:text-xs opacity-50">
                                 <span>Rp 0</span>
                                 <span>Rp 5 Jt</span>
@@ -914,9 +946,11 @@
                         <div>
                             <div class="flex justify-between mb-1 sm:mb-2">
                                 <label class="text-xs sm:text-sm font-medium opacity-70">Hiburan & Lifestyle</label>
-                                <span class="text-xs sm:text-sm font-bold text-cyan-400" id="entertainmentValue">Rp 0</span>
+                                <span class="text-xs sm:text-sm font-bold text-cyan-400" id="entertainmentValue">Rp
+                                    0</span>
                             </div>
-                            <input type="range" id="entertainmentSlider" class="mb-1 sm:mb-2" min="0" max="3000000" value="0" step="50000">
+                            <input type="range" id="entertainmentSlider" class="mb-1 sm:mb-2" min="0" max="3000000"
+                                value="0" step="50000">
                             <div class="flex justify-between text-xxs sm:text-xs opacity-50">
                                 <span>Rp 0</span>
                                 <span>Rp 3 Jt</span>
@@ -939,7 +973,8 @@
                                 <label class="text-xs sm:text-sm font-medium opacity-70">Tabungan & Investasi</label>
                                 <span class="text-xs sm:text-sm font-bold text-cyan-400" id="savingsValue">Rp 0</span>
                             </div>
-                            <input type="range" id="savingsSlider" class="mb-1 sm:mb-2" min="0" max="5000000" value="0" step="50000">
+                            <input type="range" id="savingsSlider" class="mb-1 sm:mb-2" min="0" max="5000000" value="0"
+                                step="50000">
                             <div class="flex justify-between text-xxs sm:text-xs opacity-50">
                                 <span>Rp 0</span>
                                 <span>Rp 5 Jt</span>
@@ -962,7 +997,8 @@
                                 <label class="text-xs sm:text-sm font-medium opacity-70">Lain-lain</label>
                                 <span class="text-xs sm:text-sm font-bold text-cyan-400" id="othersValue">Rp 0</span>
                             </div>
-                            <input type="range" id="othersSlider" class="mb-1 sm:mb-2" min="0" max="2000000" value="0" step="50000">
+                            <input type="range" id="othersSlider" class="mb-1 sm:mb-2" min="0" max="2000000" value="0"
+                                step="50000">
                             <div class="flex justify-between text-xxs sm:text-xs opacity-50">
                                 <span>Rp 0</span>
                                 <span>Rp 2 Jt</span>
@@ -972,7 +1008,8 @@
                         <div class="summary-card mt-4 sm:mt-5 md:mt-6">
                             <div class="flex justify-between items-center">
                                 <span class="text-xs sm:text-sm font-semibold">Total Pengeluaran:</span>
-                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-red-400" id="totalExpenses">Rp 0</span>
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-red-400"
+                                    id="totalExpenses">Rp 0</span>
                             </div>
                         </div>
                     </div>
@@ -992,7 +1029,7 @@
                 <!-- Summary -->
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl">
                     <h3 class="text-base sm:text-lg md:text-xl font-bold mb-4 sm:mb-6">Ringkasan Keuangan</h3>
-                    
+
                     <div class="space-y-4 sm:space-y-5 md:space-y-6">
                         <div>
                             <div class="flex justify-between mb-1 sm:mb-2">
@@ -1034,7 +1071,8 @@
 
                         <div class="summary-card">
                             <div class="flex items-start gap-2 sm:gap-3">
-                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                                <div
+                                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
                                     <i data-lucide="info" class="w-4 h-4 sm:w-5 sm:h-5 text-violet-400"></i>
                                 </div>
                                 <div>
@@ -1055,8 +1093,11 @@
     <section class="pb-20 sm:pb-24 md:pb-28 lg:pb-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-10 sm:mb-12 md:mb-16">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">Tips Mengatur Budget</h2>
-                <div class="w-16 sm:w-20 md:w-24 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-4 sm:mb-6"></div>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">Tips Mengatur Budget
+                </h2>
+                <div
+                    class="w-16 sm:w-20 md:w-24 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 mx-auto rounded-full mb-4 sm:mb-6">
+                </div>
                 <p class="text-sm sm:text-base md:text-lg opacity-70 max-w-2xl mx-auto px-4">
                     Panduan sederhana untuk mengelola keuangan dengan lebih baik
                 </p>
@@ -1064,7 +1105,8 @@
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                    <div
+                        class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
                         <i data-lucide="percent" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"></i>
                     </div>
                     <h3 class="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">Metode 50/30/20</h3>
@@ -1074,7 +1116,8 @@
                 </div>
 
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                    <div
+                        class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
                         <i data-lucide="alert-circle" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"></i>
                     </div>
                     <h3 class="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">Dana Darurat</h3>
@@ -1084,7 +1127,8 @@
                 </div>
 
                 <div class="budget-card p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl sm:col-span-2 lg:col-span-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                    <div
+                        class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
                         <i data-lucide="trending-up" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white"></i>
                     </div>
                     <h3 class="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">Investasi Dini</h3>
@@ -1096,7 +1140,7 @@
         </div>
     </section>
 
-<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-[#020617] pt-24 pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
@@ -1107,14 +1151,19 @@
                         </div>
                         <span class="text-2xl font-bold">Monetra</span>
                     </div>
-                    <p class="opacity-50 text-sm leading-relaxed">Platform edukasi finansial interaktif yang membantu generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih bijak.</p>
+                    <p class="opacity-50 text-sm leading-relaxed">Platform edukasi finansial interaktif yang membantu
+                        generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih
+                        bijak.</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-6">Produk</h4>
                     <ul class="space-y-4 text-sm opacity-60">
-                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
-                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
-                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a></li>
+                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a>
+                        </li>
+                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a>
+                        </li>
+                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a>
+                        </li>
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
@@ -1128,13 +1177,16 @@
                 <div>
                     <h4 class="font-bold mb-6">Ikuti Kami</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="twitter" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="instagram" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="linkedin" class="w-5 h-5"></i>
                         </a>
                     </div>
@@ -1148,20 +1200,20 @@
 
     <script>
         lucide.createIcons();
-        
+
         // Loading
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
         });
-        
+
         // AOS
         AOS.init({ duration: 900, once: true, offset: 60, easing: 'ease-out-cubic' });
-        
+
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
         const html = document.documentElement;
-        
+
         function toggleTheme() {
             html.classList.toggle('dark');
             html.classList.toggle('light');
@@ -1169,10 +1221,10 @@
             lucide.createIcons();
             if (budgetChart) updateChart();
         }
-        
+
         if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
         if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
-        
+
         // Load saved theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
@@ -1181,23 +1233,23 @@
         } else if (!savedTheme) {
             html.classList.add('dark');
         }
-        
+
         // Floating Navbar on Scroll
         const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY > 100) {
                 navbar.classList.add('floating');
             } else {
                 navbar.classList.remove('floating');
             }
         });
-        
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileMenu = document.getElementById('closeMobileMenu');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        
+
         function openMobileMenu() {
             if (mobileMenu && mobileMenuOverlay) {
                 mobileMenu.classList.add('active');
@@ -1205,7 +1257,7 @@
                 document.body.style.overflow = 'hidden';
             }
         }
-        
+
         function closeMobileMenuFunc() {
             if (mobileMenu && mobileMenuOverlay) {
                 mobileMenu.classList.remove('active');
@@ -1213,24 +1265,24 @@
                 document.body.style.overflow = '';
             }
         }
-        
+
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', openMobileMenu);
         }
-        
+
         if (closeMobileMenu) {
             closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
         }
-        
+
         if (mobileMenuOverlay) {
             mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
         }
-        
+
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMobileMenuFunc);
         });
-        
-        document.addEventListener('keydown', function(e) {
+
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
                 closeMobileMenuFunc();
             }
@@ -1258,30 +1310,30 @@
         const additionalIncome = document.getElementById('additionalIncome');
         const passiveIncome = document.getElementById('passiveIncome');
         const totalIncomeSpan = document.getElementById('totalIncome');
-        
+
         const needsSlider = document.getElementById('needsSlider');
         const transportSlider = document.getElementById('transportSlider');
         const entertainmentSlider = document.getElementById('entertainmentSlider');
         const savingsSlider = document.getElementById('savingsSlider');
         const othersSlider = document.getElementById('othersSlider');
-        
+
         const needsValue = document.getElementById('needsValue');
         const transportValue = document.getElementById('transportValue');
         const entertainmentValue = document.getElementById('entertainmentValue');
         const savingsValue = document.getElementById('savingsValue');
         const othersValue = document.getElementById('othersValue');
         const totalExpensesSpan = document.getElementById('totalExpenses');
-        
+
         const remainingBudgetSpan = document.getElementById('remainingBudget');
         const budgetPercentage = document.getElementById('budgetPercentage');
         const percentageText = document.getElementById('percentageText');
-        
+
         const needsPercentage = document.getElementById('needsPercentage');
         const transportPercentage = document.getElementById('transportPercentage');
         const entertainmentPercentage = document.getElementById('entertainmentPercentage');
         const savingsPercentage = document.getElementById('savingsPercentage');
         const othersPercentage = document.getElementById('othersPercentage');
-        
+
         const budgetTip = document.getElementById('budgetTip');
 
         let budgetChart;
@@ -1293,9 +1345,9 @@
         }
 
         function calculateTotalExpenses() {
-            const total = Number(needsSlider.value) + Number(transportSlider.value) + 
-                         Number(entertainmentSlider.value) + Number(savingsSlider.value) + 
-                         Number(othersSlider.value);
+            const total = Number(needsSlider.value) + Number(transportSlider.value) +
+                Number(entertainmentSlider.value) + Number(savingsSlider.value) +
+                Number(othersSlider.value);
             totalExpensesSpan.textContent = formatRupiah(total);
             return total;
         }
@@ -1310,9 +1362,9 @@
             const totalIncome = calculateTotalIncome();
             const totalExpenses = calculateTotalExpenses();
             const remaining = totalIncome - totalExpenses;
-            
+
             remainingBudgetSpan.textContent = formatRupiah(remaining);
-            
+
             const percentage = totalIncome > 0 ? (totalExpenses / totalIncome) * 100 : 0;
             const percentageValue = Math.min(percentage, 100);
             budgetPercentage.style.width = percentageValue + '%';
@@ -1349,7 +1401,7 @@
 
         function initChart() {
             const ctx = document.getElementById('budgetChart').getContext('2d');
-            
+
             budgetChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -1401,15 +1453,15 @@
 
         [mainIncome, additionalIncome, passiveIncome].forEach(input => {
             if (input) {
-                input.addEventListener('input', function() {
+                input.addEventListener('input', function () {
                     formatInputRupiah(this);
                     updateValues();
                 });
-                
-                input.addEventListener('blur', function() {
+
+                input.addEventListener('blur', function () {
                     formatInputRupiah(this);
                 });
-                
+
                 formatInputRupiah(input);
             }
         });
@@ -1425,7 +1477,7 @@
 
         function saveSimulation() {
             alert('Simulasi budget berhasil disimpan!');
-            
+
             const simulationData = {
                 income: {
                     main: parseInputRupiah(mainIncome),
@@ -1441,11 +1493,19 @@
                 },
                 date: new Date().toISOString()
             };
-            
+
             localStorage.setItem('lastSimulation', JSON.stringify(simulationData));
         }
 
         window.saveSimulation = saveSimulation;
     </script>
+    <!-- Floating Clock -->
+    <div id="floating-clock" class="clock-container">
+        <div class="clock-time">00:00:00</div>
+        <div class="clock-date">Memuat...</div>
+    </div>
+
+    <script src="assets/js/clock.js"></script>
 </body>
+
 </html>

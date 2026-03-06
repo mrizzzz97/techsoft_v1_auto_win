@@ -1,0 +1,88 @@
+/* Floating Clock Styles */
+.clock-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Inter', sans-serif;
+    min-width: 160px;
+    z-index: 9999;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    user-select: none;
+}
+
+.clock-container:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.2);
+}
+
+html.light .clock-container {
+    background: rgba(15, 23, 42, 0.05);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.1);
+}
+
+html.light .clock-container:hover {
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.clock-time {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.clock-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    margin-top: 4px;
+    background: linear-gradient(135deg, #f8fafc, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+html.light .clock-date {
+    background: linear-gradient(135deg, #0f172a, #475569);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@media (max-width: 768px) {
+    .clock-container {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        padding: 0.6rem 1.25rem;
+        min-width: 140px;
+    }
+
+    .clock-time {
+        font-size: 1.25rem;
+    }
+
+    .clock-date {
+        font-size: 0.6rem;
+    }
+}

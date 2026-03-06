@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Tentang Monetra - Platform Edukasi Finansial</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,30 +29,45 @@
             }
         }
     </script>
-    
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <link rel="stylesheet" href="assets/css/clock.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        html.dark body { background-color: #020617; color: #f8fafc; }
-        html.light body { background-color: #f8fafc; color: #0f172a; }
+
+        html.dark body {
+            background-color: #020617;
+            color: #f8fafc;
+        }
+
+        html.light body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
 
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
             opacity: 0.03;
@@ -60,8 +76,10 @@
 
         .loader-wrapper {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             background: #020617;
             z-index: 10000;
             display: flex;
@@ -70,43 +88,101 @@
             align-items: center;
             transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        .loader-wrapper.slide-up { transform: translateY(-100%); }
+
+        .loader-wrapper.slide-up {
+            transform: translateY(-100%);
+        }
+
         .loader-logo-img {
-            width: 80px; height: 80px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
             opacity: 0;
             animation: logoReveal 1s ease forwards 0.5s;
         }
-        @media (min-width: 640px) { .loader-logo-img { width: 100px; height: 100px; } }
-        @keyframes logoReveal { to { opacity: 1; transform: scale(1); } }
+
+        @media (min-width: 640px) {
+            .loader-logo-img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @keyframes logoReveal {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .loader-text {
             margin-top: 20px;
-            font-size: 1.5rem; font-weight: 800;
+            font-size: 1.5rem;
+            font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 1.2s;
         }
-        @media (min-width: 640px) { .loader-text { font-size: 2rem; margin-top: 24px; } }
+
+        @media (min-width: 640px) {
+            .loader-text {
+                font-size: 2rem;
+                margin-top: 24px;
+            }
+        }
+
         .loader-subtext {
             margin-top: 6px;
-            font-size: 0.7rem; color: #64748b;
-            letter-spacing: 0.2em; text-transform: uppercase;
+            font-size: 0.7rem;
+            color: #64748b;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
             opacity: 0;
             animation: fadeIn 1s ease forwards 1.8s;
         }
-        @media (min-width: 640px) { .loader-subtext { font-size: 0.875rem; margin-top: 8px; } }
-        @keyframes fadeIn { to { opacity: 1; } }
+
+        @media (min-width: 640px) {
+            .loader-subtext {
+                font-size: 0.875rem;
+                margin-top: 8px;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
 
         .navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 0.75rem; padding-bottom: 0.75rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
         }
-        @media (min-width: 768px) { .navbar { padding-top: 1.25rem; padding-bottom: 1.25rem; } }
-        .navbar .navbar-container { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 0; max-width: 80rem; width: 100%; }
-        .navbar.floating { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+        @media (min-width: 768px) {
+            .navbar {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+        }
+
+        .navbar .navbar-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+            max-width: 80rem;
+            width: 100%;
+        }
+
+        .navbar.floating {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
         .navbar.floating .navbar-container {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
@@ -116,7 +192,13 @@
             padding: 0.5rem 1rem;
             max-width: 1200px;
         }
-        @media (min-width: 768px) { .navbar.floating .navbar-container { padding: 0.75rem 2rem; } }
+
+        @media (min-width: 768px) {
+            .navbar.floating .navbar-container {
+                padding: 0.75rem 2rem;
+            }
+        }
+
         html.light .navbar.floating .navbar-container {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -130,29 +212,48 @@
             cursor: pointer;
             border: none;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4); filter: brightness(1.1); }
-        .btn-primary:active { transform: translateY(0); }
-        .btn-primary *, .btn-primary i, .btn-primary span { color: #ffffff !important; }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary *,
+        .btn-primary i,
+        .btn-primary span {
+            color: #ffffff !important;
+        }
 
         .btn-secondary {
             background: transparent;
-            border: 1.5px solid rgba(255,255,255,0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
             color: #ffffff !important;
             transition: all 0.3s ease;
         }
-        .btn-secondary:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
 
         /* light mode: btn-secondary pakai warna gelap */
         html.light .btn-secondary,
         html.light a.btn-secondary {
-            border-color: rgba(109,40,217,0.35) !important;
+            border-color: rgba(109, 40, 217, 0.35) !important;
             color: #5b21b6 !important;
             background: transparent !important;
         }
+
         html.light .btn-secondary:hover,
         html.light a.btn-secondary:hover {
-            background: rgba(109,40,217,0.07) !important;
-            border-color: rgba(109,40,217,0.6) !important;
+            background: rgba(109, 40, 217, 0.07) !important;
+            border-color: rgba(109, 40, 217, 0.6) !important;
         }
 
         .gradient-text {
@@ -162,21 +263,42 @@
             background-size: 200% auto;
             animation: gradientMove 5s linear infinite;
         }
-        @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
 
         .mobile-menu-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(4px);
             z-index: 9998;
-            opacity: 0; visibility: hidden;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
         }
-        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .mobile-menu {
-            position: fixed; top: 0; right: 0;
-            width: 85%; max-width: 320px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 85%;
+            max-width: 320px;
             height: 100vh;
             background: #0f172a;
             z-index: 9999;
@@ -184,154 +306,926 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
             padding: 1.5rem;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
         }
-        html.light .mobile-menu { background: #ffffff; border-left: 1px solid #e2e8f0; }
-        .mobile-menu.active { transform: translateX(0); }
+
+        html.light .mobile-menu {
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
         #closeMobileMenu {
-            position: relative; z-index: 10000;
+            position: relative;
+            z-index: 10000;
             cursor: pointer;
-            width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 999px;
-            background: rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        #closeMobileMenu:hover { background: rgba(255,255,255,0.2); }
-        #mobileMenuBtn {
-            width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
         }
 
-        .dropdown { position: relative; }
+        #closeMobileMenu:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #mobileMenuBtn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
         .dropdown-menu {
-            position: absolute; top: 100%; left: 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
             margin-top: 0.5rem;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 1rem;
             padding: 0.5rem;
             min-width: 200px;
-            opacity: 0; visibility: hidden;
+            opacity: 0;
+            visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
             z-index: 100;
         }
-        html.light .dropdown-menu { background: rgba(255,255,255,0.95); border: 1px solid rgba(0,0,0,0.1); }
-        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        html.light .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
         .dropdown-item {
-            display: flex; align-items: center; gap: 0.75rem;
-            padding: 0.75rem 1rem; border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
             transition: all 0.2s ease;
             color: #f8fafc;
         }
-        html.light .dropdown-item { color: #0f172a; }
-        .dropdown-item:hover { background: rgba(139, 92, 246, 0.2); }
 
-        .blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: 0.12; }
-        .blob-1 { width: 500px; height: 500px; background: #7c3aed; top: -100px; right: -100px; }
-        .blob-2 { width: 400px; height: 400px; background: #0891b2; bottom: -80px; left: -80px; }
+        html.light .dropdown-item {
+            color: #0f172a;
+        }
 
-        .hero-title { font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.04em; }
-        .hero-subtitle { font-size: clamp(1rem, 2.2vw, 1.25rem); line-height: 1.8; color: #94a3b8; max-width: 620px; margin: 0 auto; }
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: #7c3aed;
+            top: -100px;
+            right: -100px;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #0891b2;
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 9vw, 8rem);
+            font-weight: 900;
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
+            line-height: 1.8;
+            color: #94a3b8;
+            max-width: 620px;
+            margin: 0 auto;
+        }
 
         .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 20px; border-radius: 999px;
-            border: 1px solid rgba(139,92,246,0.3);
-            background: rgba(139,92,246,0.08); backdrop-filter: blur(8px);
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(8px);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
             color: #c4b5fd;
         }
 
-        .section-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8b5cf6; margin-bottom: 12px; }
-        .section-heading { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; }
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8b5cf6;
+            margin-bottom: 12px;
+        }
 
-        .glass-card { background: rgba(15,23,42,0.55); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275); overflow: hidden; }
-        html.light .glass-card { background: #ffffff; border: 1px solid #e8edf5; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
-        .glass-card:hover { border-color: rgba(139,92,246,0.4); box-shadow: 0 20px 50px rgba(139,92,246,0.15); transform: translateY(-5px); }
+        .section-heading {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+        }
 
-        .info-box { padding: 22px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); text-align: center; transition: all 0.35s cubic-bezier(0.175,0.885,0.32,1.275); }
-        html.light .info-box { background: #ffffff; border: 1px solid #e8edf5; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
-        .info-box:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(139,92,246,0.35); box-shadow: 0 16px 40px rgba(139,92,246,0.12); }
-        .info-box-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 24px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
 
-        .approach-card { padding: 28px 32px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); transition: all 0.3s ease; position: relative; overflow: hidden; }
-        html.light .approach-card { background: #f8fafc; border: 1px solid #e2e8f0; }
-        .approach-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(to bottom, #8b5cf6, #06b6d4); border-radius: 0 4px 4px 0; transform: scaleY(0); transition: transform 0.3s ease; transform-origin: top; }
-        .approach-card:hover::before { transform: scaleY(1); }
-        .approach-card:hover { border-color: rgba(139,92,246,0.3); transform: translateX(4px); }
-        .approach-number { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #8b5cf6; margin-bottom: 8px; }
+        html.light .glass-card {
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+        }
 
-        .value-card { padding: 28px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: all 0.35s ease; position: relative; overflow: hidden; }
-        html.light .value-card { background: #ffffff; border: 1px solid #e8edf5; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
-        .value-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, #8b5cf6, #06b6d4); transform: scaleX(0); transition: transform 0.3s ease; }
-        .value-card:hover::after { transform: scaleX(1); }
-        .value-card:hover { border-color: rgba(139,92,246,0.3); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(139,92,246,0.12); }
-        .value-icon { width: 48px; height: 48px; border-radius: 16px; background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.15)); border: 1px solid rgba(139,92,246,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+            transform: translateY(-5px);
+        }
 
-        .mv-card { padding: 40px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); position: relative; overflow: hidden; transition: all 0.35s ease; }
-        html.light .mv-card { background: #ffffff; border: 1px solid #e8edf5; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-        .mv-card:hover { border-color: rgba(139,92,246,0.3); box-shadow: 0 24px 60px rgba(139,92,246,0.12); }
-        .mv-icon-wrap { width: 56px; height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-        .mv-list-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-        html.light .mv-list-item { border-bottom: 1px solid #f1f5f9; }
-        .mv-list-item:last-child { border-bottom: none; }
+        .info-box {
+            padding: 22px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-        .team-card { border-radius: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); overflow: hidden; transition: all 0.35s cubic-bezier(0.175,0.885,0.32,1.275); }
-        html.light .team-card { background: #ffffff; border: 1px solid #e8edf5; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-        .team-card:hover { transform: translateY(-8px); border-color: rgba(139,92,246,0.35); box-shadow: 0 24px 60px rgba(139,92,246,0.18); }
-        .team-img-wrap { width: 88px; height: 88px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(139,92,246,0.3); margin: 0 auto 16px; position: relative; }
-        .team-img-wrap::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(139,92,246,0.1), transparent); }
-        .social-btn { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); transition: all 0.2s ease; color: #94a3b8; }
-        html.light .social-btn { background: #f1f5f9; border-color: #e2e8f0; color: #475569; }
-        .social-btn:hover { background: #7c3aed; border-color: #7c3aed; color: #ffffff !important; }
+        html.light .info-box {
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+        }
 
-        .cta-wrap { border-radius: 32px; padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 60px); background: linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(8,145,178,0.08) 100%); border: 1px solid rgba(139,92,246,0.2); position: relative; overflow: hidden; text-align: center; }
-        .cta-wrap::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(139,92,246,0.5), transparent); }
-        .cta-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(139,92,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.03) 1px, transparent 1px); background-size: 48px 48px; pointer-events: none; }
+        .info-box:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.12);
+        }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        .info-box-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
 
-        html.light h1, html.light h2, html.light h3, html.light h4, html.light h5 { color: #0f172a !important; }
-        html.light p, html.light span, html.light li, html.light a { color: #334155 !important; }
-        html.light .text-gray-400, html.light .text-slate-400 { color: #64748b !important; }
-        html.light .section-label { color: #7c3aed; }
+        .approach-card {
+            padding: 28px 32px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-        html.light .btn-primary, html.dark .btn-primary { color: #ffffff !important; }
-        html.light .btn-primary span, html.dark .btn-primary span { color: #ffffff !important; }
-        html.light .btn-primary svg, html.light .btn-primary svg *, html.dark .btn-primary svg, html.dark .btn-primary svg * { color: #ffffff !important; stroke: #ffffff !important; }
+        html.light .approach-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .approach-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #8b5cf6, #06b6d4);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: top;
+        }
+
+        .approach-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .approach-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateX(4px);
+        }
+
+        .approach-number {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #8b5cf6;
+            margin-bottom: 8px;
+        }
+
+        .value-card {
+            padding: 28px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        html.light .value-card {
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .value-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #8b5cf6, #06b6d4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .value-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.12);
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .mv-card {
+            padding: 40px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        html.light .mv-card {
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .mv-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 24px 60px rgba(139, 92, 246, 0.12);
+        }
+
+        .mv-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .mv-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        html.light .mv-list-item {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .mv-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .team-card {
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        html.light .team-card {
+            background: #ffffff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 24px 60px rgba(139, 92, 246, 0.18);
+        }
+
+        .team-img-wrap {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .team-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+            color: #94a3b8;
+        }
+
+        html.light .social-btn {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #475569;
+        }
+
+        .social-btn:hover {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #ffffff !important;
+        }
+
+        .cta-wrap {
+            border-radius: 32px;
+            padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 60px);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(8, 145, 178, 0.08) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .cta-wrap::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.5), transparent);
+        }
+
+        .cta-grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        html.light ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        html.light h1,
+        html.light h2,
+        html.light h3,
+        html.light h4,
+        html.light h5 {
+            color: #0f172a !important;
+        }
+
+        html.light p,
+        html.light span,
+        html.light li,
+        html.light a {
+            color: #334155 !important;
+        }
+
+        html.light .text-gray-400,
+        html.light .text-slate-400 {
+            color: #64748b !important;
+        }
+
+        html.light .section-label {
+            color: #7c3aed;
+        }
+
+        html.light .btn-primary,
+        html.dark .btn-primary {
+            color: #ffffff !important;
+        }
+
+        html.light .btn-primary span,
+        html.dark .btn-primary span {
+            color: #ffffff !important;
+        }
+
+        html.light .btn-primary svg,
+        html.light .btn-primary svg *,
+        html.dark .btn-primary svg,
+        html.dark .btn-primary svg * {
+            color: #ffffff !important;
+            stroke: #ffffff !important;
+        }
 
         /* btn-secondary: dark = putih, light = gelap (ungu) */
-        html.dark .btn-secondary { color: #ffffff !important; }
-        html.dark .btn-secondary span { color: #ffffff !important; }
-        html.dark .btn-secondary svg { color: #ffffff !important; stroke: #ffffff !important; }
-        html.light .btn-secondary, html.light a.btn-secondary { color: #5b21b6 !important; }
-        html.light .btn-secondary span, html.light a.btn-secondary span { color: #5b21b6 !important; }
+        html.dark .btn-secondary {
+            color: #ffffff !important;
+        }
 
-        footer, footer h4, footer p, footer a, footer span, footer li, footer div { color: #ffffff !important; }
-        html.light footer, html.light footer h4, html.light footer p, html.light footer a,
-        html.light footer span, html.light footer li, html.light footer div { color: #ffffff !important; }
+        html.dark .btn-secondary span {
+            color: #ffffff !important;
+        }
 
-        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: rgba(15,23,42,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; padding: 0.75rem 1.5rem; color: white; font-size: 0.875rem; z-index: 10002; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3); white-space: nowrap; }
-        html.light .toast { background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0; }
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        html.dark .btn-secondary svg {
+            color: #ffffff !important;
+            stroke: #ffffff !important;
+        }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-        .anim-slide-up { animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
+        html.light .btn-secondary,
+        html.light a.btn-secondary {
+            color: #5b21b6 !important;
+        }
+
+        html.light .btn-secondary span,
+        html.light a.btn-secondary span {
+            color: #5b21b6 !important;
+        }
+
+        footer,
+        footer h4,
+        footer p,
+        footer a,
+        footer span,
+        footer li,
+        footer div {
+            color: #ffffff !important;
+        }
+
+        html.light footer,
+        html.light footer h4,
+        html.light footer p,
+        html.light footer a,
+        html.light footer span,
+        html.light footer li,
+        html.light footer div {
+            color: #ffffff !important;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-size: 0.875rem;
+            z-index: 10002;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        html.light .toast {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-slide-up {
+            animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        /* ─── MORPH BUTTON ─── */
+        .morph-btn {
+            position: relative;
+            padding: 16px 44px;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            overflow: visible;
+            isolation: isolate;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .morph-btn .btn-fill {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+            border-radius: 6px;
+            transition: border-radius 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1;
+        }
+
+        .morph-btn:hover .btn-fill {
+            border-radius: 50px;
+            animation: morphJelly 0.5s ease;
+        }
+
+        @keyframes morphJelly {
+            0% {
+                transform: scale(1, 1);
+            }
+
+            30% {
+                transform: scale(1.1, 0.88);
+            }
+
+            50% {
+                transform: scale(0.93, 1.08);
+            }
+
+            70% {
+                transform: scale(1.04, 0.96);
+            }
+
+            100% {
+                transform: scale(1, 1);
+            }
+        }
+
+        .morph-btn .orbit-dots {
+            position: absolute;
+            inset: -20px;
+            pointer-events: none;
+        }
+
+        .morph-btn .orbit-dots span {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: linear-gradient(135deg, #a78bfa, #22d3ee);
+            border-radius: 50%;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .morph-btn .orbit-dots span:nth-child(1) {
+            top: 0;
+            left: 50%;
+            animation: morphOrbit1 3s linear infinite;
+        }
+
+        .morph-btn .orbit-dots span:nth-child(2) {
+            bottom: 0;
+            left: 50%;
+            animation: morphOrbit2 3s linear infinite;
+        }
+
+        .morph-btn .orbit-dots span:nth-child(3) {
+            top: 50%;
+            left: 0;
+            animation: morphOrbit3 4s linear infinite;
+        }
+
+        .morph-btn .orbit-dots span:nth-child(4) {
+            top: 50%;
+            right: 0;
+            animation: morphOrbit4 4s linear infinite;
+        }
+
+        @keyframes morphOrbit1 {
+            0% {
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+
+            25% {
+                transform: translateX(24px) translateY(8px) scale(0.6);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(16px) scale(1);
+            }
+
+            75% {
+                transform: translateX(-64px) translateY(8px) scale(0.6);
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+        }
+
+        @keyframes morphOrbit2 {
+            0% {
+                transform: translateX(-50%) translateY(0) scale(0.6);
+            }
+
+            25% {
+                transform: translateX(-64px) translateY(-8px) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-16px) scale(0.6);
+            }
+
+            75% {
+                transform: translateX(24px) translateY(-8px) scale(1);
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(0) scale(0.6);
+            }
+        }
+
+        @keyframes morphOrbit3 {
+            0% {
+                transform: translateY(-50%) translateX(0) scale(0.8);
+            }
+
+            50% {
+                transform: translateY(-50%) translateX(-12px) scale(1.2);
+            }
+
+            100% {
+                transform: translateY(-50%) translateX(0) scale(0.8);
+            }
+        }
+
+        @keyframes morphOrbit4 {
+            0% {
+                transform: translateY(-50%) translateX(0) scale(1.2);
+            }
+
+            50% {
+                transform: translateY(-50%) translateX(12px) scale(0.8);
+            }
+
+            100% {
+                transform: translateY(-50%) translateX(0) scale(1.2);
+            }
+        }
+
+        .morph-btn .btn-text {
+            position: relative;
+            display: inline-block;
+            z-index: 3;
+        }
+
+        .morph-btn .btn-text span {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition-delay: calc(var(--i) * 0.03s);
+        }
+
+        .morph-btn:hover .btn-text span {
+            animation: morphLetterBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            animation-delay: calc(var(--i) * 0.03s);
+        }
+
+        @keyframes morphLetterBounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-110%);
+            }
+
+            70% {
+                transform: translateY(8%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .morph-btn .corners span {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(167, 139, 250, 0.7);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .morph-btn .corners span:nth-child(1) {
+            top: -8px;
+            left: -8px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .morph-btn .corners span:nth-child(2) {
+            top: -8px;
+            right: -8px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .morph-btn .corners span:nth-child(3) {
+            bottom: -8px;
+            left: -8px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .morph-btn .corners span:nth-child(4) {
+            bottom: -8px;
+            right: -8px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .morph-btn:hover .corners span:nth-child(1) {
+            transform: translate(-5px, -5px) rotate(-5deg);
+        }
+
+        .morph-btn:hover .corners span:nth-child(2) {
+            transform: translate(5px, -5px) rotate(5deg);
+        }
+
+        .morph-btn:hover .corners span:nth-child(3) {
+            transform: translate(-5px, 5px) rotate(5deg);
+        }
+
+        .morph-btn:hover .corners span:nth-child(4) {
+            transform: translate(5px, 5px) rotate(-5deg);
+        }
+
+        .morph-btn .shadow {
+            position: absolute;
+            inset: 4px;
+            background: rgba(124, 58, 237, 0.35);
+            border-radius: 6px;
+            filter: blur(12px);
+            z-index: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform: translateY(8px);
+        }
+
+        .morph-btn:hover .shadow {
+            border-radius: 50px;
+            transform: translateY(14px) scale(1.1);
+            filter: blur(18px);
+            background: rgba(8, 145, 178, 0.4);
+        }
+
+        .morph-btn:active .btn-fill {
+            transform: scale(0.93);
+            transition: transform 0.1s ease;
+        }
+
+        .morph-btn:active .shadow {
+            transform: translateY(3px) scale(0.85);
+            filter: blur(8px);
+            opacity: 0.5;
+            transition: all 0.1s ease;
+        }
+
+        .morph-btn:active .btn-text {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        .morph-btn:active .corners span:nth-child(1) {
+            transform: translate(-12px, -12px) rotate(-12deg) scale(0.8);
+        }
+
+        .morph-btn:active .corners span:nth-child(2) {
+            transform: translate(12px, -12px) rotate(12deg) scale(0.8);
+        }
+
+        .morph-btn:active .corners span:nth-child(3) {
+            transform: translate(-12px, 12px) rotate(12deg) scale(0.8);
+        }
+
+        .morph-btn:active .corners span:nth-child(4) {
+            transform: translate(12px, 12px) rotate(-12deg) scale(0.8);
+        }
     </style>
 </head>
+
 <body>
     <div class="loader-wrapper" id="loader">
         <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
@@ -342,12 +1236,15 @@
     <div id="toast" class="toast"></div>
 
     <nav class="navbar fixed w-full top-0 z-50 px-4 sm:px-6">
-        <div class="navbar-container mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
-                <div class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+        <div class="navbar-container mx-auto flex items-center justify-between relative">
+            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group"
+                onclick="window.location.href='index.html'">
+                <div
+                    class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
                     <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+                <span
+                    class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
             <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
@@ -357,10 +1254,14 @@
                         Features <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="personality-test.html" class="dropdown-item"><i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
-                        <a href="budget-simulator.html" class="dropdown-item"><i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span></a>
-                        <a href="goal-tracker.html" class="dropdown-item"><i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span></a>
-                        <a href="challenge.html" class="dropdown-item"><i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span></a>
+                        <a href="personality-test.html" class="dropdown-item"><i data-lucide="user-circle"
+                                class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
+                        <a href="budget-simulator.html" class="dropdown-item"><i data-lucide="wallet"
+                                class="w-4 h-4"></i><span>Simulasi Budget</span></a>
+                        <a href="goal-tracker.html" class="dropdown-item"><i data-lucide="target"
+                                class="w-4 h-4"></i><span>Target Tabungan</span></a>
+                        <a href="challenge.html" class="dropdown-item"><i data-lucide="trophy"
+                                class="w-4 h-4"></i><span>Saving Challenge</span></a>
                     </div>
                 </div>
                 <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
@@ -368,7 +1269,9 @@
                     <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                <a href="personality-test.html" class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">Mulai Sekarang</a>
+                <a href="personality-test.html"
+                    class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">Mulai
+                    Sekarang</a>
             </div>
             <div class="md:hidden flex items-center space-x-2 sm:space-x-3">
                 <button class="p-2" id="themeToggleMobile">
@@ -389,32 +1292,48 @@
         </div>
         <div class="flex flex-col space-y-3 sm:space-y-4">
             <a href="index.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Home</a>
-            <a href="about.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
+            <a href="about.html"
+                class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
             <div class="border-t border-white/10 pt-4 sm:pt-6">
                 <div class="text-xs uppercase tracking-wider opacity-50 mb-2 sm:mb-3">Features</div>
                 <div class="space-y-2 sm:space-y-3">
-                    <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="user-circle" class="w-4 h-4"></i><span class="text-sm sm:text-base">Tes Kepribadian</span></a>
-                    <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="wallet" class="w-4 h-4"></i><span class="text-sm sm:text-base">Simulasi Budget</span></a>
-                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="target" class="w-4 h-4"></i><span class="text-sm sm:text-base">Target Tabungan</span></a>
-                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="trophy" class="w-4 h-4"></i><span class="text-sm sm:text-base">Saving Challenge</span></a>
+                    <a href="personality-test.html"
+                        class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
+                            data-lucide="user-circle" class="w-4 h-4"></i><span class="text-sm sm:text-base">Tes
+                            Kepribadian</span></a>
+                    <a href="budget-simulator.html"
+                        class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="wallet"
+                            class="w-4 h-4"></i><span class="text-sm sm:text-base">Simulasi Budget</span></a>
+                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
+                            data-lucide="target" class="w-4 h-4"></i><span class="text-sm sm:text-base">Target
+                            Tabungan</span></a>
+                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
+                            data-lucide="trophy" class="w-4 h-4"></i><span class="text-sm sm:text-base">Saving
+                            Challenge</span></a>
                 </div>
             </div>
-            <a href="contact.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
-            <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">Mulai Sekarang</a>
+            <a href="contact.html"
+                class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
+            <a href="personality-test.html"
+                class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">Mulai
+                Sekarang</a>
         </div>
     </div>
 
     <section class="relative pt-36 sm:pt-44 md:pt-56 pb-28 sm:pb-36 md:pb-44 overflow-hidden">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none"></div>
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none">
+        </div>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
             <h1 class="hero-title mb-8 anim-slide-up delay-1">
                 Platform Edukasi<br>
                 <span class="gradient-text">Finansial</span> yang Nyata
             </h1>
             <p class="hero-subtitle anim-slide-up delay-2">
-                Monetra adalah platform edukasi finansial interaktif yang dirancang untuk membantu generasi muda Indonesia memahami dan mengelola keuangan secara lebih terarah, personal, dan berkelanjutan.
+                Monetra adalah platform edukasi finansial interaktif yang dirancang untuk membantu generasi muda
+                Indonesia memahami dan mengelola keuangan secara lebih terarah, personal, dan berkelanjutan.
             </p>
         </div>
     </section>
@@ -426,39 +1345,54 @@
                     <div class="section-label">Latar Belakang</div>
                     <h2 class="section-heading mb-6">Kenapa <span class="gradient-text">Monetra</span> Ada</h2>
                     <div class="space-y-4 text-sm sm:text-base leading-relaxed" style="color: #94a3b8;">
-                        <p>Banyak generasi muda mengalami kesulitan dalam mengatur keuangan karena kurangnya edukasi yang aplikatif dan mudah dipahami. Pengelolaan uang sering kali hanya berfokus pada pencatatan, tanpa memahami pola kebiasaan dan strategi yang sesuai dengan karakter masing-masing individu.</p>
-                        <p>Monetra hadir sebagai solusi berbasis teknologi yang menggabungkan edukasi, personalisasi, dan fitur interaktif untuk membantu pengguna mengenali tipe kepribadian finansial, menyusun anggaran bulanan secara terstruktur, menetapkan dan memantau target tabungan, serta membangun konsistensi melalui tantangan finansial.</p>
-                        <p>Kami percaya bahwa literasi finansial bukan hanya tentang menabung, tetapi tentang memahami pola perilaku keuangan, menyusun strategi yang realistis, dan membangun kebiasaan yang konsisten untuk masa depan.</p>
+                        <p>Banyak generasi muda mengalami kesulitan dalam mengatur keuangan karena kurangnya edukasi
+                            yang aplikatif dan mudah dipahami. Pengelolaan uang sering kali hanya berfokus pada
+                            pencatatan, tanpa memahami pola kebiasaan dan strategi yang sesuai dengan karakter
+                            masing-masing individu.</p>
+                        <p>Monetra hadir sebagai solusi berbasis teknologi yang menggabungkan edukasi, personalisasi,
+                            dan fitur interaktif untuk membantu pengguna mengenali tipe kepribadian finansial, menyusun
+                            anggaran bulanan secara terstruktur, menetapkan dan memantau target tabungan, serta
+                            membangun konsistensi melalui tantangan finansial.</p>
+                        <p>Kami percaya bahwa literasi finansial bukan hanya tentang menabung, tetapi tentang memahami
+                            pola perilaku keuangan, menyusun strategi yang realistis, dan membangun kebiasaan yang
+                            konsisten untuk masa depan.</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
                     <div class="info-box col-span-2">
-                        <div class="info-box-icon bg-gradient-to-br from-violet-600/20 to-violet-600/5 border border-violet-500/20">
+                        <div
+                            class="info-box-icon bg-gradient-to-br from-violet-600/20 to-violet-600/5 border border-violet-500/20">
                             <i data-lucide="lightbulb" class="w-5 h-5 text-violet-400"></i>
                         </div>
                         <div class="text-lg font-bold mb-1">Lahir dari Masalah Nyata</div>
-                        <p class="text-xs sm:text-sm" style="color:#64748b">Bukan project iseng — Monetra muncul dari kegelisahan nyata terhadap rendahnya literasi finansial di kalangan pelajar dan mahasiswa Indonesia.</p>
+                        <p class="text-xs sm:text-sm" style="color:#64748b">Bukan project iseng — Monetra muncul dari
+                            kegelisahan nyata terhadap rendahnya literasi finansial di kalangan pelajar dan mahasiswa
+                            Indonesia.</p>
                     </div>
                     <div class="info-box">
-                        <div class="info-box-icon bg-gradient-to-br from-cyan-600/20 to-cyan-600/5 border border-cyan-500/20 mx-auto">
+                        <div
+                            class="info-box-icon bg-gradient-to-br from-cyan-600/20 to-cyan-600/5 border border-cyan-500/20 mx-auto">
                             <i data-lucide="book-open" class="w-4 h-4 text-cyan-400"></i>
                         </div>
                         <div class="text-base font-bold">Edukatif</div>
                         <p class="text-xs mt-1" style="color:#64748b">Berbasis pembelajaran</p>
                     </div>
                     <div class="info-box">
-                        <div class="info-box-icon bg-gradient-to-br from-emerald-600/20 to-emerald-600/5 border border-emerald-500/20 mx-auto">
+                        <div
+                            class="info-box-icon bg-gradient-to-br from-emerald-600/20 to-emerald-600/5 border border-emerald-500/20 mx-auto">
                             <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <div class="text-base font-bold">Personal</div>
                         <p class="text-xs mt-1" style="color:#64748b">Sesuai kepribadianmu</p>
                     </div>
                     <div class="info-box col-span-2">
-                        <div class="info-box-icon bg-gradient-to-br from-amber-600/20 to-amber-600/5 border border-amber-500/20 mx-auto">
+                        <div
+                            class="info-box-icon bg-gradient-to-br from-amber-600/20 to-amber-600/5 border border-amber-500/20 mx-auto">
                             <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
                         </div>
                         <div class="text-lg font-bold mb-1">Interaktif &amp; Aplikatif</div>
-                        <p class="text-xs sm:text-sm" style="color:#64748b">Fitur simulasi, visualisasi progres, dan tracking yang membuat belajar keuangan terasa nyata — bukan sekadar teori.</p>
+                        <p class="text-xs sm:text-sm" style="color:#64748b">Fitur simulasi, visualisasi progres, dan
+                            tracking yang membuat belajar keuangan terasa nyata — bukan sekadar teori.</p>
                     </div>
                 </div>
             </div>
@@ -475,17 +1409,21 @@
                 <div class="approach-card" data-aos="fade-up" data-aos-delay="0">
                     <div class="approach-number">01 — Edukatif</div>
                     <h3 class="text-lg font-bold mb-3">Bahasa yang Sederhana</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Materi dan fitur dirancang dengan bahasa yang sederhana, relevan, dan mudah dipahami oleh pelajar maupun mahasiswa.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Materi dan fitur dirancang dengan bahasa
+                        yang sederhana, relevan, dan mudah dipahami oleh pelajar maupun mahasiswa.</p>
                 </div>
                 <div class="approach-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="approach-number">02 — Personal</div>
                     <h3 class="text-lg font-bold mb-3">Sesuai Kebutuhanmu</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Rekomendasi dan insight disesuaikan dengan hasil Tes Kepribadian Finansial, sehingga setiap pengguna mendapatkan pengalaman yang berbeda sesuai kebutuhannya.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Rekomendasi dan insight disesuaikan dengan
+                        hasil Tes Kepribadian Finansial, sehingga setiap pengguna mendapatkan pengalaman yang berbeda
+                        sesuai kebutuhannya.</p>
                 </div>
                 <div class="approach-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="approach-number">03 — Interaktif</div>
                     <h3 class="text-lg font-bold mb-3">Belajar Sambil Praktik</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Fitur simulasi, visualisasi progres, dan sistem tracking membantu pengguna belajar sambil praktik secara langsung.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Fitur simulasi, visualisasi progres, dan
+                        sistem tracking membantu pengguna belajar sambil praktik secara langsung.</p>
                 </div>
             </div>
         </div>
@@ -502,11 +1440,13 @@
                     <div class="space-y-0 mt-4">
                         <div class="mv-list-item">
                             <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Meningkatkan kesadaran literasi finansial melalui pendekatan digital yang interaktif</span>
+                            <span class="text-sm">Meningkatkan kesadaran literasi finansial melalui pendekatan digital
+                                yang interaktif</span>
                         </div>
                         <div class="mv-list-item">
                             <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Menyediakan alat perencanaan keuangan yang mudah digunakan dan aplikatif</span>
+                            <span class="text-sm">Menyediakan alat perencanaan keuangan yang mudah digunakan dan
+                                aplikatif</span>
                         </div>
                         <div class="mv-list-item">
                             <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
@@ -519,7 +1459,9 @@
                         <i data-lucide="eye" class="w-6 h-6 text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-3">Visi</h3>
-                    <p class="text-sm leading-relaxed mb-6" style="color:#94a3b8">Menjadi platform edukasi finansial digital yang membantu generasi muda Indonesia membangun kebiasaan finansial yang sehat dan berkelanjutan.</p>
+                    <p class="text-sm leading-relaxed mb-6" style="color:#94a3b8">Menjadi platform edukasi finansial
+                        digital yang membantu generasi muda Indonesia membangun kebiasaan finansial yang sehat dan
+                        berkelanjutan.</p>
                     <div class="space-y-0">
                         <div class="mv-list-item">
                             <i data-lucide="star" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
@@ -549,17 +1491,20 @@
                 <div class="value-card" data-aos="fade-up" data-aos-delay="0">
                     <div class="value-icon"><i data-lucide="zap" class="w-5 h-5 text-violet-400"></i></div>
                     <h3 class="text-base font-bold mb-2">Inovatif</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Mengembangkan solusi digital yang adaptif dan relevan dengan kebutuhan generasi muda.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Mengembangkan solusi digital yang adaptif
+                        dan relevan dengan kebutuhan generasi muda.</p>
                 </div>
                 <div class="value-card" data-aos="fade-up" data-aos-delay="80">
                     <div class="value-icon"><i data-lucide="layout" class="w-5 h-5 text-violet-400"></i></div>
                     <h3 class="text-base font-bold mb-2">Aksesibel</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Mudah digunakan, responsif di berbagai perangkat, dan ramah untuk pelajar serta mahasiswa.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Mudah digunakan, responsif di berbagai
+                        perangkat, dan ramah untuk pelajar serta mahasiswa.</p>
                 </div>
                 <div class="value-card" data-aos="fade-up" data-aos-delay="160">
                     <div class="value-icon"><i data-lucide="trending-up" class="w-5 h-5 text-violet-400"></i></div>
                     <h3 class="text-base font-bold mb-2">Berdampak</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Memberikan manfaat nyata dalam membantu pengguna mengelola dan merencanakan keuangan mereka.</p>
+                    <p class="text-sm leading-relaxed" style="color:#64748b">Memberikan manfaat nyata dalam membantu
+                        pengguna mengelola dan merencanakan keuangan mereka.</p>
                 </div>
             </div>
         </div>
@@ -570,34 +1515,46 @@
             <div class="text-center mb-10 md:mb-14" data-aos="fade-up">
                 <div class="section-label">Tim Pengembang</div>
                 <h2 class="section-heading">Dua Orang di <span class="gradient-text">Balik Monetra</span></h2>
-                <p class="text-sm sm:text-base mt-3 max-w-xl mx-auto" style="color:#64748b">Monetra dikembangkan oleh tim yang memiliki ketertarikan pada bidang teknologi dan literasi finansial. Dengan kolaborasi yang solid, kami berkomitmen menghadirkan platform yang fungsional, edukatif, dan berdampak.</p>
+                <p class="text-sm sm:text-base mt-3 max-w-xl mx-auto" style="color:#64748b">Monetra dikembangkan oleh
+                    tim yang memiliki ketertarikan pada bidang teknologi dan literasi finansial. Dengan kolaborasi yang
+                    solid, kami berkomitmen menghadirkan platform yang fungsional, edukatif, dan berdampak.</p>
             </div>
             <div class="grid sm:grid-cols-2 max-w-3xl mx-auto gap-5 sm:gap-6">
                 <div class="team-card" data-aos="fade-up" data-aos-delay="0">
                     <div class="p-8">
                         <div class="team-img-wrap mb-4">
-                            <img src="assets/img/IMG_20260211_091513.jpg" alt="Daffi Nafeeza" class="w-full h-full object-cover">
+                            <img src="assets/img/IMG_20260211_091513.jpg" alt="Daffi Nafeeza"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="text-lg font-bold text-center mb-1">Daffi Nafeeza</h3>
                         <p class="text-xs text-center font-semibold mb-3" style="color:#8b5cf6">Full Stack Developer</p>
-                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Berperan dalam perancangan sistem dan pengembangan fitur interaktif, dengan fokus pada pengalaman pengguna yang modern dan responsif.</p>
+                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Berperan dalam
+                            perancangan sistem dan pengembangan fitur interaktif, dengan fokus pada pengalaman pengguna
+                            yang modern dan responsif.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="https://www.linkedin.com/in/daffi-nafeeza-036601376/" class="social-btn" target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                            <a href="https://github.com/D4FF1" class="social-btn" target="_blank"><i data-lucide="github" class="w-4 h-4"></i></a>
+                            <a href="https://www.linkedin.com/in/daffi-nafeeza-036601376/" class="social-btn"
+                                target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                            <a href="https://github.com/D4FF1" class="social-btn" target="_blank"><i
+                                    data-lucide="github" class="w-4 h-4"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="team-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="p-8">
                         <div class="team-img-wrap mb-4">
-                            <img src="assets/img/WhatsApp Image 2026-02-17 at 14.07.22.jpeg" alt="M Rizki Suryapratama" class="w-full h-full object-cover">
+                            <img src="assets/img/WhatsApp Image 2026-02-17 at 14.07.22.jpeg" alt="M Rizki Suryapratama"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="text-lg font-bold text-center mb-1">M Rizki Suryapratama</h3>
                         <p class="text-xs text-center font-semibold mb-3" style="color:#8b5cf6">Full Stack Developer</p>
-                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Bertanggung jawab pada pengembangan backend dan integrasi sistem, memastikan performa dan stabilitas platform berjalan optimal.</p>
+                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Bertanggung jawab pada
+                            pengembangan backend dan integrasi sistem, memastikan performa dan stabilitas platform
+                            berjalan optimal.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="https://www.linkedin.com/in/muhammad-rizki-suryapratama/" class="social-btn" target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                            <a href="https://github.com/mrizzzz97" class="social-btn" target="_blank"><i data-lucide="github" class="w-4 h-4"></i></a>
+                            <a href="https://www.linkedin.com/in/muhammad-rizki-suryapratama/" class="social-btn"
+                                target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                            <a href="https://github.com/mrizzzz97" class="social-btn" target="_blank"><i
+                                    data-lucide="github" class="w-4 h-4"></i></a>
                         </div>
                     </div>
                 </div>
@@ -611,11 +1568,31 @@
                 <div class="cta-grid-lines"></div>
                 <div class="relative z-10">
                     <div class="section-label mb-4" style="color:#a78bfa">Mulai Sekarang</div>
-                    <h2 class="section-heading mb-4">Lebih dari Sekadar<br><span class="gradient-text">Pencatatan Keuangan</span></h2>
-                    <p class="text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed" style="color:#94a3b8">Monetra adalah sarana pembelajaran yang membantu generasi muda memahami, merencanakan, dan mengoptimalkan masa depan finansial mereka secara lebih bijak.</p>
+                    <h2 class="section-heading mb-4">Lebih dari Sekadar<br><span class="gradient-text">Pencatatan
+                            Keuangan</span></h2>
+                    <p class="text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed" style="color:#94a3b8">Monetra
+                        adalah sarana pembelajaran yang membantu generasi muda memahami, merencanakan, dan
+                        mengoptimalkan masa depan finansial mereka secara lebih bijak.</p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="personality-test.html" class="btn-primary px-8 py-3.5 rounded-full font-semibold text-sm">Mulai Tes Kepribadian</a>
-                        <a href="contact.html" class="btn-secondary px-8 py-3.5 rounded-full font-semibold text-sm">Hubungi Kami</a>
+                        <a href="personality-test.html" class="morph-btn">
+                            <span class="btn-fill"></span>
+                            <span class="shadow"></span>
+                            <span class="btn-text">
+                                <span style="--i:0">M</span><span style="--i:1">u</span><span
+                                    style="--i:2">l</span><span style="--i:3">a</span><span
+                                    style="--i:4">i</span>&nbsp;<span style="--i:5">T</span><span
+                                    style="--i:6">e</span><span style="--i:7">s</span>&nbsp;<span
+                                    style="--i:8">K</span><span style="--i:9">e</span><span style="--i:10">p</span><span
+                                    style="--i:11">r</span><span style="--i:12">i</span><span
+                                    style="--i:13">b</span><span style="--i:14">a</span><span
+                                    style="--i:15">d</span><span style="--i:16">i</span><span
+                                    style="--i:17">a</span><span style="--i:18">n</span>
+                            </span>
+                            <span class="orbit-dots"><span></span><span></span><span></span><span></span></span>
+                            <span class="corners"><span></span><span></span><span></span><span></span></span>
+                        </a>
+                        <a href="contact.html"
+                            class="btn-secondary px-8 py-3.5 rounded-full font-semibold text-sm">Hubungi Kami</a>
                     </div>
                 </div>
             </div>
@@ -624,21 +1601,26 @@
 
     <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
                 <div>
                     <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                        <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
+                        <div
+                            class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
                             <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
                         </div>
                         <span class="text-xl sm:text-2xl font-bold">Monetra</span>
                     </div>
-                    <p class="opacity-50 text-xs sm:text-sm">Platform edukasi finansial untuk generasi muda Indonesia.</p>
+                    <p class="opacity-50 text-xs sm:text-sm">Platform edukasi finansial untuk generasi muda Indonesia.
+                    </p>
                 </div>
                 <div>
                     <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Produk</h4>
                     <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
-                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
-                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
+                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a>
+                        </li>
+                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a>
+                        </li>
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
@@ -652,9 +1634,15 @@
                 <div>
                     <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Ikuti Kami</h4>
                     <div class="flex space-x-3 sm:space-x-4">
-                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
-                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
-                        <a href="#" class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
+                                data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
+                                data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
+                                data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
                     </div>
                 </div>
             </div>
@@ -667,7 +1655,7 @@
     <script>
         lucide.createIcons();
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
         });
 
@@ -692,7 +1680,7 @@
         else if (!savedTheme) { html.classList.add('dark'); }
 
         const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             navbar.classList.toggle('floating', window.scrollY > 50);
         });
 
@@ -718,5 +1706,13 @@
         }
         window.showToast = showToast;
     </script>
+    <!-- Floating Clock -->
+    <div id="floating-clock" class="clock-container">
+        <div class="clock-time">00:00:00</div>
+        <div class="clock-date">Memuat...</div>
+    </div>
+
+    <script src="assets/js/clock.js"></script>
 </body>
+
 </html>

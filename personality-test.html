@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tes Kepribadian Finansial - Monetra</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,28 +21,30 @@
             }
         }
     </script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <link rel="stylesheet" href="assets/css/clock.css">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.3s ease;
         }
-        
+
         html.dark body {
             background-color: #020617;
             color: #f8fafc;
         }
-        
+
         html.light body {
             background-color: #f8fafc;
             color: #0f172a;
@@ -76,7 +79,7 @@
             align-items: center;
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        
+
         .loader-wrapper.slide-up {
             transform: translateY(-100%);
         }
@@ -92,7 +95,10 @@
         }
 
         @keyframes logoReveal {
-            to { opacity: 1; transform: scale(1); }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .loader-text {
@@ -117,7 +123,9 @@
         }
 
         @keyframes fadeIn {
-            to { opacity: 1; }
+            to {
+                opacity: 1;
+            }
         }
 
         /* Floating Rounded Header */
@@ -126,17 +134,17 @@
             padding-top: 1.25rem;
             padding-bottom: 1.25rem;
         }
-        
+
         .navbar .navbar-container {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0;
         }
-        
+
         .navbar.floating {
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
-        
+
         .navbar.floating .navbar-container {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
@@ -146,7 +154,7 @@
             padding: 0.75rem 2rem;
             max-width: 1200px;
         }
-        
+
         html.light .navbar.floating .navbar-container {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -163,7 +171,7 @@
             overflow: hidden;
             cursor: pointer;
         }
-        
+
         html.light .personality-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -258,7 +266,7 @@
         html.light h5 {
             color: #0f172a !important;
         }
-        
+
         html.light p,
         html.light span,
         html.light li {
@@ -272,7 +280,7 @@
         html.light .btn-primary span {
             color: #ffffff !important;
         }
-        
+
         html.light .text-gray-300,
         html.light .text-gray-400,
         html.light .text-gray-500 {
@@ -299,7 +307,7 @@
         html.light footer div {
             color: #ffffff !important;
         }
-        
+
         html.light footer .opacity-50,
         html.light footer .opacity-60,
         html.light footer .opacity-40 {
@@ -365,12 +373,12 @@
             background: #0f172a;
             z-index: 9999;
         }
-        
+
         html.light .mobile-menu {
             background: #ffffff;
             border-left: 1px solid #e2e8f0;
         }
-        
+
         .mobile-menu.active {
             transform: translateX(0);
         }
@@ -404,15 +412,15 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: #0f172a;
         }
-        
+
         html.light ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: #334155;
             border-radius: 4px;
@@ -425,6 +433,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div class="loader-wrapper" id="loader">
@@ -435,19 +444,21 @@
 
     <!-- Floating Rounded Header -->
     <nav class="navbar fixed w-full top-0 z-50 px-6">
-        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between">
+        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between relative">
             <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
-                <div class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
+                <div
+                    class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
                     <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
+                <span
+                    class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
             </div>
-            
+
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                
+
                 <!-- Features Dropdown -->
                 <div class="dropdown">
                     <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
@@ -475,19 +486,18 @@
                 </div>
 
 
+
                 <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
-                
+
                 <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-300"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-700"></i>
                 </button>
-                
+
                 <a href="personality-test.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold">
                     Mulai Sekarang
                 </a>
             </div>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center space-x-4">
                 <button class="p-2" id="themeToggleMobile">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
@@ -499,10 +509,10 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
+
     <!-- Mobile Menu -->
     <div class="mobile-menu fixed top-0 right-0 w-72 h-full p-6 md:hidden shadow-2xl">
         <div class="flex justify-end mb-8">
@@ -513,7 +523,7 @@
         <div class="flex flex-col space-y-4">
             <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
             <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
-            
+
             <div class="border-t border-white/10 pt-4">
                 <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
                 <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
@@ -536,7 +546,7 @@
 
 
             <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
-            
+
             <a href="personality-test.html" class="btn-primary px-6 py-3 rounded-full text-center mt-4">
                 Mulai Sekarang
             </a>
@@ -549,13 +559,16 @@
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center">
                 <div class="inline-block mb-6">
-                    <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                    <span
+                        class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
                         Tes Psikologi Finansial
                     </span>
                 </div>
-                <h1 class="text-5xl md:text-6xl font-black mb-6">Kenali <span class="gradient-text">Tipe Finansialmu</span></h1>
+                <h1 class="text-5xl md:text-6xl font-black mb-6">Kenali <span class="gradient-text">Tipe
+                        Finansialmu</span></h1>
                 <p class="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed">
-                    Jawab 10 pertanyaan sederhana untuk memahami kepribadian finansialmu dan dapatkan rekomendasi pengelolaan uang yang tepat
+                    Jawab 10 pertanyaan sederhana untuk memahami kepribadian finansialmu dan dapatkan rekomendasi
+                    pengelolaan uang yang tepat
                 </p>
             </div>
         </div>
@@ -582,7 +595,9 @@
 
             <!-- Navigation Buttons -->
             <div class="flex justify-between items-center mt-8">
-                <button id="prevBtn" class="px-8 py-3 rounded-full border border-white/20 font-medium hover:bg-white/5 transition disabled:opacity-30 disabled:cursor-not-allowed" disabled>
+                <button id="prevBtn"
+                    class="px-8 py-3 rounded-full border border-white/20 font-medium hover:bg-white/5 transition disabled:opacity-30 disabled:cursor-not-allowed"
+                    disabled>
                     <i data-lucide="arrow-left" class="w-4 h-4 inline mr-2"></i>
                     Sebelumnya
                 </button>
@@ -602,20 +617,24 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <div class="inline-block mb-6">
-                    <span class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                    <span
+                        class="px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
                         Hasil Tes Kamu
                     </span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6">Kamu adalah Tipe <span class="gradient-text" id="resultType">The Saver</span></h2>
+                <h2 class="text-4xl md:text-5xl font-black mb-6">Kamu adalah Tipe <span class="gradient-text"
+                        id="resultType">The Saver</span></h2>
                 <p class="text-lg opacity-70 max-w-2xl mx-auto leading-relaxed" id="resultDescription">
-                    Kamu memiliki kecenderungan untuk menabung dan berhemat. Kamu bijak dalam mengelola uang dan selalu mempersiapkan masa depan.
+                    Kamu memiliki kecenderungan untuk menabung dan berhemat. Kamu bijak dalam mengelola uang dan selalu
+                    mempersiapkan masa depan.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 mb-16">
                 <!-- Strengths -->
                 <div class="result-card">
-                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="star" class="w-8 h-8 text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Kelebihan</h3>
@@ -629,7 +648,8 @@
 
                 <!-- Weaknesses -->
                 <div class="result-card">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="alert-triangle" class="w-8 h-8 text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Tantangan</h3>
@@ -643,7 +663,8 @@
 
                 <!-- Recommendations -->
                 <div class="result-card">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6">
                         <i data-lucide="lightbulb" class="w-8 h-8 text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Rekomendasi</h3>
@@ -657,18 +678,20 @@
             </div>
 
             <div class="text-center">
-                <a href="budget-simulator.html" class="btn-primary px-12 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
+                <a href="budget-simulator.html"
+                    class="btn-primary px-12 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
                     Mulai Simulasi Budget
                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
-                <button onclick="restartTest()" class="ml-4 px-12 py-4 rounded-full border border-white/20 font-bold text-lg hover:bg-white/5 transition">
+                <button onclick="restartTest()"
+                    class="ml-4 px-12 py-4 rounded-full border border-white/20 font-bold text-lg hover:bg-white/5 transition">
                     Ulangi Tes
                 </button>
             </div>
         </div>
     </section>
 
-<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-[#020617] pt-24 pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
@@ -679,14 +702,19 @@
                         </div>
                         <span class="text-2xl font-bold">Monetra</span>
                     </div>
-                    <p class="opacity-50 text-sm leading-relaxed">Platform edukasi finansial interaktif yang membantu generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih bijak.</p>
+                    <p class="opacity-50 text-sm leading-relaxed">Platform edukasi finansial interaktif yang membantu
+                        generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih
+                        bijak.</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-6">Produk</h4>
                     <ul class="space-y-4 text-sm opacity-60">
-                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
-                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
-                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a></li>
+                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a>
+                        </li>
+                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a>
+                        </li>
+                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a>
+                        </li>
                         <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
                     </ul>
                 </div>
@@ -700,13 +728,16 @@
                 <div>
                     <h4 class="font-bold mb-6">Ikuti Kami</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="twitter" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="instagram" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
+                        <a href="#"
+                            class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
                             <i data-lucide="linkedin" class="w-5 h-5"></i>
                         </a>
                     </div>
@@ -720,64 +751,64 @@
 
     <script>
         lucide.createIcons();
-        
+
         // Loading - Increased to 4 seconds
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 4000);
         });
-        
+
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
         const html = document.documentElement;
-        
+
         function toggleTheme() {
             html.classList.toggle('dark');
             html.classList.toggle('light');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             lucide.createIcons();
         }
-        
+
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleMobile.addEventListener('click', toggleTheme);
-        
+
         if (localStorage.getItem('theme') === 'light') {
             html.classList.remove('dark');
             html.classList.add('light');
         }
-        
+
         // Floating Navbar on Scroll
         const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY > 100) {
                 navbar.classList.add('floating');
             } else {
                 navbar.classList.remove('floating');
             }
         });
-        
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileMenu = document.getElementById('closeMobileMenu');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        
+
         function openMobileMenu() {
             mobileMenu.classList.add('active');
             mobileMenuOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-        
+
         function closeMobileMenuFunc() {
             mobileMenu.classList.remove('active');
             mobileMenuOverlay.classList.remove('active');
             document.body.style.overflow = '';
         }
-        
+
         mobileMenuBtn.addEventListener('click', openMobileMenu);
         closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
         mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        
+
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMobileMenuFunc);
         });
@@ -992,7 +1023,7 @@
         function renderQuestion() {
             const q = questions[currentQuestion];
             const selectedAnswer = answers[currentQuestion];
-            
+
             let html = `
                 <div class="question-card">
                     <div class="mb-8">
@@ -1001,7 +1032,7 @@
                     </div>
                     <div class="space-y-4">
             `;
-            
+
             q.options.forEach((option, index) => {
                 const isSelected = selectedAnswer === index;
                 html += `
@@ -1015,20 +1046,20 @@
                     </div>
                 `;
             });
-            
+
             html += `
                     </div>
                 </div>
             `;
-            
+
             questionContainer.innerHTML = html;
             lucide.createIcons();
-            
+
             // Update buttons
             updateNavigationButtons();
         }
 
-        window.selectAnswer = function(optionIndex) {
+        window.selectAnswer = function (optionIndex) {
             answers[currentQuestion] = optionIndex;
             renderQuestion();
         };
@@ -1040,10 +1071,10 @@
             } else {
                 prevBtn.disabled = false;
             }
-            
+
             // Next/Submit buttons
             const hasAnswer = answers[currentQuestion] !== null;
-            
+
             if (currentQuestion === questions.length - 1) {
                 nextBtn.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
@@ -1053,7 +1084,7 @@
                 submitBtn.classList.add('hidden');
                 nextBtn.disabled = !hasAnswer;
             }
-            
+
             // Update counter and progress
             questionCounter.textContent = `${currentQuestion + 1}/${questions.length}`;
             progressFill.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
@@ -1078,7 +1109,7 @@
         function calculateResult() {
             // Reset scores
             scores = { saver: 0, spender: 0, investor: 0, security: 0 };
-            
+
             // Calculate scores based on answers
             questions.forEach((q, index) => {
                 const answerIndex = answers[index];
@@ -1089,29 +1120,29 @@
                     });
                 }
             });
-            
+
             // Find dominant type
             let dominantType = 'saver';
             let maxScore = 0;
-            
+
             Object.keys(scores).forEach(key => {
                 if (scores[key] > maxScore) {
                     maxScore = scores[key];
                     dominantType = key;
                 }
             });
-            
+
             return dominantType;
         }
 
         function showResult() {
             const type = calculateResult();
             const result = resultTypes[type];
-            
+
             // Update result section
             document.getElementById('resultType').textContent = result.name;
             document.getElementById('resultDescription').textContent = result.description;
-            
+
             // Update strengths
             const strengthsList = document.getElementById('strengthsList');
             strengthsList.innerHTML = result.strengths.map(s => `
@@ -1120,7 +1151,7 @@
                     <span>${s}</span>
                 </li>
             `).join('');
-            
+
             // Update weaknesses
             const weaknessesList = document.getElementById('weaknessesList');
             weaknessesList.innerHTML = result.weaknesses.map(w => `
@@ -1129,7 +1160,7 @@
                     <span>${w}</span>
                 </li>
             `).join('');
-            
+
             // Update recommendations
             const recommendationsList = document.getElementById('recommendationsList');
             recommendationsList.innerHTML = result.recommendations.map(r => `
@@ -1138,13 +1169,13 @@
                     <span>${r}</span>
                 </li>
             `).join('');
-            
+
             lucide.createIcons();
-            
+
             // Hide test section, show result section
             testSection.classList.add('hidden');
             resultSection.classList.remove('hidden');
-            
+
             // Scroll to result
             window.scrollTo({ top: resultSection.offsetTop - 100, behavior: 'smooth' });
         }
@@ -1153,10 +1184,10 @@
             currentQuestion = 0;
             answers = new Array(questions.length).fill(null);
             scores = { saver: 0, spender: 0, investor: 0, security: 0 };
-            
+
             testSection.classList.remove('hidden');
             resultSection.classList.add('hidden');
-            
+
             renderQuestion();
             window.scrollTo({ top: testSection.offsetTop - 100, behavior: 'smooth' });
         }
@@ -1172,5 +1203,13 @@
         // Make restartTest function globally available
         window.restartTest = restartTest;
     </script>
+    <!-- Floating Clock -->
+    <div id="floating-clock" class="clock-container">
+        <div class="clock-time">00:00:00</div>
+        <div class="clock-date">Memuat...</div>
+    </div>
+
+    <script src="assets/js/clock.js"></script>
 </body>
+
 </html>
