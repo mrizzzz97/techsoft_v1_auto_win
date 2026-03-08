@@ -594,6 +594,156 @@
             border-color: rgba(124, 58, 237, 0.3);
         }
 
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print,
+            .navbar,
+            footer,
+            #floating-clock,
+            .loader-wrapper,
+            .mobile-menu,
+            .mobile-menu-overlay,
+            header,
+            section:not(#printReport),
+            .btn-primary,
+            .btn-outline,
+            .challenge-card:not(.print-report-card),
+            .tips-section {
+                display: none !important;
+            }
+
+            #printReport {
+                display: block !important;
+                padding: 0;
+            }
+
+            .print-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #8b5cf6;
+            }
+
+            .print-logo-section {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .print-logo-section img {
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+            }
+
+            .print-title h1 {
+                font-size: 20px;
+                font-weight: 900;
+                margin: 0;
+                color: #0f172a;
+            }
+
+            .print-meta {
+                text-align: right;
+                font-size: 9px;
+                color: #475569;
+            }
+
+            .summary-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+
+            .summary-item {
+                background: #f8fafc;
+                padding: 12px;
+                border-radius: 10px;
+                border: 1px solid #e2e8f0;
+                text-align: center;
+            }
+
+            .summary-item-label {
+                font-size: 9px;
+                text-transform: uppercase;
+                color: #64748b;
+                margin-bottom: 4px;
+            }
+
+            .summary-item-value {
+                font-size: 14px;
+                font-weight: 700;
+                color: #0f172a;
+            }
+
+            .tracker-title {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 15px;
+                color: #1e293b;
+                border-bottom: 1px solid #e2e8f0;
+                padding-bottom: 5px;
+            }
+
+            .print-day-grid {
+                display: grid;
+                grid-template-columns: repeat(10, 1fr);
+                gap: 8px;
+                margin-bottom: 30px;
+            }
+
+            .day-circle-print {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                border: 1px solid #cbd5e1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .day-circle-print.completed {
+                background-color: #10b981 !important;
+                color: white !important;
+                border-color: #10b981 !important;
+            }
+
+            .day-circle-print.current {
+                border: 2px solid #8b5cf6 !important;
+                color: #8b5cf6 !important;
+            }
+
+            .print-footer {
+                margin-top: 40px;
+                padding-top: 15px;
+                border-top: 1px dashed #cbd5e1;
+                text-align: center;
+                font-size: 8px;
+                color: #94a3b8;
+            }
+        }
+
+        #printReport {
+            display: none;
+        }
+
         /* Light Mode Fixes */
         html.light h1,
         html.light h2,
@@ -1352,10 +1502,18 @@
                                 <i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                                 Tandai Hari Ini
                             </button>
-                            <button class="btn-outline flex-1 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="shareProgress()">
-                                <i data-lucide="share-2" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                                Bagikan Progress
-                            </button>
+                            <div class="grid grid-cols-2 gap-3 flex-1 lg:flex-none lg:w-1/3">
+                                <button onclick="downloadResult()"
+                                    class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-bold hover:bg-violet-500 hover:text-white transition">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    Download
+                                </button>
+                                <button onclick="printResult()"
+                                    class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-white/10 transition">
+                                    <i data-lucide="printer" class="w-4 h-4"></i>
+                                    Print
+                                </button>
+                            </div>
                             <button class="btn-outline py-3 sm:py-4 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2" onclick="resetChallenge()">
                                 <i data-lucide="refresh-cw" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                                 Reset
@@ -1562,6 +1720,148 @@
             setTimeout(() => { showToast('🎉 Selamat! Challenge selesai! 🎉', 'success', 5000); }, 500);
         }
 
+        function generatePrintContent() {
+            if (!currentChallenge) return '';
+
+            const progress = Math.round((currentChallenge.collectedAmount / currentChallenge.targetAmount) * 100);
+            const daysRemaining = 30 - currentChallenge.currentDay;
+            const date = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            let dayGridHTML = '';
+            for (let i = 1; i <= 30; i++) {
+                const day = currentChallenge.days.find(d => d.day === i);
+                dayGridHTML += `<div class="day-circle-print ${day.status}">${i}</div>`;
+            }
+
+            return `
+                <div class="print-report" style="display: block;">
+                    <div class="print-header">
+                        <div class="print-logo-section">
+                            <img src="assets/img/image.jpeg" alt="Monetra Logo">
+                            <div>
+                                <h2 style="margin:0; font-size: 18px;">Monetra</h2>
+                                <p style="margin:0; font-size: 9px; color: #64748b;">Financial Intelligence Platform</p>
+                            </div>
+                        </div>
+                        <div class="print-title">
+                            <h1>Laporan Saving Challenge</h1>
+                        </div>
+                        <div class="print-meta">
+                            <p>Dicetak pada: ${date}</p>
+                            <p>Progres Tantangan Menabung</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <h2 style="font-size: 18px; margin-bottom: 5px;">${currentChallenge.title}</h2>
+                        <p style="font-size: 11px; opacity: 0.7;">Challenge dimulai: ${new Date(currentChallenge.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-item-label">Status</div>
+                            <div class="summary-item-value">${currentChallenge.level}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-item-label">Terkumpul</div>
+                            <div class="summary-item-value" style="color: #10b981;">${formatRupiah(currentChallenge.collectedAmount)}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-item-label">Target</div>
+                            <div class="summary-item-value" style="color: #8b5cf6;">${formatRupiah(currentChallenge.targetAmount)}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-item-label">Progres</div>
+                            <div class="summary-item-value">${progress}%</div>
+                        </div>
+                    </div>
+
+                    <div class="details-section">
+                        <div class="tracker-title">Daily Tracker Progress (30 Hari)</div>
+                        <div class="print-day-grid">
+                            ${dayGridHTML}
+                        </div>
+                    </div>
+
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="font-size: 14px; margin-bottom: 10px;">Ringkasan Pencapaian</h3>
+                        <p style="font-size: 12px; line-height: 1.6;">
+                            Selamat! Anda berada di hari ke-<b>${currentChallenge.currentDay}</b>. 
+                            Sejauh ini Anda telah berhasil mengumpulkan <b>${formatRupiah(currentChallenge.collectedAmount)}</b>. 
+                            Tinggal <b>${daysRemaining} hari</b> lagi untuk mencapai target utama Anda sebesar <b>${formatRupiah(currentChallenge.targetAmount)}</b>. 
+                            Teruskan konsistensi Anda!
+                        </p>
+                    </div>
+
+                    <div class="print-footer">
+                        <p>© ${new Date().getFullYear()} Monetra - Rencanakan Keuanganmu Sejak Dini</p>
+                        <p>Laporan ini dihasilkan secara otomatis oleh sistem Monetra berdasarkan progres pengguna.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadResult() {
+            if (!currentChallenge) {
+                showToast('Belum ada challenge aktif untuk diunduh!', 'error');
+                return;
+            }
+            const printContent = generatePrintContent();
+            const printWindow = window.open('', '_blank');
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Laporan Saving Challenge - Monetra</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+                    <style>
+                        ${document.querySelector('style').innerHTML}
+                        body {
+                            font-family: 'Inter', sans-serif;
+                            padding: 40px;
+                            background: white;
+                            margin: 0;
+                        }
+                        @media print {
+                            body { padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${printContent}
+                    <div style="text-align: center; margin-top: 30px; display: none;" class="no-print">
+                        <button onclick="window.print()" style="padding: 12px 30px; background: #8b5cf6; color: white; border: none; border-radius: 50px; font-size: 16px; cursor: pointer; margin-right: 10px;">Cetak</button>
+                        <button onclick="window.close()" style="padding: 12px 30px; background: #e2e8f0; border: none; border-radius: 50px; font-size: 16px; cursor: pointer;">Tutup</button>
+                    </div>
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 800);
+        }
+
+        function printResult() {
+            if (!currentChallenge) {
+                showToast('Belum ada challenge aktif untuk dicetak!', 'error');
+                return;
+            }
+            const printReport = document.getElementById('printReport');
+            printReport.innerHTML = generatePrintContent();
+            printReport.style.display = 'block';
+
+            window.print();
+
+            setTimeout(() => {
+                printReport.style.display = 'none';
+            }, 1000);
+        }
+
         // ==================== INITIAL RENDER ====================
         updateChallengeDisplay();
         renderChallenges();
@@ -1572,12 +1872,18 @@
         window.markToday = markToday;
         window.shareProgress = shareProgress;
         window.resetChallenge = resetChallenge;
+        window.downloadResult = downloadResult;
+        window.printResult = printResult;
     </script>
+
     <!-- Floating Clock -->
-    <div id="floating-clock" class="clock-container">
+    <div id="floating-clock" class="clock-container no-print">
         <div class="clock-time">00:00:00</div>
         <div class="clock-date">Memuat...</div>
     </div>
+
+    <!-- Print Report Hidden Container -->
+    <div id="printReport"></div>
 
     <script src="assets/js/clock.js"></script>
 </body>

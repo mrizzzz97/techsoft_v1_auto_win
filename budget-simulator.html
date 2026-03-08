@@ -676,6 +676,180 @@
             background: rgba(124, 58, 237, 0.08);
             border-color: rgba(124, 58, 237, 0.3);
         }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print,
+            .navbar,
+            footer,
+            #floating-clock,
+            .loader-wrapper,
+            .mobile-menu,
+            .mobile-menu-overlay,
+            header,
+            section:not(#printReport),
+            .btn-primary,
+            .btn-outline,
+            .budget-card:not(.print-report-card) {
+                display: none !important;
+            }
+
+            #printReport {
+                display: block !important;
+                padding: 0;
+            }
+
+            .print-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #8b5cf6;
+            }
+
+            .print-logo-section {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .print-logo-section img {
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+            }
+
+            .print-title h1 {
+                font-size: 22px;
+                font-weight: 900;
+                margin: 0;
+                color: #0f172a;
+            }
+
+            .print-meta {
+                text-align: right;
+                font-size: 10px;
+                color: #475569;
+            }
+
+            .summary-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+
+            .summary-item {
+                background: #f8fafc;
+                padding: 15px;
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+            }
+
+            .summary-item-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #64748b;
+                margin-bottom: 5px;
+            }
+
+            .summary-item-value {
+                font-size: 18px;
+                font-weight: 700;
+                color: #0f172a;
+            }
+
+            .chart-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 30px;
+                page-break-inside: avoid;
+            }
+
+            .chart-section h2 {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+
+            .chart-image-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .details-section {
+                margin-top: 30px;
+            }
+
+            .details-title {
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #8b5cf6;
+            }
+
+            .details-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .details-card {
+                background: white;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 15px;
+                page-break-inside: avoid;
+            }
+
+            .details-card h3 {
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+            .details-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .details-list-item {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                padding: 6px 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+
+            .print-footer {
+                margin-top: 40px;
+                padding-top: 15px;
+                border-top: 1px dashed #cbd5e1;
+                text-align: center;
+                font-size: 9px;
+                color: #94a3b8;
+            }
+        }
+
+        #printReport {
+            display: none;
+        }
     </style>
 </head>
 
@@ -1083,6 +1257,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="grid grid-cols-2 gap-3 mt-4">
+                            <button onclick="downloadResult()"
+                                class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-bold hover:bg-violet-500 hover:text-white transition">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                Download PDF
+                            </button>
+                            <button onclick="printResult()"
+                                class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-white/10 transition">
+                                <i data-lucide="printer" class="w-4 h-4"></i>
+                                Cetak Laporan
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1475,35 +1662,159 @@
             initChart();
         }
 
-        function saveSimulation() {
-            alert('Simulasi budget berhasil disimpan!');
+        function captureChart() {
+            if (budgetChart) {
+                return budgetChart.toBase64Image();
+            }
+            return '';
+        }
 
-            const simulationData = {
-                income: {
-                    main: parseInputRupiah(mainIncome),
-                    additional: parseInputRupiah(additionalIncome),
-                    passive: parseInputRupiah(passiveIncome)
-                },
-                expenses: {
-                    needs: Number(needsSlider.value),
-                    transport: Number(transportSlider.value),
-                    entertainment: Number(entertainmentSlider.value),
-                    savings: Number(savingsSlider.value),
-                    others: Number(othersSlider.value)
-                },
-                date: new Date().toISOString()
-            };
+        function generatePrintContent() {
+            const totalIncome = calculateTotalIncome();
+            const totalExpenses = calculateTotalExpenses();
+            const remaining = totalIncome - totalExpenses;
+            const chartImage = captureChart();
+            const date = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
 
-            localStorage.setItem('lastSimulation', JSON.stringify(simulationData));
+            return `
+                <div class="print-report" style="display: block;">
+                    <div class="print-header">
+                        <div class="print-logo-section">
+                            <img src="assets/img/image.jpeg" alt="Monetra Logo">
+                            <div>
+                                <h2 style="margin:0; font-size: 20px;">Monetra</h2>
+                                <p style="margin:0; font-size: 10px; color: #64748b;">Financial Intelligence Platform</p>
+                            </div>
+                        </div>
+                        <div class="print-title">
+                            <h1>Laporan Simulasi Anggaran Bulanan</h1>
+                        </div>
+                        <div class="print-meta">
+                            <p>Dicetak pada: ${date}</p>
+                            <p>Dokumen Simulasi Keuangan Pribadi</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-item-label">Total Pemasukan</div>
+                            <div class="summary-item-value" style="color: #10b981;">${formatRupiah(totalIncome)}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-item-label">Total Pengeluaran</div>
+                            <div class="summary-item-value" style="color: #f43f5e;">${formatRupiah(totalExpenses)}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-item-label">Sisa Anggaran</div>
+                            <div class="summary-item-value" style="color: #8b5cf6;">${formatRupiah(remaining)}</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section text-center">
+                        <h2>Visualisasi Alokasi Dana</h2>
+                        <div class="chart-image-container mx-auto" style="width: 300px; height: 300px;">
+                            <img src="${chartImage}" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+
+                    <div class="details-section">
+                        <div class="details-title">Detail Alokasi Pengeluaran</div>
+                        <div class="details-grid">
+                            <div class="details-card">
+                                <h3>Pemasukan</h3>
+                                <div class="details-list">
+                                    <div class="details-list-item"><span>Utama</span> <span>${mainIncome.value}</span></div>
+                                    <div class="details-list-item"><span>Tambahan</span> <span>${additionalIncome.value}</span></div>
+                                    <div class="details-list-item"><span>Pasif</span> <span>${passiveIncome.value}</span></div>
+                                </div>
+                            </div>
+                            <div class="details-card">
+                                <h3>Pengeluaran</h3>
+                                <div class="details-list">
+                                    <div class="details-list-item"><span>Kebutuhan Pokok</span> <span>${formatRupiah(Number(needsSlider.value))}</span></div>
+                                    <div class="details-list-item"><span>Transportasi</span> <span>${formatRupiah(Number(transportSlider.value))}</span></div>
+                                    <div class="details-list-item"><span>Hiburan</span> <span>${formatRupiah(Number(entertainmentSlider.value))}</span></div>
+                                    <div class="details-list-item"><span>Tabungan</span> <span>${formatRupiah(Number(savingsSlider.value))}</span></div>
+                                    <div class="details-list-item"><span>Lain-lain</span> <span>${formatRupiah(Number(othersSlider.value))}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="print-footer">
+                        <p>© ${new Date().getFullYear()} Monetra - Rencanakan Keuanganmu Sejak Dini</p>
+                        <p>Simulasi ini adalah estimasi berdasarkan input pengguna. Gunakan sebagai panduan umum.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadResult() {
+            const printContent = generatePrintContent();
+            const printWindow = window.open('', '_blank');
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Laporan Simulasi Budget - Monetra</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+                    <style>
+                        ${document.querySelector('style').innerHTML}
+                        body {
+                            font-family: 'Inter', sans-serif;
+                            padding: 40px;
+                            background: white;
+                            margin: 0;
+                        }
+                        @media print {
+                            body { padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${printContent}
+                    <div style="text-align: center; margin-top: 30px; display: none;" class="no-print">
+                        <button onclick="window.print()" style="padding: 12px 30px; background: #8b5cf6; color: white; border: none; border-radius: 50px; font-size: 16px; cursor: pointer; margin-right: 10px;">Cetak</button>
+                        <button onclick="window.close()" style="padding: 12px 30px; background: #e2e8f0; border: none; border-radius: 50px; font-size: 16px; cursor: pointer;">Tutup</button>
+                    </div>
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 800);
+        }
+
+        function printResult() {
+            const printReport = document.getElementById('printReport');
+            printReport.innerHTML = generatePrintContent();
+            printReport.style.display = 'block';
+
+            window.print();
+
+            setTimeout(() => {
+                printReport.style.display = 'none';
+            }, 1000);
         }
 
         window.saveSimulation = saveSimulation;
+        window.downloadResult = downloadResult;
+        window.printResult = printResult;
     </script>
+
     <!-- Floating Clock -->
-    <div id="floating-clock" class="clock-container">
+    <div id="floating-clock" class="clock-container no-print">
         <div class="clock-time">00:00:00</div>
         <div class="clock-date">Memuat...</div>
     </div>
+
+    <!-- Print Report Hidden Container -->
+    <div id="printReport"></div>
 
     <script src="assets/js/clock.js"></script>
 </body>
