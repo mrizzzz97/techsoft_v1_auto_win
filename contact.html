@@ -29,6 +29,7 @@
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="assets/css/clock.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 
     <style>
         * {
@@ -110,6 +111,7 @@
             font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 1.2s;
@@ -246,6 +248,7 @@
             font-family: 'DM Sans', 'Inter', sans-serif;
             background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 55%, #818cf8 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
             animation: gradientMove 6s linear infinite;
@@ -264,6 +267,7 @@
         html.light .gradient-text {
             background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: none;
         }
@@ -1901,10 +1905,18 @@
         lucide.createIcons();
 
         window.addEventListener('load', function () {
-            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 3000);
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                if (loader) loader.classList.add('slide-up');
+            }, 800);
         });
 
-        AOS.init({ duration: 900, once: true, offset: 50, easing: 'ease-out-cubic' });
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
 
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');

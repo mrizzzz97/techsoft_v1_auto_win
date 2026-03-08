@@ -36,6 +36,7 @@
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="assets/css/clock.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 
     <style>
         * {
@@ -123,6 +124,7 @@
             font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 1.2s;
@@ -259,6 +261,7 @@
         .gradient-text {
             background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
             animation: gradientMove 5s linear infinite;
@@ -1656,10 +1659,18 @@
         lucide.createIcons();
 
         window.addEventListener('load', function () {
-            setTimeout(() => document.getElementById('loader').classList.add('slide-up'), 2000);
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                if (loader) loader.classList.add('slide-up');
+            }, 800);
         });
 
-        AOS.init({ duration: 700, once: true, offset: 30, disable: window.innerWidth < 768 });
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
 
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
