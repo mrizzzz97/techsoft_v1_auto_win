@@ -1,929 +1,775 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Tes Kepribadian Finansial - Monetra</title>
+    <title>Tes Kepribadian - Monetra</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { primary: '#8b5cf6', secondary: '#06b6d4' },
-                    screens: { 'xs': '480px' }
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: '#3b82f6',
+                    },
+                    animation: {
+                        'breathe': 'breathe 8s ease-in-out infinite',
+                        'shine': 'shine 1.5s ease-out infinite',
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'translateX(-50%) scale(1)', opacity: '0.4' },
+                            '50%': { transform: 'translateX(-50%) scale(1.1)', opacity: '0.7' },
+                        },
+                        shine: {
+                            '0%': { left: '-100%' },
+                            '20%': { left: '100%' },
+                            '100%': { left: '100%' }
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.441.0/dist/umd/lucide.min.js"></script>
-
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* CORE CSS */
+        html { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent;}
+        ::selection { background: rgba(59, 130, 246, 0.3); color: inherit; }
+        
+        /* LANGUAGE SWITCHER LOGIC */
+        html[lang="en"] .lang-id { display: none !important; }
+        html[lang="id"] .lang-en { display: none !important; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
+        /* Minimalist Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
 
-        html.dark body { background-color: #020617; color: #f8fafc; }
-        html.light body { background-color: #f8fafc; color: #0f172a; }
-
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* === ANIMATIONS === */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.85); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        @keyframes orb-float-1 {
-            0%, 100% { transform: translate(0,0) scale(1); }
-            33% { transform: translate(30px,-20px) scale(1.05); }
-            66% { transform: translate(-20px,15px) scale(0.95); }
-        }
-        @keyframes orb-float-2 {
-            0%, 100% { transform: translate(0,0) scale(1); }
-            33% { transform: translate(-25px,20px) scale(0.95); }
-            66% { transform: translate(20px,-15px) scale(1.05); }
+        /* Background Grid */
+        .bg-grid-pattern {
+            position: fixed; inset: 0; z-index: -10; pointer-events: none;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(128, 128, 128, 0.08) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(128, 128, 128, 0.08) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center top, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center top, black 30%, transparent 80%);
         }
 
-        /* Background orbs */
-        .bg-orb {
-            position: fixed; border-radius: 50%;
-            filter: blur(80px); pointer-events: none; z-index: 0;
+        .sys-loader {
+            position: fixed; inset: 0; background: #09090b; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
         }
-        .bg-orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
-            top: -100px; left: -100px;
-            animation: orb-float-1 12s ease-in-out infinite;
+        .sys-loader.booted { transform: translateY(-100%); }
+
+        /* ISLAND NAVBAR */
+        #navbar {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 100%; border-radius: 0; border: 1px solid transparent;
         }
-        .bg-orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(6,182,212,0.12), transparent 70%);
-            bottom: 20%; right: -80px;
-            animation: orb-float-2 15s ease-in-out infinite;
+        .nav-scrolled {
+            top: 20px !important; max-width: 1000px !important; border-radius: 9999px !important;
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 228, 231, 0.8) !important;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            padding-left: 0.5rem; padding-right: 0.5rem;
         }
-        .bg-orb-3 {
-            width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 70%);
-            top: 50%; left: 40%;
-            animation: orb-float-1 18s ease-in-out infinite reverse;
+        html.dark .nav-scrolled {
+            background: rgba(9, 9, 11, 0.85) !important; border: 1px solid rgba(39, 39, 42, 0.8) !important;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
         }
 
-        /* Entrance animations */
-        .anim-navbar  { animation: fadeInDown 0.7s cubic-bezier(0.23,1,0.32,1) forwards; }
-        .anim-hero-tag   { animation: fadeInDown 0.6s cubic-bezier(0.23,1,0.32,1) 0.1s both; }
-        .anim-hero-title { animation: fadeInUp  0.8s cubic-bezier(0.23,1,0.32,1) 0.2s both; }
-        .anim-hero-sub   { animation: fadeInUp  0.8s cubic-bezier(0.23,1,0.32,1) 0.35s both; }
-        .anim-hero-card  { animation: scaleIn   0.7s cubic-bezier(0.23,1,0.32,1) 0.5s both; }
-
-        /* Scroll reveal */
-        .reveal {
-            opacity: 1; transform: translateY(0);
-            transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
-        }
-        .reveal.pre-reveal { opacity: 0; transform: translateY(30px); }
-        .reveal-left {
-            opacity: 1; transform: translateX(0);
-            transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
-        }
-        .reveal-left.pre-reveal { opacity: 0; transform: translateX(-30px); }
-        .reveal-scale {
-            opacity: 1; transform: scale(1);
-            transition: opacity 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.6s cubic-bezier(0.23,1,0.32,1);
-        }
-        .reveal-scale.pre-reveal { opacity: 0; transform: scale(0.9); }
-
-        .float-anim { animation: float 6s ease-in-out infinite; }
-
-        .shimmer-card { position: relative; overflow: hidden; }
-        .shimmer-card::after {
-            content: '';
-            position: absolute; top: 0; left: 0;
-            width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        /* === NAVBAR === */
-        .navbar {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 1.25rem; padding-bottom: 1.25rem;
-        }
-        .navbar .navbar-container {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
-        }
-
-        html.dark .navbar a,
-        html.dark .navbar button,
-        html.dark .navbar span { color: #f8fafc; }
-        html.light .navbar a,
-        html.light .navbar button,
-        html.light .navbar span { color: #0f172a; }
-
-        .navbar.floating { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .navbar.floating .navbar-container {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            padding: 0.75rem 2rem; max-width: 1200px;
-        }
-        html.light .navbar.floating .navbar-container {
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        /* =============================================
-           TOMBOL "MULAI SEKARANG" - SELALU PUTIH
-           ============================================= */
-        .navbar-cta {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            display: inline-block;
-            transition: all 0.3s ease;
-            padding: 0.6rem 1.5rem;
-            font-size: 0.875rem;
-            font-weight: 700;
-        }
-        .navbar-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.45);
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-        }
-        /* Pastikan semua child element juga putih di mode apapun */
-        .navbar-cta span,
-        .navbar-cta *,
-        html.light .navbar-cta,
-        html.light .navbar-cta span,
-        html.light .navbar-cta *,
-        html.dark .navbar-cta,
-        html.dark .navbar-cta span,
-        html.dark .navbar-cta * {
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .btn-primary *, .btn-primary i, .btn-primary span { color: #ffffff !important; }
-
-        .btn-outline {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: transparent; color: inherit;
-            transition: all 0.2s ease;
-        }
-        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); }
-        html.light .btn-outline { border-color: #cbd5e1; }
-        html.light .btn-outline:hover { background: #f1f5f9; }
-
-        /* Dropdown */
-        .dropdown { position: relative; }
-        .dropdown-menu {
-            position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
-            background: rgba(15, 23, 42, 0.97); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1rem;
-            padding: 0.5rem; min-width: 200px;
-            opacity: 0; visibility: hidden; transform: translateY(-10px);
-            transition: all 0.3s ease; z-index: 100;
-        }
-        html.light .dropdown-menu { background: rgba(255,255,255,0.97); border: 1px solid rgba(0,0,0,0.1); }
-        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-        .dropdown-item {
-            display: flex; align-items: center; gap: 0.75rem;
-            padding: 0.75rem 1rem; border-radius: 0.5rem;
-            transition: all 0.2s ease; color: #f8fafc !important;
-        }
-        html.light .dropdown-item { color: #0f172a !important; }
-        .dropdown-item span { color: inherit !important; }
-        .dropdown-item:hover { background: rgba(139, 92, 246, 0.2); }
-
-        /* Mobile menu */
-        .mobile-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
-            z-index: 9998; opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
-        .mobile-menu {
-            position: fixed; top: 0; right: 0; width: 85%; max-width: 320px;
-            height: 100vh; background: #0f172a; z-index: 9999;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto; padding: 1.5rem;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-        }
-        html.light .mobile-menu { background: #ffffff; border-left: 1px solid #e2e8f0; }
-        .mobile-menu.active { transform: translateX(0); }
-        .mobile-menu a, .mobile-menu span { color: #f8fafc; }
-        html.light .mobile-menu a, html.light .mobile-menu span { color: #0f172a; }
-
-        #closeMobileMenu {
-            position: relative; z-index: 10000; cursor: pointer;
-            width: 40px; height: 40px; display: flex; align-items: center;
-            justify-content: center; border-radius: 999px;
-            background: rgba(255,255,255,0.1); transition: all 0.2s ease; color: #f8fafc;
-        }
-        #closeMobileMenu:hover { background: rgba(255,255,255,0.2); }
-        #mobileMenuBtn {
-            width: 40px; height: 40px; display: flex; align-items: center;
-            justify-content: center; border-radius: 999px;
-            background: rgba(255,255,255,0.1); transition: all 0.2s ease; color: #f8fafc;
-        }
-        html.light #mobileMenuBtn { background: rgba(0,0,0,0.05); color: #0f172a; }
-        #mobileMenuBtn:hover { background: rgba(255,255,255,0.2); }
-
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 200% auto; animation: gradientMove 5s linear infinite;
-        }
-
-        /* Section tag */
-        .section-tag {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.35rem 1rem; border-radius: 9999px;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            background: rgba(139, 92, 246, 0.08);
-            font-size: 0.72rem; font-weight: 700;
-            letter-spacing: 0.15em; text-transform: uppercase; color: #a78bfa;
-        }
-        html.light .section-tag { color: #7c3aed; background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.3); }
-
-        /* Progress Bar */
-        .progress-bar {
-            width: 100%; height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 999px; overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #8b5cf6, #06b6d4, #8b5cf6);
-            background-size: 200% auto;
-            animation: gradientShift 3s linear infinite;
-            transition: width 0.5s cubic-bezier(0.23,1,0.32,1);
-            border-radius: 999px;
-        }
-
-        /* Personality / Question Cards */
-        .personality-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
-            overflow: hidden; cursor: pointer;
-        }
-        .personality-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(139,92,246,0.5);
-            box-shadow: 0 12px 40px rgba(139,92,246,0.2);
-        }
-        html.light .personality-card {
-            background: #ffffff; border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        .personality-card.selected {
-            border: 2px solid #8b5cf6;
-            box-shadow: 0 8px 20px rgba(139,92,246,0.2);
-        }
-
-        .question-container { min-height: 400px; }
+        /* PERSONALITY TEST CARDS */
         .question-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem; padding: 2.5rem;
-            transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease;
-            animation: scaleIn 0.6s cubic-bezier(0.23,1,0.32,1) both;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
+            border: 1px solid rgba(128, 128, 128, 0.2); border-radius: 1.5rem; padding: 2.5rem;
+            animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-        .question-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(139,92,246,0.15);
+        html.light .question-card { background: #ffffff; border: 1px solid #e4e4e7; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .personality-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(128, 128, 128, 0.2);
+            border-radius: 1rem; padding: 1.25rem; cursor: pointer;
+            transition: all 0.2s ease; position: relative; overflow: hidden;
         }
-        html.light .question-card {
-            background: #ffffff; border: 1px solid #e2e8f0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        html.light .personality-card { background: #f8fafc; border: 1px solid #e2e8f0; }
+        .personality-card:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); transform: translateY(-2px); }
+        .personality-card.selected { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        .personality-card.selected::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #3b82f6;
         }
 
-        /* Result Cards */
-        .result-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem; padding: 2rem;
-            transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
-            overflow: hidden;
-        }
-        html.light .result-card { background: #ffffff; border: 1px solid #e2e8f0; }
-        .result-card:hover {
-            border-color: rgba(139,92,246,0.5);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(139,92,246,0.2);
-        }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-        /* Icon wrapper */
-        .icon-wrapper {
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
+        /* PROGRESS BAR */
+        .progress-bar { width: 100%; height: 6px; background: rgba(0,0,0,0.05); border-radius: 999px; overflow: hidden; }
+        html.dark .progress-bar { background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: #3b82f6; border-radius: 999px; transition: width 0.5s ease; }
 
-        /* Light mode */
-        html.light h1, html.light h2, html.light h3, html.light h4, html.light h5 { color: #0f172a; }
-        html.light .result-card p, html.light .result-card span:not(.gradient-text),
-        html.light .result-card li, html.light .question-card p,
-        html.light .question-card label { color: #334155; }
-        html.light .text-gray-300, html.light .text-gray-400, html.light .text-gray-500 { color: #64748b; }
+        /* FLOATING CLOCK - LIGHT MODE FIX */
+        .clock-container {
+            position: fixed; bottom: 24px; right: 24px;
+            background: rgba(24, 24, 27, 0.8); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 999px;
+            padding: 10px 24px; color: white; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); min-width: 160px;
+        }
+        html.light .clock-container {
+            background: #ffffff !important; color: #18181b !important;
+            border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .clock-time { font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; }
+        .clock-date { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-top: 4px; }
 
-        /* =============================================
-           FOOTER - SEMUA TEKS PUTIH PENUH
-           ============================================= */
-        footer {
-            background-color: #020617 !important;
+        /* Magnetic Button & Shine */
+        .btn-magnetic { transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; }
+        .btn-magnetic::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
         }
-        footer,
-        footer *,
-        footer p,
-        footer span,
-        footer h4,
-        footer a,
-        footer li,
-        footer div,
-        footer ul,
-        footer ol,
-        footer label {
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-        }
-        footer a:hover {
-            color: #a78bfa !important;
-            -webkit-text-fill-color: #a78bfa !important;
-        }
-        footer .text-gray-400,
-        footer .text-gray-500,
-        footer .opacity-50,
-        footer .opacity-40,
-        footer .opacity-60 {
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            opacity: 1 !important;
-        }
-        footer p.opacity-50,
-        footer .opacity-50 p {
-            color: #cbd5e1 !important;
-            -webkit-text-fill-color: #cbd5e1 !important;
-            opacity: 1 !important;
-        }
-        footer .border-t {
-            opacity: 1 !important;
-        }
-        footer .border-t p {
-            color: #94a3b8 !important;
-            -webkit-text-fill-color: #94a3b8 !important;
-        }
+        .btn-magnetic:hover::after { animation: shine 1.5s ease-out infinite; }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
-        button, a { -webkit-tap-highlight-color: transparent; }
-
-        /* SVG icons */
-        svg[data-lucide] { display: inline-block; vertical-align: middle; }
-
-        /* ============================================
-           CLOCK
-           ============================================ */
-        #floating-clock {
-            position: fixed; bottom: 2rem; right: 2rem;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 0.75rem 1.5rem; border-radius: 9999px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            min-width: 160px; z-index: 9990;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.37);
-            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-            cursor: default; user-select: none;
-            font-family: 'Inter', sans-serif;
-        }
-        #floating-clock:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(139,92,246,0.5);
-            box-shadow: 0 12px 40px rgba(139,92,246,0.2);
-        }
-        html.light #floating-clock {
-            background: rgba(15,23,42,0.05);
-            border: 1px solid rgba(15,23,42,0.1);
-            box-shadow: 0 8px 32px rgba(15,23,42,0.1);
-        }
-        html.light #floating-clock:hover {
-            background: rgba(15,23,42,0.08); border-color: rgba(139,92,246,0.3);
-        }
-        #floating-clock > .clock-time {
-            font-size: 1.5rem; font-weight: 800; line-height: 1;
-            background: linear-gradient(135deg, #a78bfa, #22d3ee);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent; display: block;
-        }
-        #floating-clock > .clock-date {
-            font-size: 0.7rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            opacity: 0.8; margin-top: 4px;
-            background: linear-gradient(135deg, #f8fafc, #94a3b8);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; display: block;
-        }
-        html.light #floating-clock > .clock-date {
-            background: linear-gradient(135deg, #0f172a, #475569);
-            -webkit-background-clip: text; background-clip: text;
-        }
-        @media (max-width: 768px) {
-            #floating-clock { bottom: 1.5rem; right: 1.5rem; padding: 0.6rem 1.25rem; min-width: 140px; }
-            #floating-clock > .clock-time { font-size: 1.25rem; }
-            #floating-clock > .clock-date { font-size: 0.6rem; }
-        }
-
-        /* Print Styles */
+        /* Print Specific Styles */
         @media print {
-            @page { size: A4; margin: 1.5cm; }
-            body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .no-print, .navbar, footer, #floating-clock, .btn-primary, .btn-outline { display: none !important; }
-            .print-report { display: block !important; font-family: 'Inter', sans-serif; max-width: 100%; margin: 0 auto; background: white; }
-            .report-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #8b5cf6; }
-            .logo-area { display: flex; align-items: center; gap: 15px; }
-            .logo-area img { width: 50px; height: 50px; border-radius: 10px; }
-            .result-name { font-size: 36px; font-weight: 900; margin: 10px 0; color: #8b5cf6; }
-            .result-desc { font-size: 14px; line-height: 1.6; color: #334155; }
-            .print-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 25px 0; }
-            .print-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 15px; }
-            .print-card-list li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; font-size: 11px; color: #334155; }
-            .answers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .answer-item { background: #f8fafc; border-radius: 10px; padding: 12px; font-size: 11px; border-left: 3px solid #8b5cf6; }
-            .print-footer { margin-top: 40px; padding-top: 15px; border-top: 1px dashed #cbd5e1; text-align: center; font-size: 9px; color: #94a3b8; }
+            body { background: white !important; color: black !important; padding: 0 !important; }
+            nav, footer, .no-print, #floating-clock { display: none !important; }
+            #testSection, #testHeader { display: none !important; }
+            #resultSection { display: block !important; padding: 0 !important; }
+            .bg-grid-pattern, .fixed { display: none !important; }
+            #printReport { display: block !important; padding: 2cm; font-family: sans-serif; }
+            .bg-white, .dark .bg-\[#09090b\] { background: white !important; border: 1px solid #eee !important; color: black !important; }
+            .grid { display: block !important; }
+            .grid > div { margin-bottom: 20px; break-inside: avoid; }
         }
-        .print-report { display: none; }
+        #printReport { display: none; }
     </style>
 </head>
 
-<body>
-    <div class="bg-orb bg-orb-1"></div>
-    <div class="bg-orb bg-orb-2"></div>
-    <div class="bg-orb bg-orb-3"></div>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-50 transition-colors duration-300 selection:bg-brand selection:text-white overflow-x-hidden">
 
-    <!-- Navbar -->
-    <nav class="navbar anim-navbar fixed w-full top-0 z-50 px-6">
-        <div class="navbar-container max-w-7xl mx-auto flex items-center justify-between relative">
-            <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.href='index.html'">
-                <div class="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
-                    <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover"
-                         onerror="this.style.display='none'">
-                </div>
-                <span class="text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
-                <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                <div class="dropdown">
-                    <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="personality-test.html" class="dropdown-item">
-                            <i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span>
-                        </a>
-                        <a href="budget-simulator.html" class="dropdown-item">
-                            <i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span>
-                        </a>
-                        <a href="goal-tracker.html" class="dropdown-item">
-                            <i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span>
-                        </a>
-                        <a href="challenge.html" class="dropdown-item">
-                            <i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span>
-                        </a>
-                    </div>
-                </div>
-                <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
-                <button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle" title="Toggle theme">
-                    <span id="themeIcon" style="display:flex;align-items:center;justify-content:center;"></span>
-                </button>
-                <a href="personality-test.html" class="navbar-cta rounded-full font-bold flex items-center gap-2">
-                    <span>Mulai Sekarang</span>
-                </a>
-            </div>
-
-            <!-- Mobile -->
-            <div class="md:hidden flex items-center space-x-3">
-                <button class="p-2 rounded-full bg-white/5" id="themeToggleMobile" title="Toggle theme">
-                    <span id="themeIconMobile" style="display:flex;align-items:center;justify-content:center;"></span>
-                </button>
-                <button id="mobileMenuBtn" aria-label="Open menu">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
-            </div>
+    <!-- Fast Boot Loader -->
+    <div class="sys-loader" id="loader">
+        <div class="font-mono text-brand text-sm tracking-widest mb-4 flex items-center gap-2">
+            <i data-lucide="terminal" class="w-4 h-4 animate-pulse"></i> DIAGNOSTIC.INIT()
         </div>
-    </nav>
-
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="flex justify-end mb-8">
-            <button id="closeMobileMenu" aria-label="Close menu">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
-        <div class="flex flex-col space-y-4">
-            <a href="index.html" class="text-lg font-medium hover:text-violet-400 transition">Home</a>
-            <a href="about.html" class="text-lg font-medium hover:text-violet-400 transition">About</a>
-            <div class="border-t border-white/10 pt-4">
-                <div class="text-xs uppercase tracking-wider opacity-50 mb-3">Features</div>
-                <a href="personality-test.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="user-circle" class="w-4 h-4"></i><span>Tes Kepribadian</span>
-                </a>
-                <a href="budget-simulator.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="wallet" class="w-4 h-4"></i><span>Simulasi Budget</span>
-                </a>
-                <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="target" class="w-4 h-4"></i><span>Target Tabungan</span>
-                </a>
-                <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition">
-                    <i data-lucide="trophy" class="w-4 h-4"></i><span>Saving Challenge</span>
-                </a>
-            </div>
-            <a href="contact.html" class="text-lg font-medium hover:text-violet-400 transition">Contact</a>
-            <a href="personality-test.html" class="navbar-cta rounded-full text-center mt-4">Mulai Sekarang</a>
+        <div class="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden">
+            <div class="h-full bg-brand w-0" id="bootProgress" style="transition: width 0.5s ease;"></div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="pt-40 pb-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center">
-                <div class="inline-block mb-6 anim-hero-tag">
-                    <span class="section-tag">Tes Psikologi Finansial</span>
+    <div class="bg-grid-pattern"></div>
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none z-[-5] animate-breathe"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-1/2 -translate-x-1/2 w-full z-50 bg-transparent h-[72px] flex items-center px-6">
+        <div class="w-full flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3 group pl-2">
+                <div class="w-8 h-8 rounded-md bg-zinc-900 dark:bg-white flex items-center justify-center overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <img src="assets/img/image.jpeg" alt="Logo" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-300">
                 </div>
-                <h1 class="text-5xl md:text-6xl font-black mb-6 anim-hero-title">
-                    Kenali <span class="gradient-text">Tipe Finansialmu</span>
-                </h1>
-                <p class="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed anim-hero-sub">
-                    Jawab 10 pertanyaan sederhana untuk memahami kepribadian finansialmu dan dapatkan rekomendasi pengelolaan uang yang tepat
-                </p>
+                <span class="font-bold text-lg tracking-tight">Monetra<span class="text-brand">.</span></span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="index.html" class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 relative group overflow-hidden">
+                    <span class="lang-id">Beranda</span><span class="lang-en">Home</span>
+                </a>
+                <div class="relative group">
+                    <button class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-1">
+                        <span class="lang-id">Fitur</span><span class="lang-en">Features</span>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-[60]">
+                        <div class="w-64 bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl p-2 backdrop-blur-xl">
+                            <a href="personality-test.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item bg-zinc-100 dark:bg-zinc-800">
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-zinc-900 flex items-center justify-center text-brand transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="user-round" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-bold tracking-tight"><span class="lang-id">Tes Kepribadian</span><span class="lang-en">Personality Test</span></span>
+                            </a>
+                            <a href="budget-simulator.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Simulator Budget</span><span class="lang-en">Budget Simulator</span></span>
+                            </a>
+                            <a href="goal-tracker.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="target" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Target Tabungan</span><span class="lang-en">Savings Goal</span></span>
+                            </a>
+                            <a href="challenge.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Saving Challenge</span><span class="lang-en">Saving Challenge</span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html" class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 relative group overflow-hidden">
+                    <span class="lang-id">Tim Kami</span><span class="lang-en">Our Team</span>
+                </a>
+                <a href="contact.html" class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 relative group overflow-hidden">
+                    <span class="lang-id">Kontak</span><span class="lang-en">Contact</span>
+                </a>
             </div>
+
+            <div class="hidden md:flex items-center gap-3 pr-2">
+                <button id="langToggleBtn" class="text-xs font-bold px-2 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-300 w-10 active:scale-95">ID</button>
+                <button class="text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white transition-colors p-2 active:scale-90" id="themeToggle" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block hover:rotate-90 transition-transform duration-500"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden hover:-rotate-12 transition-transform duration-300"></i>
+                </button>
+                <div class="h-4 w-px bg-zinc-300 dark:bg-zinc-800 mx-1"></div>
+                <a href="personality-test.html" class="btn-magnetic inline-flex items-center justify-center gap-2 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all">
+                    <span class="lang-id">Eksekusi</span><span class="lang-en">Execute</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-zinc-900 dark:text-white"><i data-lucide="menu" class="w-5 h-5"></i></button>
         </div>
-    </section>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="pt-40 pb-16 relative z-10 text-center px-6" id="testHeader">
+        <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 mb-6 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md">
+                <i data-lucide="scan-line" class="w-3.5 h-3.5 text-brand"></i>
+                <span class="lang-id">Modul Diagnostik</span><span class="lang-en">Diagnostic Module</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-6">
+                <!-- Teks Berwarna Konsisten untuk Kedua Bahasa -->
+                <span class="lang-id text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Tes Kepribadian</span>
+                <span class="lang-en text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Personality Test</span>
+            </h1>
+            <p class="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed max-w-2xl mx-auto">
+                <span class="lang-id">Jawab 10 parameter berikut untuk mengidentifikasi logika finansial dasar Anda dan menerima instruksi pengelolaan yang teroptimasi.</span>
+                <span class="lang-en">Answer the following 10 parameters to identify your core financial logic and receive optimized management instructions.</span>
+            </p>
+        </div>
+    </header>
 
     <!-- Test Section -->
-    <section class="pb-32" id="testSection">
-        <div class="max-w-4xl mx-auto px-6">
-            <!-- Progress -->
-            <div class="mb-12">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-sm font-medium opacity-60">Progress Tes</span>
-                    <span class="text-sm font-bold text-violet-400" id="questionCounter">1/10</span>
+    <section class="pb-32 relative z-10" id="testSection">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="mb-10 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+                <div class="flex justify-between items-center mb-3 font-mono text-xs uppercase tracking-wider">
+                    <span class="text-zinc-500"><i data-lucide="loader" class="w-3 h-3 inline animate-spin mr-1"></i> <span class="lang-id">Status: Kompilasi Data</span><span class="lang-en">Status: Compiling Data</span></span>
+                    <span class="font-bold text-brand" id="questionCounter">1/10</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill" style="width: 10%"></div>
                 </div>
             </div>
 
-            <!-- Question Container -->
-            <div id="questionContainer" class="question-container"></div>
+            <div id="questionContainer" class="min-h-[400px] flex flex-col gap-4">
+                <!-- Question injected here -->
+            </div>
 
-            <!-- Navigation -->
-            <div class="flex justify-between items-center mt-8">
-                <button id="prevBtn"
-                    class="px-8 py-3 rounded-full border border-white/20 font-medium hover:bg-white/5 transition disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2"
-                    disabled>
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>Sebelumnya
+            <div class="flex justify-between items-center mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+                <button id="prevBtn" class="px-6 py-2.5 rounded-md border border-zinc-300 dark:border-zinc-700 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 text-sm" disabled>
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span class="lang-id">Mundur</span><span class="lang-en">Back</span>
                 </button>
-                <button id="nextBtn" class="btn-primary px-8 py-3 rounded-full font-medium flex items-center gap-2">
-                    Selanjutnya <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <button id="nextBtn" class="px-6 py-2.5 rounded-md bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-medium hover:opacity-90 transition-opacity flex items-center gap-2 text-sm shadow-md shadow-zinc-200 dark:shadow-zinc-900">
+                    <span class="lang-id">Lanjut</span><span class="lang-en">Next</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
-                <button id="submitBtn" class="btn-primary px-8 py-3 rounded-full font-medium hidden flex items-center gap-2">
-                    <i data-lucide="check" class="w-4 h-4"></i>Lihat Hasil
+                <button id="submitBtn" class="hidden px-6 py-2.5 rounded-md bg-brand text-white font-bold hover:bg-blue-600 transition-colors items-center gap-2 text-sm shadow-md shadow-blue-500/20">
+                    <i data-lucide="terminal" class="w-4 h-4"></i> <span class="lang-id">Eksekusi Analisis</span><span class="lang-en">Execute Analysis</span>
                 </button>
             </div>
         </div>
     </section>
 
     <!-- Result Section -->
-    <section class="pb-32 hidden" id="resultSection">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="pt-60 pb-32 hidden relative z-10" id="resultSection">
+        <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-16">
-                <div class="inline-block mb-6">
-                    <span class="section-tag">Hasil Tes Kamu</span>
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-green-500/30 text-green-600 dark:text-green-400 mb-6 bg-green-50 dark:bg-green-500/10">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                    <span class="lang-id">Proses Selesai</span><span class="lang-en">Process Complete</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6">
-                    Kamu adalah Tipe <span class="gradient-text" id="resultType">The Saver</span>
+                <h2 class="text-3xl md:text-5xl font-black mb-4">
+                    <span class="lang-id">Tipe Sistem Terdeteksi: <br><span class="text-brand" id="resultType">...</span></span>
+                    <span class="lang-en">System Type Detected: <br><span class="text-brand" id="resultTypeEn">...</span></span>
                 </h2>
-                <p class="text-lg opacity-70 max-w-2xl mx-auto leading-relaxed" id="resultDescription">
-                    Kamu memiliki kecenderungan untuk menabung dan berhemat.
-                </p>
+                <p class="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto" id="resultDescription"></p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- Strengths -->
-                <div class="result-card shimmer-card reveal">
-                    <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-6">
-                        <i data-lucide="star" class="w-8 h-8 text-white"></i>
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <div class="bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-green-500"></i>
+                        <h3 class="text-lg font-bold font-mono"><span class="lang-id">Kelebihan</span><span class="lang-en">Strengths</span></h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Kelebihan</h3>
-                    <ul class="space-y-3" id="strengthsList">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
-                            <span>Bijak dalam mengelola keuangan</span>
-                        </li>
-                    </ul>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400" id="strengthsList"></ul>
                 </div>
 
-                <!-- Weaknesses -->
-                <div class="result-card shimmer-card reveal" style="transition-delay:0.1s">
-                    <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mb-6">
-                        <i data-lucide="alert-triangle" class="w-8 h-8 text-white"></i>
+                <div class="bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>
+                        <h3 class="text-lg font-bold font-mono"><span class="lang-id">Tantangan</span><span class="lang-en">Challenges</span></h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Tantangan</h3>
-                    <ul class="space-y-3" id="weaknessesList">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="alert-circle" class="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5"></i>
-                            <span>Kadang terlalu takut mengambil risiko</span>
-                        </li>
-                    </ul>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400" id="weaknessesList"></ul>
                 </div>
 
-                <!-- Recommendations -->
-                <div class="result-card shimmer-card reveal" style="transition-delay:0.2s">
-                    <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl mb-6">
-                        <i data-lucide="lightbulb" class="w-8 h-8 text-white"></i>
+                <div class="bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+                        <i data-lucide="cpu" class="w-5 h-5 text-brand"></i>
+                        <h3 class="text-lg font-bold font-mono"><span class="lang-id">Rekomendasi</span><span class="lang-en">Recommendations</span></h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Rekomendasi</h3>
-                    <ul class="space-y-3" id="recommendationsList">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
-                            <span>Mulai investasi reksadana</span>
-                        </li>
-                    </ul>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400" id="recommendationsList"></ul>
                 </div>
             </div>
 
-            <div class="text-center flex flex-wrap justify-center gap-4">
-                <a href="budget-simulator.html"
-                    class="btn-primary px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
-                    Mulai Simulasi Budget <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </a>
-                <button onclick="downloadResult()"
-                    class="btn-primary px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
-                    <i data-lucide="download" class="w-5 h-5"></i>Download Hasil
+            <div class="flex flex-wrap justify-center gap-4 no-print">
+                <button onclick="printResult()" class="px-8 py-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 rounded-full font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> <span class="lang-id">Cetak</span><span class="lang-en">Print</span>
                 </button>
-                <button onclick="printResult()"
-                    class="btn-outline px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
-                    <i data-lucide="printer" class="w-5 h-5"></i>Print Hasil
+                <button onclick="downloadResult()" class="px-8 py-3 border border-zinc-300 dark:border-zinc-700 rounded-full font-bold hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> <span class="lang-id">Unduh Log</span><span class="lang-en">Download Log</span>
                 </button>
-                <button onclick="restartTest()"
-                    class="btn-outline px-8 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3">
-                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>Ulangi Tes
+                <button onclick="restartTest()" class="px-8 py-3 text-zinc-500 font-bold hover:text-zinc-900 dark:hover:text-white transition-colors">
+                    <span class="lang-id">Re-inisialisasi</span><span class="lang-en">Restart</span>
                 </button>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#020617] pt-24 pb-12 border-t border-white/5">
+    <footer class="pt-24 pb-12 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#030712] relative z-10 no-print">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
-                <div>
-                    <div class="flex items-center space-x-3 mb-6">
-                        <div class="w-10 h-10 overflow-hidden rounded-xl border border-white/10">
-                            <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover"
-                                 onerror="this.style.display='none'">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
+                <div class="md:col-span-4">
+                    <a href="index.html" class="flex items-center space-x-3 mb-6 grayscale hover:grayscale-0 transition-all duration-300 w-max group">
+                        <div class="w-8 h-8 rounded bg-zinc-900 dark:bg-white flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform">
+                            <img src="assets/img/image.jpeg" alt="Logo" class="w-full h-full object-cover">
                         </div>
-                        <span class="text-2xl font-bold">Monetra</span>
-                    </div>
-                    <p class="text-sm leading-relaxed" style="color:#cbd5e1 !important; -webkit-text-fill-color:#cbd5e1 !important;">Platform edukasi finansial interaktif yang membantu generasi muda Indonesia memahami, merencanakan, dan mengoptimalkan keuangan mereka secara lebih bijak.</p>
+                        <span class="font-bold text-xl tracking-tight">Monetra.</span>
+                    </a>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-6 max-w-xs">
+                        <span class="lang-id">Infrastruktur logika untuk keputusan finansial generasi muda.</span>
+                        <span class="lang-en">Logical infrastructure for the younger generation's financial decisions.</span>
+                    </p>
                 </div>
-                <div>
-                    <h4 class="font-bold mb-6">Produk</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a></li>
-                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a></li>
-                        <li><a href="goal-tracker.html" class="hover:text-violet-400 transition">Target Tabungan</a></li>
-                        <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
+                <div class="hidden md:block md:col-span-2"></div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold mb-5 text-sm uppercase tracking-widest text-zinc-900 dark:text-white">Modul</h4>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                        <li><a href="personality-test.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform text-brand font-bold"><span class="lang-id">Tes Kepribadian</span><span class="lang-en">Personality Test</span></a></li>
+                        <li><a href="budget-simulator.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Simulator Budget</span><span class="lang-en">Budget Simulator</span></a></li>
+                        <li><a href="goal-tracker.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Target Tabungan</span><span class="lang-en">Savings Goal</span></a></li>
+                        <li><a href="challenge.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Saving Challenge</span><span class="lang-en">Saving Challenge</span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-bold mb-6">Perusahaan</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
-                        <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold mb-5 text-sm uppercase tracking-widest text-zinc-900 dark:text-white"><span class="lang-id">Akses</span><span class="lang-en">Access</span></h4>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                        <li><a href="about.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Tentang Tim</span><span class="lang-en">Our Team</span></a></li>
+                        <li><a href="contact.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Hubungi Kami</span><span class="lang-en">Contact Us</span></a></li>
                     </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6">Ikuti Kami</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="twitter" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
-            <div class="border-t border-white/5 pt-8 text-center text-sm">
-                <p style="color:#94a3b8 !important; -webkit-text-fill-color:#94a3b8 !important;">&copy; 2026 Monetra. All rights reserved.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-200 dark:border-zinc-800 text-xs text-zinc-500 font-mono">
+                <p>&copy; 2026 Monetra System. All rights reserved.</p>
+                <div class="flex items-center gap-2 mt-4 md:mt-0 bg-zinc-200 dark:bg-zinc-900 px-3 py-1.5 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <span class="lang-id">Sistem Operasional: Normal</span><span class="lang-en">Systems Operational</span>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Floating Clock -->
-    <div id="floating-clock" class="no-print">
-        <div class="clock-time">00:00:00</div>
-        <div class="clock-date">Memuat...</div>
+    <!-- Jam Capsule -->
+    <div id="floating-clock" class="clock-container no-print">
+        <div class="clock-time" id="clock-time">00:00:00</div>
+        <div class="clock-date" id="clock-date">Memuat...</div>
     </div>
 
-    <!-- Print Report -->
-    <div id="printReport" class="print-report"></div>
+    <!-- Hidden element for print generation -->
+    <div id="printReport"></div>
 
-    <script src="assets/js/personality-main.js"></script>
+    <!-- Core Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        function initLucide() {
-            if (typeof lucide !== 'undefined') {
-                try { lucide.createIcons(); } catch(e) { console.warn('Lucide error:', e); }
-            } else {
-                const s = document.createElement('script');
-                s.src = 'https://unpkg.com/lucide@0.441.0/dist/umd/lucide.min.js';
-                s.onload = () => { try { lucide.createIcons(); } catch(e) {} };
-                document.head.appendChild(s);
-            }
-        }
+        // UI & Common Logic
+        lucide.createIcons();
+        AOS.init({ duration: 800, once: true });
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initLucide);
-        } else {
-            initLucide();
-        }
-
-        // Theme Toggle
-        const _htmlEl = document.documentElement;
-
-        const SVG_SUN  = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
-        const SVG_MOON = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>';
-
-        function updateThemeIcons() {
-            const icon = _htmlEl.classList.contains('dark') ? SVG_SUN : SVG_MOON;
-            const ti = document.getElementById('themeIcon');
-            const tim = document.getElementById('themeIconMobile');
-            if (ti) ti.innerHTML = icon;
-            if (tim) tim.innerHTML = icon;
-        }
-
-        function toggleTheme() {
-            const isDark = _htmlEl.classList.contains('dark');
-            _htmlEl.classList.toggle('dark', !isDark);
-            _htmlEl.classList.toggle('light', isDark);
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-            updateThemeIcons();
-        }
-
-        document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
-        document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme);
-
-        (function() {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') { _htmlEl.classList.remove('dark'); _htmlEl.classList.add('light'); }
-            else { _htmlEl.classList.add('dark'); _htmlEl.classList.remove('light'); }
-        })();
-
-        updateThemeIcons();
-
-        // Floating Navbar
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('floating', window.scrollY > 100);
+        // Fast Boot Loader
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('bootProgress');
+            const loader = document.getElementById('loader');
+            setTimeout(() => { if(bar) bar.style.width = '100%'; }, 100);
+            setTimeout(() => { if(loader) loader.classList.add('booted'); }, 600);
         });
 
-        // Mobile Menu
-        function openMobileMenu() {
-            document.getElementById('mobileMenu')?.classList.add('active');
-            document.getElementById('mobileMenuOverlay')?.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // Theme System
+        const themeToggle = () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            document.documentElement.classList.toggle('light', !isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            lucide.createIcons();
+        };
+        document.getElementById('themeToggle').addEventListener('click', themeToggle);
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
         }
-        function closeMobileMenuFn() {
-            document.getElementById('mobileMenu')?.classList.remove('active');
-            document.getElementById('mobileMenuOverlay')?.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', openMobileMenu);
-        document.getElementById('closeMobileMenu')?.addEventListener('click', closeMobileMenuFn);
-        document.getElementById('mobileMenuOverlay')?.addEventListener('click', closeMobileMenuFn);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', closeMobileMenuFn));
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenuFn(); });
 
-        // Scroll Reveal
-        function initReveal() {
-            const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
-            els.forEach(el => el.classList.add('pre-reveal'));
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.remove('pre-reveal');
-                        obs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
-            els.forEach(el => obs.observe(el));
-        }
-        requestAnimationFrame(() => requestAnimationFrame(initReveal));
-
-        // Floating Clock
-        (function() {
-            const days   = ['MINGGU','SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU'];
-            const months = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'];
-            function updateClock() {
-                const now = new Date();
-                const hh = String(now.getHours()).padStart(2,'0');
-                const mm = String(now.getMinutes()).padStart(2,'0');
-                const ss = String(now.getSeconds()).padStart(2,'0');
-                const timeEl = document.querySelector('#floating-clock > .clock-time');
-                const dateEl = document.querySelector('#floating-clock > .clock-date');
-                if (timeEl) timeEl.textContent = `${hh}:${mm}:${ss}`;
-                if (dateEl) dateEl.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-            }
+        // Language System
+        const applyLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            document.getElementById('langToggleBtn').innerText = lang.toUpperCase();
+            document.title = lang === 'id' ? "Tes Kepribadian - Monetra" : "Personality Test - Monetra";
+            localStorage.setItem('lang', lang);
             updateClock();
-            setInterval(updateClock, 1000);
-        })();
+            if (typeof renderQuestion === 'function') renderQuestion();
+        };
 
-        // Cursor trail
-        document.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.85) {
-                const dot = document.createElement('div');
-                dot.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:6px;height:6px;border-radius:50%;background:rgba(139,92,246,0.6);pointer-events:none;z-index:9999;transition:all 0.8s ease;transform:translate(-50%,-50%)`;
-                document.body.appendChild(dot);
-                requestAnimationFrame(() => { dot.style.opacity = '0'; dot.style.transform = 'translate(-50%,-50%) scale(0)'; });
-                setTimeout(() => dot.remove(), 800);
-            }
+        document.getElementById('langToggleBtn').addEventListener('click', () => {
+            const target = document.documentElement.lang === 'id' ? 'en' : 'id';
+            applyLanguage(target);
         });
+
+        // Island Navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 40) navbar.classList.add('nav-scrolled');
+            else navbar.classList.remove('nav-scrolled');
+        });
+
+        // Clock Logic
+        function updateClock() {
+            const now = new Date();
+            const isID = document.documentElement.lang === 'id';
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock-time').textContent = `${hours}.${minutes}.${seconds}`;
+            
+            const daysID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
+            const monthsID = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+            const daysEN = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            const monthsEN = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            
+            if (isID) {
+                document.getElementById('clock-date').textContent = `${daysID[now.getDay()]}, ${now.getDate()} ${monthsID[now.getMonth()]} ${now.getFullYear()}`;
+            } else {
+                document.getElementById('clock-date').textContent = `${daysEN[now.getDay()]}, ${monthsEN[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Magnetic Buttons Physics
+        const magneticBtns = document.querySelectorAll('.btn-magnetic');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            btn.addEventListener('mouseout', function() {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    </script>
+
+    <!-- PERSONALITY TEST LOGIC -->
+    <script>
+        const questions = [
+            {
+                id: 1,
+                question: { id: "Ketika menerima uang, apa yang pertama kamu pikirkan?", en: "When receiving money, what is the first thing you think about?" },
+                options: [
+                    { text: { id: "Langsung ditabung", en: "Save it immediately" }, type: "saver" },
+                    { text: { id: "Langsung dibelanjakan", en: "Spend it immediately" }, type: "spender" },
+                    { text: { id: "Dicari cara untuk dikembangkan", en: "Find a way to grow it" }, type: "investor" },
+                    { text: { id: "Disimpan untuk kebutuhan darurat", en: "Keep it for emergencies" }, type: "security" }
+                ]
+            },
+            {
+                id: 2,
+                question: { id: "Bagaimana pandanganmu tentang investasi?", en: "What is your view on investment?" },
+                options: [
+                    { text: { id: "Risiko tinggi, lebih baik tabungan biasa", en: "High risk, better use regular savings" }, type: "saver" },
+                    { text: { id: "Investasi itu membosankan, lebih baik belanja", en: "Investment is boring, better go shopping" }, type: "spender" },
+                    { text: { id: "Peluang untuk mengembangkan uang", en: "Opportunity to grow money" }, type: "investor" },
+                    { text: { id: "Hanya instrumen yang aman seperti deposito", en: "Only safe instruments like deposits" }, type: "security" }
+                ]
+            },
+            {
+                id: 3,
+                question: { id: "Apa reaksimu saat melihat diskon besar-besaran?", en: "What's your reaction to massive discounts?" },
+                options: [
+                    { text: { id: "Tetap berpikir apakah benar-benar butuh", en: "Still think if I really need it" }, type: "saver" },
+                    { text: { id: "Langsung beli sebelum kehabisan", en: "Buy immediately before it's gone" }, type: "spender" },
+                    { text: { id: "Membeli barang yang bisa dijual kembali", en: "Buy items that can be resold" }, type: "investor" },
+                    { text: { id: "Membeli kebutuhan pokok dalam jumlah banyak", en: "Buy basic needs in bulk" }, type: "security" }
+                ]
+            },
+            {
+                id: 4,
+                question: { id: "Bagaimana persiapanmu untuk masa pensiun?", en: "How are your preparations for retirement?" },
+                options: [
+                    { text: { id: "Menabung secara rutin setiap bulan", en: "Saving regularly every month" }, type: "saver" },
+                    { text: { id: "Belum terpikirkan sama sekali", en: "Haven't thought about it at all" }, type: "spender" },
+                    { text: { id: "Berinvestasi jangka panjang", en: "Investing for the long term" }, type: "investor" },
+                    { text: { id: "Ikut program asuransi dan dana pensiun", en: "Join insurance and pension fund programs" }, type: "security" }
+                ]
+            },
+            {
+                id: 5,
+                question: { id: "Saat memiliki uang lebih, apa yang kamu lakukan?", en: "When you have extra money, what do you do?" },
+                options: [
+                    { text: { id: "Menambah tabungan", en: "Add to savings" }, type: "saver" },
+                    { text: { id: "Traktir teman atau keluarga", en: "Treat friends or family" }, type: "spender" },
+                    { text: { id: "Beli saham atau emas", en: "Buy stocks or gold" }, type: "investor" },
+                    { text: { id: "Simpan di rekening terpisah", en: "Keep it in a separate account" }, type: "security" }
+                ]
+            },
+            {
+                id: 6,
+                question: { id: "Bagaimana perasaanmu tentang utang?", en: "How do you feel about debt?" },
+                options: [
+                    { text: { id: "Harus dihindari sebisa mungkin", en: "Avoid it at all costs" }, type: "saver" },
+                    { text: { id: "Wajar untuk gaya hidup", en: "Normal for lifestyle" }, type: "spender" },
+                    { text: { id: "Bisa jadi alat untuk bisnis", en: "Can be a tool for business" }, type: "investor" },
+                    { text: { id: "Hanya untuk kebutuhan mendesak", en: "Only for urgent needs" }, type: "security" }
+                ]
+            },
+            {
+                id: 7,
+                question: { id: "Kamu mendapatkan bonus besar. Apa yang kamu lakukan?", en: "You got a big bonus. What do you do?" },
+                options: [
+                    { text: { id: "90% ditabung, 10% untuk reward", en: "Save 90%, 10% for reward" }, type: "saver" },
+                    { text: { id: "Beli barang impian", en: "Buy a dream item" }, type: "spender" },
+                    { text: { id: "Cari peluang investasi baru", en: "Search for new investment opportunities" }, type: "investor" },
+                    { text: { id: "Gunakan untuk dana darurat", en: "Use it for emergency fund" }, type: "security" }
+                ]
+            },
+            {
+                id: 8,
+                question: { id: "Bagaimana kebiasaan catatan keuanganmu?", en: "How is your financial tracking habit?" },
+                options: [
+                    { text: { id: "Mencatat setiap pemasukan & pengeluaran", en: "Recording every income & expense" }, type: "saver" },
+                    { text: { id: "Jarang mencatat, yang penting cukup", en: "Rarely record, as long as it's enough" }, type: "spender" },
+                    { text: { id: "Mencatat untuk evaluasi investasi", en: "Record for investment evaluation" }, type: "investor" },
+                    { text: { id: "Mencatat pengeluaran penting saja", en: "Record important expenses only" }, type: "security" }
+                ]
+            },
+            {
+                id: 10,
+                question: { id: "Apa tujuan keuangan utamamu?", en: "What is your main financial goal?" },
+                options: [
+                    { text: { id: "Memiliki tabungan besar", en: "Having big savings" }, type: "saver" },
+                    { text: { id: "Menikmati hidup tanpa mikir uang", en: "Enjoy life without thinking about money" }, type: "spender" },
+                    { text: { id: "Mencapai kebebasan finansial", en: "Reach financial freedom" }, type: "investor" },
+                    { text: { id: "Keuangan stabil dan aman", en: "Stable and secure finances" }, type: "security" }
+                ]
+            }
+        ];
+
+        const resultTypes = {
+            saver: {
+                name: { id: "The Saver", en: "The Saver" },
+                description: { id: "Kamu adalah tipe yang suka menabung dan hemat. Kamu selalu memikirkan masa depan dan tidak mudah tergoda oleh gaya hidup konsumtif.", en: "You are a saver type who loves to save and be frugal. You always think about the future and are not easily tempted by consumerist lifestyles." },
+                strengths: { id: ["Bijak dalam mengelola keuangan", "Disiplin menabung", "Tidak mudah tergoda diskon"], en: ["Wise in managing finances", "Disciplined in saving", "Not easily tempted by discounts"] },
+                weaknesses: { id: ["Kadang terlalu pelit pada diri sendiri", "Takut mengambil risiko", "Sulit menikmati hasil jerih payah"], en: ["Sometimes too stingy with oneself", "Afraid of taking risks", "Difficulty enjoying the fruits of labor"] },
+                recommendations: { id: ["Mulai belajar investasi rendah risiko", "Sisihkan dana untuk reward diri", "Coba saving challenge"], en: ["Start learning low-risk investments", "Set aside funds for self-reward", "Try a saving challenge"] }
+            },
+            spender: {
+                name: { id: "The Spender", en: "The Spender" },
+                description: { id: "Kamu adalah tipe yang menikmati hidup dan tidak ragu membelanjakan uang untuk hal-hal yang kamu suka.", en: "You are the type who enjoys life and doesn't hesitate to spend money on things you like." },
+                strengths: { id: ["Menghargai hasil kerja keras", "Pandai mencari kesenangan", "Tidak pelit"], en: ["Appreciates hard work", "Good at finding joy", "Not stingy"] },
+                weaknesses: { id: ["Sulit menabung", "Mudah tergoda diskon", "Kurang persiapan masa depan"], en: ["Difficult to save", "Easily tempted by discounts", "Lack of future preparation"] },
+                recommendations: { id: ["Gunakan metode 50-30-20", "Buat rekening tabungan terpisah", "Cari hobi yang gratis"], en: ["Use the 50-30-20 method", "Create separate savings accounts", "Find free hobbies"] }
+            },
+            investor: {
+                name: { id: "The Investor", en: "The Investor" },
+                description: { id: "Kamu memiliki jiwa investor sejati. Kamu selalu mencari peluang untuk mengembangkan uang dan berpikir jangka panjang.", en: "You have a true investor spirit. You always look for opportunities to grow money and think long term." },
+                strengths: { id: ["Berpikir jangka panjang", "Berani mengambil risiko", "Paham instrumen investasi"], en: ["Long-term thinking", "Daring to take risks", "Understands investment instruments"] },
+                weaknesses: { id: ["Bisa terlalu agresif", "Kurang dana darurat", "Mengabaikan kebutuhan pendek"], en: ["Can be too aggressive", "Lack of emergency fund", "Ignoring short-term needs"] },
+                recommendations: { id: ["Seimbangkan portofolio", "Siapkan dana darurat 6 bulan", "Diversifikasi investasi"], en: ["Balance the portfolio", "Prepare a 6-month emergency fund", "Diversify investments"] }
+            },
+            security: {
+                name: { id: "The Security Seeker", en: "The Security Seeker" },
+                description: { id: "Kamu adalah tipe yang mengutamakan keamanan finansial. Kamu selalu siap menghadapi situasi darurat.", en: "You are the type who prioritizes financial security. You are always ready for emergency situations." },
+                strengths: { id: ["Siap menghadapi darurat", "Memiliki proteksi diri", "Perencanaan matang"], en: ["Ready for emergencies", "Has self-protection", "Thorough planning"] },
+                weaknesses: { id: ["Terlalu protektif", "Melewatkan peluang untung", "Kurang fleksibel"], en: ["Too protective", "Missing profit opportunities", "Lacks flexibility"] },
+                recommendations: { id: ["Eksplorasi investasi stabil", "Evaluasi proteksi berkala", "Belajar tentang inflasi"], en: ["Explore stable investments", "Periodic protection evaluation", "Learn about inflation"] }
+            }
+        };
+
+        let currentStep = 0;
+        let answers = [];
+        let dominantType = '';
+
+        function renderQuestion() {
+            const isID = document.documentElement.lang === 'id';
+            const q = questions[currentStep];
+            if (!q) return;
+            const container = document.getElementById('questionContainer');
+
+            container.innerHTML = `
+                <div class="question-card" data-aos="fade-left">
+                    <h2 class="text-xl md:text-2xl font-bold mb-8">${isID ? q.question.id : q.question.en}</h2>
+                    <div class="space-y-4">
+                        ${q.options.map(opt => `
+                            <div class="personality-card ${answers[currentStep] === opt.type ? 'selected' : ''}" 
+                                 onclick="selectOption('${opt.type}')">
+                                <span class="font-medium">${isID ? opt.text.id : opt.text.en}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('questionCounter').innerText = `${currentStep + 1}/${questions.length}`;
+            document.getElementById('progressFill').style.width = `${((currentStep + 1) / questions.length) * 100}%`;
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (currentStep === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+            
+            nextBtn.disabled = !answers[currentStep];
+            submitBtn.disabled = !answers[currentStep];
+        }
+
+        window.selectOption = function(type) {
+            answers[currentStep] = type;
+            renderQuestion();
+            setTimeout(() => {
+                if (currentStep < questions.length - 1) {
+                    currentStep++;
+                    renderQuestion();
+                }
+            }, 400);
+        };
+
+        document.getElementById('prevBtn').onclick = () => {
+            if (currentStep > 0) {
+                currentStep--;
+                renderQuestion();
+            }
+        };
+
+        document.getElementById('nextBtn').onclick = () => {
+            if (currentStep < questions.length - 1) {
+                currentStep++;
+                renderQuestion();
+            }
+        };
+
+        document.getElementById('submitBtn').onclick = () => {
+            showResults();
+        };
+
+        function showResults() {
+            const counts = answers.reduce((acc, val) => {
+                acc[val] = (acc[val] || 0) + 1;
+                return acc;
+            }, {});
+            
+            dominantType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            const result = resultTypes[dominantType];
+            const isID = document.documentElement.lang === 'id';
+
+            document.getElementById('testSection').classList.add('hidden');
+            document.getElementById('testHeader').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            document.getElementById('resultType').innerText = result.name.id;
+            document.getElementById('resultTypeEn').innerText = result.name.en;
+            document.getElementById('resultDescription').innerText = isID ? result.description.id : result.description.en;
+
+            const populateList = (id, items) => {
+                document.getElementById(id).innerHTML = items.map(item => `<li>• ${item}</li>`).join('');
+            };
+
+            populateList('strengthsList', isID ? result.strengths.id : result.strengths.en);
+            populateList('weaknessesList', isID ? result.weaknesses.id : result.weaknesses.en);
+            populateList('recommendationsList', isID ? result.recommendations.id : result.recommendations.en);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+        }
+
+        window.restartTest = () => {
+            currentStep = 0;
+            answers = [];
+            dominantType = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('testHeader').classList.remove('hidden');
+            document.getElementById('testSection').classList.remove('hidden');
+            renderQuestion();
+        };
+
+        window.downloadResult = () => {
+            const isID = document.documentElement.lang === 'id';
+            const typeName = isID ? document.getElementById('resultType').innerText : document.getElementById('resultTypeEn').innerText;
+            const desc = document.getElementById('resultDescription').innerText;
+            const date = new Date().toLocaleString();
+            const logContent = `MONETRA DIAGNOSTIC LOG\n----------------------\nTimestamp: ${date}\nDetected Type: ${typeName}\nDescription: ${desc}\n\nDIAGNOSTIC STATUS: Systems Normal.`;
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Monetra_Diagnostic_Log.txt`;
+            a.click();
+        };
+
+        window.printResult = () => {
+            const isID = document.documentElement.lang === 'id';
+            const result = resultTypes[dominantType];
+            const typeName = isID ? result.name.id : result.name.en;
+            const typeDesc = isID ? result.description.id : result.description.en;
+            const date = new Date().toLocaleDateString(isID ? 'id-ID' : 'en-US');
+            const printArea = document.getElementById('printReport');
+            printArea.innerHTML = `
+                <div style="border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif;">
+                    <h1 style="color: #3b82f6; margin: 0;">Monetra Diagnostic</h1>
+                    <p style="margin: 0;">Date: ${date}</p>
+                </div>
+                <h2 style="margin-bottom: 5px;">Type: <span style="color: #3b82f6;">${typeName}</span></h2>
+                <p style="font-style: italic; color: #666;">${typeDesc}</p>
+            `;
+            window.print();
+        };
+
+        renderQuestion();
     </script>
 </body>
 </html>

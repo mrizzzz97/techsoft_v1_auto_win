@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Tentang Monetra - Platform Edukasi Finansial</title>
+    <title>Monetra - Arsitektur & Tim</title>
     <link rel="shortcut icon" href="assets/img/image.jpeg" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,17 +17,27 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        primary: '#8b5cf6',
-                        secondary: '#06b6d4',
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
                     },
-                    screens: {
-                        'xs': '480px',
-                        'sm': '640px',
-                        'md': '768px',
-                        'lg': '1024px',
-                        'xl': '1280px',
-                        '2xl': '1536px',
+                    colors: {
+                        brand: '#3b82f6', // Blue 500
+                    },
+                    animation: {
+                        'breathe': 'breathe 8s ease-in-out infinite',
+                        'shine': 'shine 1.5s ease-out infinite',
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'translateX(-50%) scale(1)', opacity: '0.4' },
+                            '50%': { transform: 'translateX(-50%) scale(1.1)', opacity: '0.7' },
+                        },
+                        shine: {
+                            '0%': { left: '-100%' },
+                            '20%': { left: '100%' },
+                            '100%': { left: '100%' }
+                        }
                     }
                 }
             }
@@ -32,1691 +46,579 @@
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="assets/css/clock.css">
-    <link rel="stylesheet" href="assets/css/main.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html.dark body {
-            background-color: #020617;
-            color: #f8fafc;
-        }
-
-        html.light body {
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #020617;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
-        .loader-wrapper.slide-up {
-            transform: translateY(-100%);
-        }
-
-        .loader-logo-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
-            opacity: 0;
-            animation: logoReveal 1s ease forwards 0.5s;
-        }
-
-        @media (min-width: 640px) {
-            .loader-logo-img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        @keyframes logoReveal {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .loader-text {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
-        }
-
-        .loader-subtext {
-            margin-top: 8px;
-            font-size: 0.875rem;
-            color: #64748b;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.8s;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .navbar {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-        }
-
-        @media (min-width: 768px) {
-            .navbar {
-                padding-top: 1.25rem;
-                padding-bottom: 1.25rem;
-            }
-        }
-
-        .navbar .navbar-container {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
-            max-width: 80rem;
-            width: 100%;
-        }
-
-        .navbar.floating {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .navbar.floating .navbar-container {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            padding: 0.5rem 1rem;
-            max-width: 1200px;
-        }
-
-        @media (min-width: 768px) {
-            .navbar.floating .navbar-container {
-                padding: 0.75rem 2rem;
-            }
-        }
-
-        html.light .navbar.floating .navbar-container {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            color: #ffffff !important;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-            filter: brightness(1.1);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary *,
-        .btn-primary i,
-        .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff !important;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* light mode: btn-secondary pakai warna gelap */
-        html.light .btn-secondary,
-        html.light a.btn-secondary {
-            border-color: rgba(109, 40, 217, 0.35) !important;
-            color: #5b21b6 !important;
-            background: transparent !important;
-        }
-
-        html.light .btn-secondary:hover,
-        html.light a.btn-secondary:hover {
-            background: rgba(109, 40, 217, 0.07) !important;
-            border-color: rgba(109, 40, 217, 0.6) !important;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #818cf8 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: gradientMove 5s linear infinite;
-        }
-
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            100% {
-                background-position: 200% 50%;
-            }
-        }
-
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 85%;
-            max-width: 320px;
-            height: 100vh;
-            background: #0f172a;
-            z-index: 9999;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            padding: 1.5rem;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-        }
-
-        html.light .mobile-menu {
-            background: #ffffff;
-            border-left: 1px solid #e2e8f0;
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        #closeMobileMenu {
-            position: relative;
-            z-index: 10000;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        #closeMobileMenu:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        #mobileMenuBtn {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        html.light .dropdown-menu {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-            color: #f8fafc;
-        }
-
-        html.light .dropdown-item {
-            color: #0f172a;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            opacity: 0.12;
-        }
-
-        .blob-1 {
-            width: 500px;
-            height: 500px;
-            background: #7c3aed;
-            top: -100px;
-            right: -100px;
-        }
-
-        .blob-2 {
-            width: 400px;
-            height: 400px;
-            background: #0891b2;
-            bottom: -80px;
-            left: -80px;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 9vw, 8rem);
-            font-weight: 900;
-            line-height: 1.02;
-            letter-spacing: -0.04em;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2.2vw, 1.25rem);
-            line-height: 1.8;
-            color: #94a3b8;
-            max-width: 620px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            border-radius: 999px;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            background: rgba(139, 92, 246, 0.08);
-            backdrop-filter: blur(8px);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #c4b5fd;
-        }
-
-        .section-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #8b5cf6;
-            margin-bottom: 12px;
-        }
-
-        .section-heading {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            line-height: 1.15;
-        }
-
-        .glass-card {
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 24px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
-
-        html.light .glass-card {
-            background: #ffffff;
-            border: 1px solid #e8edf5;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .info-box {
-            padding: 22px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            text-align: center;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        html.light .info-box {
-            background: #ffffff;
-            border: 1px solid #e8edf5;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
-        }
-
-        .info-box:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(139, 92, 246, 0.35);
-            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.12);
-        }
-
-        .info-box-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
-        }
-
-        .approach-card {
-            padding: 28px 32px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            background: rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        html.light .approach-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-        }
-
-        .approach-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(to bottom, #8b5cf6, #06b6d4);
-            border-radius: 0 4px 4px 0;
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-            transform-origin: top;
-        }
-
-        .approach-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .approach-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            transform: translateX(4px);
-        }
-
-        .approach-number {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #8b5cf6;
-            margin-bottom: 8px;
-        }
-
-        .value-card {
-            padding: 28px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        html.light .value-card {
-            background: #ffffff;
-            border: 1px solid #e8edf5;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
-        }
-
-        .value-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, #8b5cf6, #06b6d4);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .value-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .value-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.12);
-        }
-
-        .value-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.15));
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .mv-card {
-            padding: 40px;
-            border-radius: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            background: rgba(255, 255, 255, 0.03);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.35s ease;
-        }
-
-        html.light .mv-card {
-            background: #ffffff;
-            border: 1px solid #e8edf5;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        }
-
-        .mv-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 24px 60px rgba(139, 92, 246, 0.12);
-        }
-
-        .mv-icon-wrap {
-            width: 56px;
-            height: 56px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .mv-list-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        html.light .mv-list-item {
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .mv-list-item:last-child {
-            border-bottom: none;
-        }
-
-        .team-card {
-            border-radius: 28px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        html.light .team-card {
-            background: #ffffff;
-            border: 1px solid #e8edf5;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        }
-
-        .team-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(139, 92, 246, 0.35);
-            box-shadow: 0 24px 60px rgba(139, 92, 246, 0.18);
-        }
-
-        .team-img-wrap {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            margin: 0 auto 16px;
-            position: relative;
-        }
-
-        .team-img-wrap::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);
-        }
-
-        .social-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.2s ease;
-            color: #94a3b8;
-        }
-
-        html.light .social-btn {
-            background: #f1f5f9;
-            border-color: #e2e8f0;
-            color: #475569;
-        }
-
-        .social-btn:hover {
-            background: #7c3aed;
-            border-color: #7c3aed;
-            color: #ffffff !important;
-        }
-
-        .cta-wrap {
-            border-radius: 32px;
-            padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 60px);
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(8, 145, 178, 0.08) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .cta-wrap::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.5), transparent);
-        }
-
-        .cta-grid-lines {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-            background-size: 48px 48px;
-            pointer-events: none;
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-
-        html.light ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
-        }
-
-        html.light h1,
-        html.light h2,
-        html.light h3,
-        html.light h4,
-        html.light h5 {
-            color: #0f172a !important;
-        }
-
-        html.light p,
-        html.light span,
-        html.light li,
-        html.light a {
-            color: #334155 !important;
-        }
-
-        html.light .text-gray-400,
-        html.light .text-slate-400 {
-            color: #64748b !important;
-        }
-
-        html.light .section-label {
-            color: #7c3aed;
-        }
-
-        html.light .btn-primary,
-        html.dark .btn-primary {
-            color: #ffffff !important;
-        }
-
-        html.light .btn-primary span,
-        html.dark .btn-primary span {
-            color: #ffffff !important;
-        }
-
-        html.light .btn-primary svg,
-        html.light .btn-primary svg *,
-        html.dark .btn-primary svg,
-        html.dark .btn-primary svg * {
-            color: #ffffff !important;
-            stroke: #ffffff !important;
-        }
-
-        /* btn-secondary: dark = putih, light = gelap (ungu) */
-        html.dark .btn-secondary {
-            color: #ffffff !important;
-        }
-
-        html.dark .btn-secondary span {
-            color: #ffffff !important;
-        }
-
-        html.dark .btn-secondary svg {
-            color: #ffffff !important;
-            stroke: #ffffff !important;
-        }
-
-        html.light .btn-secondary,
-        html.light a.btn-secondary {
-            color: #5b21b6 !important;
-        }
-
-        html.light .btn-secondary span,
-        html.light a.btn-secondary span {
-            color: #5b21b6 !important;
-        }
-
-        footer,
-        footer h4,
-        footer p,
-        footer a,
-        footer span,
-        footer li,
-        footer div {
-            color: #ffffff !important;
-        }
-
-        html.light footer,
-        html.light footer h4,
-        html.light footer p,
-        html.light footer a,
-        html.light footer span,
-        html.light footer li,
-        html.light footer div {
-            color: #ffffff !important;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            padding: 0.75rem 1.5rem;
-            color: white;
-            font-size: 0.875rem;
-            z-index: 10002;
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            white-space: nowrap;
-        }
-
-        html.light .toast {
-            background: #ffffff;
-            color: #0f172a;
-            border: 1px solid #e2e8f0;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .anim-slide-up {
-            animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        .delay-1 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.3s;
-        }
-
-        /* ─── MORPH BUTTON ─── */
-        .morph-btn {
-            position: relative;
-            padding: 16px 44px;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: #ffffff;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            overflow: visible;
-            isolation: isolate;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .morph-btn .btn-fill {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
-            border-radius: 6px;
-            transition: border-radius 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1;
-        }
-
-        .morph-btn:hover .btn-fill {
-            border-radius: 50px;
-            animation: morphJelly 0.5s ease;
-        }
-
-        @keyframes morphJelly {
-            0% {
-                transform: scale(1, 1);
-            }
-
-            30% {
-                transform: scale(1.1, 0.88);
-            }
-
-            50% {
-                transform: scale(0.93, 1.08);
-            }
-
-            70% {
-                transform: scale(1.04, 0.96);
-            }
-
-            100% {
-                transform: scale(1, 1);
-            }
-        }
-
-        .morph-btn .orbit-dots {
-            position: absolute;
-            inset: -20px;
-            pointer-events: none;
-        }
-
-        .morph-btn .orbit-dots span {
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            background: linear-gradient(135deg, #a78bfa, #22d3ee);
-            border-radius: 50%;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .morph-btn .orbit-dots span:nth-child(1) {
-            top: 0;
-            left: 50%;
-            animation: morphOrbit1 3s linear infinite;
-        }
-
-        .morph-btn .orbit-dots span:nth-child(2) {
-            bottom: 0;
-            left: 50%;
-            animation: morphOrbit2 3s linear infinite;
-        }
-
-        .morph-btn .orbit-dots span:nth-child(3) {
-            top: 50%;
-            left: 0;
-            animation: morphOrbit3 4s linear infinite;
-        }
-
-        .morph-btn .orbit-dots span:nth-child(4) {
-            top: 50%;
-            right: 0;
-            animation: morphOrbit4 4s linear infinite;
-        }
-
-        @keyframes morphOrbit1 {
-            0% {
-                transform: translateX(-50%) translateY(0) scale(1);
-            }
-
-            25% {
-                transform: translateX(24px) translateY(8px) scale(0.6);
-            }
-
-            50% {
-                transform: translateX(-50%) translateY(16px) scale(1);
-            }
-
-            75% {
-                transform: translateX(-64px) translateY(8px) scale(0.6);
-            }
-
-            100% {
-                transform: translateX(-50%) translateY(0) scale(1);
-            }
-        }
-
-        @keyframes morphOrbit2 {
-            0% {
-                transform: translateX(-50%) translateY(0) scale(0.6);
-            }
-
-            25% {
-                transform: translateX(-64px) translateY(-8px) scale(1);
-            }
-
-            50% {
-                transform: translateX(-50%) translateY(-16px) scale(0.6);
-            }
-
-            75% {
-                transform: translateX(24px) translateY(-8px) scale(1);
-            }
-
-            100% {
-                transform: translateX(-50%) translateY(0) scale(0.6);
-            }
-        }
-
-        @keyframes morphOrbit3 {
-            0% {
-                transform: translateY(-50%) translateX(0) scale(0.8);
-            }
-
-            50% {
-                transform: translateY(-50%) translateX(-12px) scale(1.2);
-            }
-
-            100% {
-                transform: translateY(-50%) translateX(0) scale(0.8);
-            }
-        }
-
-        @keyframes morphOrbit4 {
-            0% {
-                transform: translateY(-50%) translateX(0) scale(1.2);
-            }
-
-            50% {
-                transform: translateY(-50%) translateX(12px) scale(0.8);
-            }
-
-            100% {
-                transform: translateY(-50%) translateX(0) scale(1.2);
-            }
-        }
-
-        .morph-btn .btn-text {
-            position: relative;
-            display: inline-block;
-            z-index: 3;
-        }
-
-        .morph-btn .btn-text span {
-            display: inline-block;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            transition-delay: calc(var(--i) * 0.03s);
-        }
-
-        .morph-btn:hover .btn-text span {
-            animation: morphLetterBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-            animation-delay: calc(var(--i) * 0.03s);
-        }
-
-        @keyframes morphLetterBounce {
-            0% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-110%);
-            }
-
-            70% {
-                transform: translateY(8%);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        .morph-btn .corners span {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(167, 139, 250, 0.7);
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .morph-btn .corners span:nth-child(1) {
-            top: -8px;
-            left: -8px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .morph-btn .corners span:nth-child(2) {
-            top: -8px;
-            right: -8px;
-            border-left: none;
-            border-bottom: none;
-        }
-
-        .morph-btn .corners span:nth-child(3) {
-            bottom: -8px;
-            left: -8px;
-            border-right: none;
-            border-top: none;
-        }
-
-        .morph-btn .corners span:nth-child(4) {
-            bottom: -8px;
-            right: -8px;
-            border-left: none;
-            border-top: none;
-        }
-
-        .morph-btn:hover .corners span:nth-child(1) {
-            transform: translate(-5px, -5px) rotate(-5deg);
-        }
-
-        .morph-btn:hover .corners span:nth-child(2) {
-            transform: translate(5px, -5px) rotate(5deg);
-        }
-
-        .morph-btn:hover .corners span:nth-child(3) {
-            transform: translate(-5px, 5px) rotate(5deg);
-        }
-
-        .morph-btn:hover .corners span:nth-child(4) {
-            transform: translate(5px, 5px) rotate(-5deg);
-        }
-
-        .morph-btn .shadow {
-            position: absolute;
-            inset: 4px;
-            background: rgba(124, 58, 237, 0.35);
-            border-radius: 6px;
-            filter: blur(12px);
-            z-index: 0;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            transform: translateY(8px);
-        }
-
-        .morph-btn:hover .shadow {
-            border-radius: 50px;
-            transform: translateY(14px) scale(1.1);
-            filter: blur(18px);
-            background: rgba(8, 145, 178, 0.4);
-        }
-
-        .morph-btn:active .btn-fill {
-            transform: scale(0.93);
-            transition: transform 0.1s ease;
-        }
-
-        .morph-btn:active .shadow {
-            transform: translateY(3px) scale(0.85);
-            filter: blur(8px);
-            opacity: 0.5;
-            transition: all 0.1s ease;
-        }
-
-        .morph-btn:active .btn-text {
-            transform: scale(0.95);
-            transition: transform 0.1s ease;
-        }
-
-        .morph-btn:active .corners span:nth-child(1) {
-            transform: translate(-12px, -12px) rotate(-12deg) scale(0.8);
-        }
-
-        .morph-btn:active .corners span:nth-child(2) {
-            transform: translate(12px, -12px) rotate(12deg) scale(0.8);
-        }
-
-        .morph-btn:active .corners span:nth-child(3) {
-            transform: translate(-12px, 12px) rotate(12deg) scale(0.8);
-        }
-
-        .morph-btn:active .corners span:nth-child(4) {
-            transform: translate(12px, 12px) rotate(-12deg) scale(0.8);
-        }
+        /* CORE CSS */
+        html { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent;}
+        ::selection { background: rgba(59, 130, 246, 0.3); color: inherit; }
+        
+        /* LANGUAGE SWITCHER LOGIC */
+        html[lang="en"] .lang-id { display: none !important; }
+        html[lang="id"] .lang-en { display: none !important; }
+
+        /* Minimalist Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+
+        /* Background Grid */
+        .bg-grid-pattern {
+            position: fixed; inset: 0; z-index: -10; pointer-events: none;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(128, 128, 128, 0.08) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(128, 128, 128, 0.08) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center top, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center top, black 30%, transparent 80%);
+        }
+
+        /* Fast Boot Loader */
+        .sys-loader {
+            position: fixed; inset: 0; background: #09090b; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .sys-loader.booted { transform: translateY(-100%); }
+
+        /* === ISLAND NAVBAR === */
+        #navbar {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 100%; border-radius: 0; border: 1px solid transparent;
+        }
+        .nav-scrolled {
+            top: 20px !important; max-width: 1000px !important; border-radius: 9999px !important;
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 228, 231, 0.8) !important;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            padding-left: 0.5rem; padding-right: 0.5rem;
+        }
+        html.dark .nav-scrolled {
+            background: rgba(9, 9, 11, 0.85) !important; border: 1px solid rgba(39, 39, 42, 0.8) !important;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        /* === 3D TILT & SPOTLIGHT === */
+        .spotlight-card { 
+            position: relative; overflow: hidden; transform-style: preserve-3d;
+            will-change: transform; transition: transform 0.1s ease, box-shadow 0.3s ease;
+        }
+        .spotlight-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.12), transparent 40%);
+            z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s ease;
+        }
+        html.dark .spotlight-card::before {
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.25), transparent 40%);
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+        .spotlight-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
+
+        /* Tech Image Card */
+        .tech-img-wrapper { position: relative; overflow: hidden; border-radius: 1rem; }
+        .tech-img-wrapper::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(9,9,11,0.8));
+            opacity: 0.6; transition: opacity 0.3s ease;
+        }
+        .tech-img-wrapper:hover::after { opacity: 0.2; }
+        .tech-img-wrapper img { transition: transform 0.5s ease, filter 0.5s ease; filter: grayscale(100%) contrast(1.1); }
+        .spotlight-card:hover .tech-img-wrapper img { transform: scale(1.05); filter: grayscale(0%) contrast(1); }
+
+        /* Magnetic Button */
+        .btn-magnetic { transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; overflow: hidden; }
+        .btn-magnetic::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+        }
+        .btn-magnetic:hover::after { animation: shine 1.5s ease-out infinite; }
+
+        /* Clock Style Integrated */
+        .clock-container {
+            position: fixed; bottom: 24px; right: 24px;
+            background: rgba(24, 24, 27, 0.8); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9999px;
+            padding: 10px 24px; color: white; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); min-width: 160px;
+        }
+        html.light .clock-container { background: #ffffff !important; color: #18181b !important; border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .clock-time { font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; }
+        .clock-date { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-top: 4px; }
     </style>
 </head>
 
-<body>
-    <div class="loader-wrapper" id="loader">
-        <img src="assets/img/image.jpeg" alt="Monetra Logo" class="loader-logo-img">
-        <div class="loader-text">MONETRA</div>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-50 transition-colors duration-300 selection:bg-brand selection:text-white overflow-x-hidden">
+
+    <div class="sys-loader" id="loader">
+        <div class="font-mono text-brand text-sm tracking-widest mb-4 flex items-center gap-2">
+            <i data-lucide="terminal" class="w-4 h-4 animate-pulse"></i> SYSTEM.BOOT()
+        </div>
+        <div class="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden">
+            <div class="h-full bg-brand w-0" id="bootProgress" style="transition: width 0.5s ease;"></div>
+        </div>
     </div>
 
-    <div id="toast" class="toast"></div>
+    <div class="bg-grid-pattern"></div>
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none z-[-5] animate-breathe"></div>
 
-    <nav class="navbar fixed w-full top-0 z-50 px-4 sm:px-6">
-        <div class="navbar-container mx-auto flex items-center justify-between relative">
-            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer group"
-                onclick="window.location.href='index.html'">
-                <div
-                    class="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-xl border border-white/10 group-hover:border-violet-500/50 transition-colors">
-                    <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-1/2 -translate-x-1/2 w-full z-50 bg-transparent h-[72px] flex items-center px-6">
+        <div class="w-full flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3 group pl-2">
+                <div class="w-8 h-8 rounded-md bg-zinc-900 dark:bg-white flex items-center justify-center overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <img src="assets/img/image.jpeg" alt="Logo" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-300">
                 </div>
-                <span
-                    class="text-lg sm:text-xl font-bold tracking-tight group-hover:text-violet-400 transition-colors">Monetra</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                <a href="index.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Home</a>
-                <a href="about.html" class="text-sm font-medium hover:text-violet-400 transition-colors">About</a>
-                <div class="dropdown">
-                    <button class="text-sm font-medium hover:text-violet-400 transition-colors flex items-center gap-1">
-                        Features <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                <span class="font-bold text-lg tracking-tight">Monetra<span class="text-brand">.</span></span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="index.html" class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 relative group overflow-hidden">
+                    <span class="lang-id">Beranda</span><span class="lang-en">Home</span>
+                </a>
+                
+                <div class="relative group">
+                    <button class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-1">
+                        <span class="lang-id">Fitur</span><span class="lang-en">Features</span>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180"></i>
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="personality-test.html" class="dropdown-item"><i data-lucide="user-circle"
-                                class="w-4 h-4"></i><span>Tes Kepribadian</span></a>
-                        <a href="budget-simulator.html" class="dropdown-item"><i data-lucide="wallet"
-                                class="w-4 h-4"></i><span>Simulasi Budget</span></a>
-                        <a href="goal-tracker.html" class="dropdown-item"><i data-lucide="target"
-                                class="w-4 h-4"></i><span>Target Tabungan</span></a>
-                        <a href="challenge.html" class="dropdown-item"><i data-lucide="trophy"
-                                class="w-4 h-4"></i><span>Saving Challenge</span></a>
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-[60]">
+                        <div class="w-64 bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl p-2 backdrop-blur-xl">
+                            <a href="personality-test.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-zinc-900 flex items-center justify-center text-brand transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="user-round" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Tes Kepribadian</span><span class="lang-en">Personality Test</span></span>
+                            </a>
+                            <a href="budget-simulator.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Simulator Budget</span><span class="lang-en">Budget Simulator</span></span>
+                            </a>
+                            <a href="goal-tracker.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="target" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Target Tabungan</span><span class="lang-en">Savings Goal</span></span>
+                            </a>
+                            <a href="challenge.html" class="flex items-center gap-3 px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors group/item">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 transition-transform group-hover/item:scale-110">
+                                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm font-semibold tracking-tight"><span class="lang-id">Saving Challenge</span><span class="lang-en">Saving Challenge</span></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <a href="contact.html" class="text-sm font-medium hover:text-violet-400 transition-colors">Contact</a>
-                <button class="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition" id="themeToggle">
-                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-yellow-300"></i>
-                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
-                </button>
-                <a href="personality-test.html"
-                    class="btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">Mulai
-                    Sekarang</a>
+
+                <a href="about.html" class="px-4 py-2 text-sm font-bold text-black dark:text-white transition-colors rounded-full bg-black/5 dark:bg-white/10 relative group overflow-hidden">
+                    <span class="lang-id">Tim Kami</span><span class="lang-en">Our Team</span>
+                </a>
+                <a href="contact.html" class="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5 relative group overflow-hidden">
+                    <span class="lang-id">Kontak</span><span class="lang-en">Contact</span>
+                </a>
             </div>
-            <div class="md:hidden flex items-center space-x-2 sm:space-x-3">
-                <button class="p-2" id="themeToggleMobile">
-                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden text-slate-700"></i>
+
+            <div class="hidden md:flex items-center gap-3 pr-2">
+                <button id="langToggleBtn" class="text-xs font-bold px-2 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-300 w-10 active:scale-95">ID</button>
+                <button class="text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white transition-colors p-2 active:scale-90" id="themeToggle" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block hover:rotate-90 transition-transform duration-500"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden hover:-rotate-12 transition-transform duration-300"></i>
                 </button>
-                <button id="mobileMenuBtn" class="p-2">
-                    <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-                </button>
+                <div class="h-4 w-px bg-zinc-300 dark:bg-zinc-800 mx-1"></div>
+                <a href="personality-test.html" class="btn-magnetic inline-flex items-center justify-center gap-2 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-5 py-2.5 rounded-full text-sm font-semibold hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all">
+                    <span class="lang-id">Eksekusi</span><span class="lang-en">Execute</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
             </div>
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-zinc-900 dark:text-white"><i data-lucide="menu" class="w-5 h-5"></i></button>
         </div>
     </nav>
 
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="flex justify-end mb-6 sm:mb-8">
-            <button id="closeMobileMenu"><i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i></button>
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[99] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="mobileMenu" class="fixed top-0 right-0 w-full max-w-sm h-full bg-white dark:bg-[#09090b] z-[100] transform translate-x-full transition-transform duration-300 border-l border-zinc-200 dark:border-zinc-800 flex flex-col">
+        <div class="flex justify-between items-center p-6 border-b border-zinc-200 dark:border-zinc-800">
+            <span class="font-bold text-lg"><span class="lang-id">Menu</span><span class="lang-en">Menu</span></span>
+            <button id="closeMobileMenu" class="p-2"><i data-lucide="x" class="w-5 h-5 hover:rotate-90 transition-transform"></i></button>
         </div>
-        <div class="flex flex-col space-y-3 sm:space-y-4">
-            <a href="index.html" class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Home</a>
-            <a href="about.html"
-                class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">About</a>
-            <div class="border-t border-white/10 pt-4 sm:pt-6">
-                <div class="text-xs uppercase tracking-wider opacity-50 mb-2 sm:mb-3">Features</div>
-                <div class="space-y-2 sm:space-y-3">
-                    <a href="personality-test.html"
-                        class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
-                            data-lucide="user-circle" class="w-4 h-4"></i><span class="text-sm sm:text-base">Tes
-                            Kepribadian</span></a>
-                    <a href="budget-simulator.html"
-                        class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i data-lucide="wallet"
-                            class="w-4 h-4"></i><span class="text-sm sm:text-base">Simulasi Budget</span></a>
-                    <a href="goal-tracker.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
-                            data-lucide="target" class="w-4 h-4"></i><span class="text-sm sm:text-base">Target
-                            Tabungan</span></a>
-                    <a href="challenge.html" class="flex items-center gap-3 py-2 hover:text-violet-400 transition"><i
-                            data-lucide="trophy" class="w-4 h-4"></i><span class="text-sm sm:text-base">Saving
-                            Challenge</span></a>
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <a href="index.html" class="block text-lg font-medium hover:text-brand"><span class="lang-id">Beranda</span><span class="lang-en">Home</span></a>
+            <div class="space-y-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400"><span class="lang-id">Fitur</span><span class="lang-en">Features</span></span>
+                <div class="grid gap-4 pl-2">
+                    <a href="personality-test.html" class="flex items-center gap-3 text-lg font-medium hover:text-brand"><i data-lucide="user-round" class="w-5 h-5"></i> <span class="lang-id">Tes Kepribadian</span><span class="lang-en">Personality Test</span></a>
+                    <a href="budget-simulator.html" class="flex items-center gap-3 text-lg font-medium hover:text-brand"><i data-lucide="wallet" class="w-5 h-5"></i> <span class="lang-id">Simulator Budget</span><span class="lang-en">Budget Simulator</span></a>
+                    <a href="goal-tracker.html" class="flex items-center gap-3 text-lg font-medium hover:text-brand"><i data-lucide="target" class="w-5 h-5"></i> <span class="lang-id">Target Tabungan</span><span class="lang-en">Savings Goal</span></a>
+                    <a href="challenge.html" class="flex items-center gap-3 text-lg font-medium hover:text-brand"><i data-lucide="trophy" class="w-5 h-5"></i> <span class="lang-id">Saving Challenge</span><span class="lang-en">Saving Challenge</span></a>
                 </div>
             </div>
-            <a href="contact.html"
-                class="text-base sm:text-lg font-medium hover:text-violet-400 transition py-2">Contact</a>
-            <a href="personality-test.html"
-                class="btn-primary px-6 py-3 rounded-full text-center text-sm sm:text-base font-semibold mt-4">Mulai
-                Sekarang</a>
+            <a href="about.html" class="block text-lg font-bold text-brand"><span class="lang-id">Tim Kami</span><span class="lang-en">Our Team</span></a>
+            <a href="contact.html" class="block text-lg font-medium hover:text-brand"><span class="lang-id">Kontak</span><span class="lang-en">Contact</span></a>
+        </div>
+        <div class="p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-5">
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium"><span class="lang-id">Bahasa</span><span class="lang-en">Language</span></span>
+                <button id="langToggleBtnMobile" class="text-xs font-bold px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800">ID</button>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium"><span class="lang-id">Tema Gelap</span><span class="lang-en">Dark Theme</span></span>
+                <button id="themeToggleMobile" class="w-11 h-6 rounded-full bg-zinc-200 dark:bg-brand relative transition-colors">
+                    <div class="absolute w-4 h-4 rounded-full bg-white top-1 left-1 dark:translate-x-5 transition-transform shadow-sm"></div>
+                </button>
+            </div>
         </div>
     </div>
 
-    <section class="relative pt-36 sm:pt-44 md:pt-56 pb-28 sm:pb-36 md:pb-44 overflow-hidden">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div
-            class="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none">
-        </div>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-            <h1 class="hero-title mb-8 anim-slide-up delay-1">
-                Platform Edukasi<br>
-                <span class="gradient-text">Finansial</span> yang Nyata
+    <!-- Header -->
+    <header class="pt-40 pb-20 relative z-10 text-center px-6">
+        <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 mb-6 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-brand"></i>
+                <span class="lang-id">Dokumentasi Sistem</span><span class="lang-en">System Documentation</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6">
+                <span class="lang-id">Arsitektur di Balik <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Monetra.</span></span>
+                <span class="lang-en">The Architecture of <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Monetra.</span></span>
             </h1>
-            <p class="hero-subtitle anim-slide-up delay-2">
-                Monetra adalah platform edukasi finansial interaktif yang dirancang untuk membantu generasi muda
-                Indonesia memahami dan mengelola keuangan secara lebih terarah, personal, dan berkelanjutan.
+            <p class="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                <span class="lang-id">Mengenal logika, algoritma dasar, dan arsitek di balik platform edukasi finansial paling terstruktur untuk generasi muda.</span>
+                <span class="lang-en">Discover the logic, core algorithms, and architects behind the most structured financial education platform for the youth.</span>
             </p>
         </div>
-    </section>
+    </header>
 
-    <section class="pt-8 sm:pt-12 pb-20 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                <div data-aos="fade-right" data-aos-duration="700">
-                    <div class="section-label">Latar Belakang</div>
-                    <h2 class="section-heading mb-6">Kenapa <span class="gradient-text">Monetra</span> Ada</h2>
-                    <div class="space-y-4 text-sm sm:text-base leading-relaxed" style="color: #94a3b8;">
-                        <p>Banyak generasi muda mengalami kesulitan dalam mengatur keuangan karena kurangnya edukasi
-                            yang aplikatif dan mudah dipahami. Pengelolaan uang sering kali hanya berfokus pada
-                            pencatatan, tanpa memahami pola kebiasaan dan strategi yang sesuai dengan karakter
-                            masing-masing individu.</p>
-                        <p>Monetra hadir sebagai solusi berbasis teknologi yang menggabungkan edukasi, personalisasi,
-                            dan fitur interaktif untuk membantu pengguna mengenali tipe kepribadian finansial, menyusun
-                            anggaran bulanan secara terstruktur, menetapkan dan memantau target tabungan, serta
-                            membangun konsistensi melalui tantangan finansial.</p>
-                        <p>Kami percaya bahwa literasi finansial bukan hanya tentang menabung, tetapi tentang memahami
-                            pola perilaku keuangan, menyusun strategi yang realistis, dan membangun kebiasaan yang
-                            konsisten untuk masa depan.</p>
+    <!-- Origin Section -->
+    <section class="py-12 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <div class="font-mono text-xs uppercase tracking-widest text-brand mb-4">Origin.Log()</div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 tracking-tight">
+                        <span class="lang-id">Lahir dari <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Anomali Sistem</span></span>
+                        <span class="lang-en">Born from a <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">System Anomaly</span></span>
+                    </h2>
+                    <div class="space-y-4 text-zinc-600 dark:text-zinc-400 text-base leading-relaxed">
+                        <p class="lang-id">Banyak generasi muda mengalami *error* dalam manajemen keuangan karena kurangnya instruksi yang jelas dan terpersonalisasi. Pengelolaan uang sering kali berjalan tanpa protokol (hanya sekadar mencatat).</p>
+                        <p class="lang-en">Many young people experience *errors* in financial management due to a lack of clear, personalized instructions. Money management often runs without protocols (merely logging expenses).</p>
+                        <p class="lang-id">Monetra di-*deploy* sebagai solusi berbasis data. Menggabungkan diagnostik kepribadian, perhitungan presisi, dan antarmuka interaktif untuk menyusun ulang arsitektur finansial pengguna.</p>
+                        <p class="lang-en">Monetra was *deployed* as a data-driven solution. Combining personality diagnostics, precision calculations, and interactive interfaces to reconstruct the user's financial architecture.</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
-                    <div class="info-box col-span-2">
-                        <div
-                            class="info-box-icon bg-gradient-to-br from-violet-600/20 to-violet-600/5 border border-violet-500/20">
-                            <i data-lucide="lightbulb" class="w-5 h-5 text-violet-400"></i>
+                
+                <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+                    <div class="spotlight-card bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 col-span-2 flex items-center gap-6">
+                        <div class="w-14 h-14 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 flex flex-shrink-0 items-center justify-center">
+                            <i data-lucide="activity" class="w-6 h-6 text-brand"></i>
                         </div>
-                        <div class="text-lg font-bold mb-1">Lahir dari Masalah Nyata</div>
-                        <p class="text-xs sm:text-sm" style="color:#64748b">Bukan project iseng — Monetra muncul dari
-                            kegelisahan nyata terhadap rendahnya literasi finansial di kalangan pelajar dan mahasiswa
-                            Indonesia.</p>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1"><span class="lang-id">Problem Realita</span><span class="lang-en">Reality Problem</span></h3>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400"><span class="lang-id">Bukan proyek iseng, ini adalah *patch* untuk masalah literasi finansial nasional.</span><span class="lang-en">Not a side project, this is a *patch* for national financial literacy issues.</span></p>
+                        </div>
                     </div>
-                    <div class="info-box">
-                        <div
-                            class="info-box-icon bg-gradient-to-br from-cyan-600/20 to-cyan-600/5 border border-cyan-500/20 mx-auto">
-                            <i data-lucide="book-open" class="w-4 h-4 text-cyan-400"></i>
-                        </div>
-                        <div class="text-base font-bold">Edukatif</div>
-                        <p class="text-xs mt-1" style="color:#64748b">Berbasis pembelajaran</p>
+                    <div class="spotlight-card bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 text-center">
+                        <i data-lucide="database" class="w-8 h-8 text-cyan-500 mx-auto mb-3"></i>
+                        <h4 class="font-bold text-sm mb-1"><span class="lang-id">Berbasis Data</span><span class="lang-en">Data-Driven</span></h4>
+                        <p class="text-xs text-zinc-500"><span class="lang-id">Objektif & Analitis</span><span class="lang-en">Objective & Analytical</span></p>
                     </div>
-                    <div class="info-box">
-                        <div
-                            class="info-box-icon bg-gradient-to-br from-emerald-600/20 to-emerald-600/5 border border-emerald-500/20 mx-auto">
-                            <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
-                        </div>
-                        <div class="text-base font-bold">Personal</div>
-                        <p class="text-xs mt-1" style="color:#64748b">Sesuai kepribadianmu</p>
-                    </div>
-                    <div class="info-box col-span-2">
-                        <div
-                            class="info-box-icon bg-gradient-to-br from-amber-600/20 to-amber-600/5 border border-amber-500/20 mx-auto">
-                            <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
-                        </div>
-                        <div class="text-lg font-bold mb-1">Interaktif &amp; Aplikatif</div>
-                        <p class="text-xs sm:text-sm" style="color:#64748b">Fitur simulasi, visualisasi progres, dan
-                            tracking yang membuat belajar keuangan terasa nyata — bukan sekadar teori.</p>
+                    <div class="spotlight-card bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 text-center">
+                        <i data-lucide="fingerprint" class="w-8 h-8 text-indigo-500 mx-auto mb-3"></i>
+                        <h4 class="font-bold text-sm mb-1"><span class="lang-id">Personal</span><span class="lang-en">Personalized</span></h4>
+                        <p class="text-xs text-zinc-500"><span class="lang-id">Adaptif ke *User*</span><span class="lang-en">Adaptive to User</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="pb-20 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="max-w-2xl mb-10 md:mb-14" data-aos="fade-up">
-                <div class="section-label">Cara Kerja</div>
-                <h2 class="section-heading">Tiga Pendekatan <span class="gradient-text">Utama</span></h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-4 sm:gap-5">
-                <div class="approach-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="approach-number">01 — Edukatif</div>
-                    <h3 class="text-lg font-bold mb-3">Bahasa yang Sederhana</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Materi dan fitur dirancang dengan bahasa
-                        yang sederhana, relevan, dan mudah dipahami oleh pelajar maupun mahasiswa.</p>
-                </div>
-                <div class="approach-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="approach-number">02 — Personal</div>
-                    <h3 class="text-lg font-bold mb-3">Sesuai Kebutuhanmu</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Rekomendasi dan insight disesuaikan dengan
-                        hasil Tes Kepribadian Finansial, sehingga setiap pengguna mendapatkan pengalaman yang berbeda
-                        sesuai kebutuhannya.</p>
-                </div>
-                <div class="approach-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="approach-number">03 — Interaktif</div>
-                    <h3 class="text-lg font-bold mb-3">Belajar Sambil Praktik</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Fitur simulasi, visualisasi progres, dan
-                        sistem tracking membantu pengguna belajar sambil praktik secara langsung.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pb-20 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid md:grid-cols-2 gap-5 sm:gap-6">
-                <div class="mv-card" data-aos="fade-right" data-aos-duration="700">
-                    <div class="mv-icon-wrap bg-gradient-to-br from-violet-600 to-violet-900">
-                        <i data-lucide="flag" class="w-6 h-6 text-white"></i>
+    <!-- Mission & Vision -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-3xl p-10 hover:border-brand/40 transition-colors" data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                            <i data-lucide="target" class="w-5 h-5 text-zinc-900 dark:text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-mono tracking-tight"><span class="lang-id">Sistem.Misi()</span><span class="lang-en">System.Mission()</span></h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3">Misi</h3>
-                    <div class="space-y-0 mt-4">
-                        <div class="mv-list-item">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Meningkatkan kesadaran literasi finansial melalui pendekatan digital
-                                yang interaktif</span>
-                        </div>
-                        <div class="mv-list-item">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Menyediakan alat perencanaan keuangan yang mudah digunakan dan
-                                aplikatif</span>
-                        </div>
-                        <div class="mv-list-item">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Mendorong konsistensi dalam mencapai target finansial</span>
-                        </div>
-                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand mt-0.5 flex-shrink-0"></i>
+                            <span class="lang-id">Meningkatkan *bandwidth* literasi finansial dengan pendekatan interaktif.</span><span class="lang-en">Increase financial literacy *bandwidth* via interactive approaches.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand mt-0.5 flex-shrink-0"></i>
+                            <span class="lang-id">Menyediakan *tools* perencanaan yang presisi dan mudah diakses.</span><span class="lang-en">Provide precise and easily accessible planning *tools*.</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                            <i data-lucide="check" class="w-4 h-4 text-brand mt-0.5 flex-shrink-0"></i>
+                            <span class="lang-id">Mengkompilasi kebiasaan baik pengguna menjadi hasil yang konsisten.</span><span class="lang-en">Compile user's good habits into consistent outputs.</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="mv-card" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
-                    <div class="mv-icon-wrap bg-gradient-to-br from-cyan-600 to-blue-800">
-                        <i data-lucide="eye" class="w-6 h-6 text-white"></i>
+                <div class="bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-3xl p-10 hover:border-cyan-500/40 transition-colors" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                            <i data-lucide="eye" class="w-5 h-5 text-zinc-900 dark:text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-mono tracking-tight"><span class="lang-id">Sistem.Visi()</span><span class="lang-en">System.Vision()</span></h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3">Visi</h3>
-                    <p class="text-sm leading-relaxed mb-6" style="color:#94a3b8">Menjadi platform edukasi finansial
-                        digital yang membantu generasi muda Indonesia membangun kebiasaan finansial yang sehat dan
-                        berkelanjutan.</p>
-                    <div class="space-y-0">
-                        <div class="mv-list-item">
-                            <i data-lucide="star" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">100.000 pengguna aktif pada tahun 2028</span>
-                        </div>
-                        <div class="mv-list-item">
-                            <i data-lucide="star" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Hadir di 50 kota di seluruh Indonesia</span>
-                        </div>
-                        <div class="mv-list-item">
-                            <i data-lucide="star" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
-                            <span class="text-sm">Kolaborasi dengan 20+ institusi pendidikan</span>
-                        </div>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 leading-relaxed">
+                        <span class="lang-id">Menjadi *mainframe* edukasi finansial digital yang membentuk struktur kebiasaan sehat bagi generasi muda secara berkesinambungan.</span>
+                        <span class="lang-en">To become the digital financial education *mainframe* that establishes a healthy habit structure for the youth sustainably.</span>
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-zinc-500 border border-zinc-200 dark:border-zinc-700">100k Users Base</span>
+                        <span class="px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-zinc-500 border border-zinc-200 dark:border-zinc-700">50+ Node Cities</span>
+                        <span class="px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-zinc-500 border border-zinc-200 dark:border-zinc-700">20+ Integrations</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="pb-20 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-10 md:mb-14" data-aos="fade-up">
-                <div class="section-label">Prinsip Kami</div>
-                <h2 class="section-heading">Nilai <span class="gradient-text">Utama</span></h2>
+    <!-- Team Section -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <div class="font-mono text-xs uppercase tracking-widest text-brand mb-4">Auth.Level(Root)</div>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight">
+                    <span class="lang-id">Arsitek <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Sistem</span></span>
+                    <span class="lang-en">System <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Architects</span></span>
+                </h2>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                <div class="value-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="value-icon"><i data-lucide="zap" class="w-5 h-5 text-violet-400"></i></div>
-                    <h3 class="text-base font-bold mb-2">Inovatif</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Mengembangkan solusi digital yang adaptif
-                        dan relevan dengan kebutuhan generasi muda.</p>
-                </div>
-                <div class="value-card" data-aos="fade-up" data-aos-delay="80">
-                    <div class="value-icon"><i data-lucide="layout" class="w-5 h-5 text-violet-400"></i></div>
-                    <h3 class="text-base font-bold mb-2">Aksesibel</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Mudah digunakan, responsif di berbagai
-                        perangkat, dan ramah untuk pelajar serta mahasiswa.</p>
-                </div>
-                <div class="value-card" data-aos="fade-up" data-aos-delay="160">
-                    <div class="value-icon"><i data-lucide="trending-up" class="w-5 h-5 text-violet-400"></i></div>
-                    <h3 class="text-base font-bold mb-2">Berdampak</h3>
-                    <p class="text-sm leading-relaxed" style="color:#64748b">Memberikan manfaat nyata dalam membantu
-                        pengguna mengelola dan merencanakan keuangan mereka.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="pb-20 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-10 md:mb-14" data-aos="fade-up">
-                <div class="section-label">Tim Pengembang</div>
-                <h2 class="section-heading">Dua Orang di <span class="gradient-text">Balik Monetra</span></h2>
-                <p class="text-sm sm:text-base mt-3 max-w-xl mx-auto" style="color:#64748b">Monetra dikembangkan oleh
-                    tim yang memiliki ketertarikan pada bidang teknologi dan literasi finansial. Dengan kolaborasi yang
-                    solid, kami berkomitmen menghadirkan platform yang fungsional, edukatif, dan berdampak.</p>
-            </div>
-            <div class="grid sm:grid-cols-2 max-w-3xl mx-auto gap-5 sm:gap-6">
-                <div class="team-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="p-8">
-                        <div class="team-img-wrap mb-4">
-                            <img src="assets/img/IMG_20260211_091513.jpg" alt="Daffi Nafeeza"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <h3 class="text-lg font-bold text-center mb-1">Daffi Nafeeza</h3>
-                        <p class="text-xs text-center font-semibold mb-3" style="color:#8b5cf6">Full Stack Developer</p>
-                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Berperan dalam
-                            perancangan sistem dan pengembangan fitur interaktif, dengan fokus pada pengalaman pengguna
-                            yang modern dan responsif.</p>
-                        <div class="flex justify-center gap-2">
-                            <a href="https://www.linkedin.com/in/daffi-nafeeza-036601376/" class="social-btn"
-                                target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                            <a href="https://github.com/D4FF1" class="social-btn" target="_blank"><i
-                                    data-lucide="github" class="w-4 h-4"></i></a>
-                        </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="spotlight-card bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="tech-img-wrapper w-32 h-32 mb-6 border-2 border-zinc-200 dark:border-zinc-800 rounded-full shadow-lg">
+                        <img src="assets/img/IMG_20260211_091513.jpg" alt="Daffi Nafeeza" class="w-full h-full object-cover">
                     </div>
-                </div>
-                <div class="team-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="p-8">
-                        <div class="team-img-wrap mb-4">
-                            <img src="assets/img/WhatsApp Image 2026-02-17 at 14.07.22.jpeg" alt="M Rizki Suryapratama"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <h3 class="text-lg font-bold text-center mb-1">M Rizki Suryapratama</h3>
-                        <p class="text-xs text-center font-semibold mb-3" style="color:#8b5cf6">Full Stack Developer</p>
-                        <p class="text-xs text-center leading-relaxed mb-5" style="color:#64748b">Bertanggung jawab pada
-                            pengembangan backend dan integrasi sistem, memastikan performa dan stabilitas platform
-                            berjalan optimal.</p>
-                        <div class="flex justify-center gap-2">
-                            <a href="https://www.linkedin.com/in/muhammad-rizki-suryapratama/" class="social-btn"
-                                target="_blank"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                            <a href="https://github.com/mrizzzz97" class="social-btn" target="_blank"><i
-                                    data-lucide="github" class="w-4 h-4"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pb-20 md:pb-28">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6" data-aos="zoom-in" data-aos-duration="600">
-            <div class="cta-wrap">
-                <div class="cta-grid-lines"></div>
-                <div class="relative z-10">
-                    <div class="section-label mb-4" style="color:#a78bfa">Mulai Sekarang</div>
-                    <h2 class="section-heading mb-4">Lebih dari Sekadar<br><span class="gradient-text">Pencatatan
-                            Keuangan</span></h2>
-                    <p class="text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed" style="color:#94a3b8">Monetra
-                        adalah sarana pembelajaran yang membantu generasi muda memahami, merencanakan, dan
-                        mengoptimalkan masa depan finansial mereka secara lebih bijak.</p>
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="personality-test.html" class="morph-btn">
-                            <span class="btn-fill"></span>
-                            <span class="shadow"></span>
-                            <span class="btn-text">
-                                <span style="--i:0">M</span><span style="--i:1">u</span><span
-                                    style="--i:2">l</span><span style="--i:3">a</span><span
-                                    style="--i:4">i</span>&nbsp;<span style="--i:5">T</span><span
-                                    style="--i:6">e</span><span style="--i:7">s</span>&nbsp;<span
-                                    style="--i:8">K</span><span style="--i:9">e</span><span style="--i:10">p</span><span
-                                    style="--i:11">r</span><span style="--i:12">i</span><span
-                                    style="--i:13">b</span><span style="--i:14">a</span><span
-                                    style="--i:15">d</span><span style="--i:16">i</span><span
-                                    style="--i:17">a</span><span style="--i:18">n</span>
-                            </span>
-                            <span class="orbit-dots"><span></span><span></span><span></span><span></span></span>
-                            <span class="corners"><span></span><span></span><span></span><span></span></span>
+                    <h3 class="text-xl font-bold mb-1">Daffi Nafeeza</h3>
+                    <div class="font-mono text-xs text-brand bg-blue-500/10 px-3 py-1 rounded-md mb-4 border border-blue-500/20">Lead.FrontEnd()</div>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-xs">
+                        <span class="lang-id">Mengeksekusi arsitektur antarmuka dan interaksi pengguna. Memastikan data kompleks divisualisasikan menjadi *UI* modern.</span>
+                        <span class="lang-en">Executes interface architecture and user interaction. Ensuring complex data is visualized into modern *UI*.</span>
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://github.com/D4FF1" target="_blank" class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-brand hover:text-white transition-colors border border-zinc-200 dark:border-zinc-700">
+                            <i data-lucide="github" class="w-4 h-4"></i>
                         </a>
-                        <a href="contact.html"
-                            class="btn-secondary px-8 py-3.5 rounded-full font-semibold text-sm">Hubungi Kami</a>
+                        <a href="https://www.linkedin.com/in/daffi-nafeeza-036601376/" target="_blank" class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-brand hover:text-white transition-colors border border-zinc-200 dark:border-zinc-700">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="spotlight-card bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col items-center text-center" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="tech-img-wrapper w-32 h-32 mb-6 border-2 border-zinc-200 dark:border-zinc-800 rounded-full shadow-lg">
+                        <img src="assets/img/WhatsApp Image 2026-02-17 at 14.07.22.jpeg" alt="M Rizki Suryapratama" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">M Rizki Suryapratama</h3>
+                    <div class="font-mono text-xs text-cyan-500 bg-cyan-500/10 px-3 py-1 rounded-md mb-4 border border-cyan-500/20">Lead.BackEnd()</div>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-xs">
+                        <span class="lang-id">Membangun logika *backend* dan integrasi *database*. Memastikan stabilitas aliran kalkulasi finansial tanpa latensi.</span>
+                        <span class="lang-en">Builds *backend* logic and database integration. Ensuring stable flow of financial calculations without latency.</span>
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://github.com/mrizzzz97" target="_blank" class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-cyan-500 hover:text-white transition-colors border border-zinc-200 dark:border-zinc-700">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/muhammad-rizki-suryapratama/" target="_blank" class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:bg-cyan-500 hover:text-white transition-colors border border-zinc-200 dark:border-zinc-700">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#020617] pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-10 md:pb-12 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-14 md:mb-16">
-                <div>
-                    <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                        <div
-                            class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 overflow-hidden rounded-xl border border-white/10">
-                            <img src="assets/img/image.jpeg" alt="Monetra Logo" class="w-full h-full object-cover">
+    <!-- Call to Action -->
+    <section class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-6 text-center" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-black mb-6">
+                <span class="lang-id">Siap Memulai <span class="text-brand">Kompilasi?</span></span>
+                <span class="lang-en">Ready to <span class="text-brand">Compile?</span></span>
+            </h2>
+            <p class="text-zinc-600 dark:text-zinc-400 mb-10 max-w-lg mx-auto">
+                <span class="lang-id">Jangan hanya mencatat. Pahami kepribadian finansialmu, dan biarkan Monetra menyusun logikanya.</span>
+                <span class="lang-en">Don't just log data. Understand your financial personality, and let Monetra build the logic.</span>
+            </p>
+            <a href="personality-test.html" class="btn-magnetic inline-flex items-center gap-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-8 py-4 rounded-md font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
+                <i data-lucide="terminal-square" class="w-5 h-5"></i>
+                <span class="lang-id">Eksekusi Tes Diagnostik</span><span class="lang-en">Execute Diagnostic Test</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-24 pb-12 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#030712] relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
+                <div class="md:col-span-4">
+                    <a href="index.html" class="flex items-center space-x-3 mb-6 grayscale hover:grayscale-0 transition-all duration-300 w-max group">
+                        <div class="w-8 h-8 rounded bg-zinc-900 dark:bg-white flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform">
+                            <img src="assets/img/image.jpeg" alt="Logo" class="w-full h-full object-cover">
                         </div>
-                        <span class="text-xl sm:text-2xl font-bold">Monetra</span>
-                    </div>
-                    <p class="opacity-50 text-xs sm:text-sm">Platform edukasi finansial untuk generasi muda Indonesia.
+                        <span class="font-bold text-xl tracking-tight">Monetra.</span>
+                    </a>
+                    <p class="text-sm text-zinc-500 leading-relaxed mb-6 max-w-xs">
+                        <span class="lang-id">Infrastruktur logika untuk keputusan finansial generasi muda.</span>
+                        <span class="lang-en">Logical infrastructure for the younger generation's financial decisions.</span>
                     </p>
                 </div>
-                <div>
-                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Produk</h4>
-                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
-                        <li><a href="personality-test.html" class="hover:text-violet-400 transition">Tes Kepribadian</a>
-                        </li>
-                        <li><a href="budget-simulator.html" class="hover:text-violet-400 transition">Simulasi Budget</a>
-                        </li>
-                        <li><a href="challenge.html" class="hover:text-violet-400 transition">Saving Challenge</a></li>
+                <div class="hidden md:block md:col-span-2"></div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold mb-5 text-sm uppercase tracking-widest text-zinc-900 dark:text-white">Modul</h4>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                        <li><a href="personality-test.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Tes Kepribadian</span><span class="lang-en">Personality Test</span></a></li>
+                        <li><a href="budget-simulator.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Simulator Budget</span><span class="lang-en">Budget Simulator</span></a></li>
+                        <li><a href="goal-tracker.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Target Tabungan</span><span class="lang-en">Savings Goal</span></a></li>
+                        <li><a href="challenge.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Saving Challenge</span><span class="lang-en">Saving Challenge</span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Perusahaan</h4>
-                    <ul class="space-y-2 sm:space-y-3 md:space-y-4 text-xs sm:text-sm opacity-60">
-                        <li><a href="about.html" class="hover:text-violet-400 transition">Tentang Kami</a></li>
-                        <li><a href="contact.html" class="hover:text-violet-400 transition">Hubungi Kami</a></li>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold mb-5 text-sm uppercase tracking-widest text-zinc-900 dark:text-white"><span class="lang-id">Akses</span><span class="lang-en">Access</span></h4>
+                    <ul class="space-y-3 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                        <li><a href="about.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform text-brand font-bold"><span class="lang-id">Tim Kami</span><span class="lang-en">Our Team</span></a></li>
+                        <li><a href="contact.html" class="hover:text-brand hover:translate-x-1 inline-block transition-transform"><span class="lang-id">Hubungi Kami</span><span class="lang-en">Contact Us</span></a></li>
                     </ul>
-                </div>
-                <div>
-                    <h4 class="text-sm sm:text-base font-bold mb-4 sm:mb-6">Ikuti Kami</h4>
-                    <div class="flex space-x-3 sm:space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
-                                data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
-                        <a href="#"
-                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
-                                data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
-                        <a href="#"
-                            class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-violet-600 transition border border-white/10"><i
-                                data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
-                    </div>
                 </div>
             </div>
-            <div class="border-t border-white/5 pt-6 sm:pt-7 md:pt-8 text-center opacity-40 text-xs">
-                <p>&copy; 2026 Monetra. All rights reserved.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-200 dark:border-zinc-800 text-xs text-zinc-500 font-mono">
+                <p>&copy; 2026 Monetra System. All rights reserved.</p>
+                <div class="flex items-center gap-2 mt-4 md:mt-0 bg-zinc-200 dark:bg-zinc-900 px-3 py-1.5 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <span class="lang-id">Sistem Operasional: Normal</span><span class="lang-en">Systems Operational</span>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Jam Capsule -->
+    <div id="floating-clock" class="clock-container no-print">
+        <div class="clock-time" id="clock-time">00:00:00</div>
+        <div class="clock-date" id="clock-date">Memuat...</div>
+    </div>
+
+    <!-- Core Scripts -->
     <script>
         lucide.createIcons();
 
-        window.addEventListener('load', function () {
+        // Fast Boot Loader Logic
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('bootProgress');
             const loader = document.getElementById('loader');
-            setTimeout(() => {
-                if (loader) loader.classList.add('slide-up');
-            }, 800);
+            setTimeout(() => { if(bar) bar.style.width = '100%'; }, 100);
+            setTimeout(() => { if(loader) loader.classList.add('booted'); }, 600);
         });
 
-        // Allow clicking loader to skip
-        const loaderElement = document.getElementById('loader');
-        if (loaderElement) {
-            loaderElement.style.cursor = 'pointer';
-            loaderElement.addEventListener('click', () => {
-                if (loaderElement && !loaderElement.classList.contains('slide-up')) {
-                    loaderElement.classList.add('slide-up');
-                }
-            });
-        }
+        // Init Animations
+        AOS.init({ duration: 800, once: true, offset: 50, easing: 'ease-out-cubic' });
 
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100,
-            easing: 'ease-out-cubic'
-        });
-
-        const themeToggle = document.getElementById('themeToggle');
-        const themeToggleMobile = document.getElementById('themeToggleMobile');
-        const html = document.documentElement;
-
-        function toggleTheme() {
-            html.classList.toggle('dark');
-            html.classList.toggle('light');
+        // Theme System
+        const toggleTheme = () => {
+            const html = document.documentElement;
+            html.classList.toggle('dark'); html.classList.toggle('light');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             lucide.createIcons();
-            updateWave();
-        }
-        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
-        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        };
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+        if (localStorage.getItem('theme') === 'light') { document.documentElement.classList.remove('dark'); document.documentElement.classList.add('light'); }
 
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') { html.classList.remove('dark'); html.classList.add('light'); }
-        else if (!savedTheme) { html.classList.add('dark'); }
+        // Language System
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        const langToggleBtnMobile = document.getElementById('langToggleBtnMobile');
+        let currentLang = localStorage.getItem('lang') || 'id';
 
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', function () {
-            navbar.classList.toggle('floating', window.scrollY > 50);
+        const applyLanguage = (lang) => {
+            document.documentElement.lang = lang; 
+            langToggleBtn.innerText = lang.toUpperCase();
+            if (langToggleBtnMobile) langToggleBtnMobile.innerText = lang.toUpperCase();
+            localStorage.setItem('lang', lang);
+            updateClock();
+        };
+
+        langToggleBtn.addEventListener('click', () => { currentLang = currentLang === 'id' ? 'en' : 'id'; applyLanguage(currentLang); });
+        if (langToggleBtnMobile) langToggleBtnMobile.addEventListener('click', () => { currentLang = currentLang === 'id' ? 'en' : 'id'; applyLanguage(currentLang); });
+        applyLanguage(currentLang);
+
+        // Island Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) navbar.classList.add('nav-scrolled');
+            else navbar.classList.remove('nav-scrolled');
         });
 
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        // 3D Spotlight Cards
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`); card.style.setProperty('--mouse-y', `${y}px`);
+                const centerX = rect.width / 2; const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`);
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll('.btn-magnetic').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            btn.addEventListener('mouseout', () => btn.style.transform = 'translate(0px, 0px)');
+        });
+
+        // Mobile Menu
         const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        const openBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('closeMobileMenu');
 
-        function openMobileMenu() { mobileMenu.classList.add('active'); mobileMenuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeMobileMenuFunc() { mobileMenu.classList.remove('active'); mobileMenuOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+        const toggleMobileMenu = (show) => {
+            if (show) {
+                mobileMenu.classList.remove('translate-x-full'); overlay.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                mobileMenu.classList.add('translate-x-full'); overlay.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+        };
+        openBtn.addEventListener('click', () => toggleMobileMenu(true));
+        closeBtn.addEventListener('click', () => toggleMobileMenu(false));
+        overlay.addEventListener('click', () => toggleMobileMenu(false));
 
-        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
-        if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
-        if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
-        document.querySelectorAll('.mobile-menu a').forEach(link => link.addEventListener('click', closeMobileMenuFunc));
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenuFunc(); });
-
-        const toast = document.getElementById('toast');
-        function showToast(message, type = 'info', duration = 3000) {
-            toast.textContent = message;
-            toast.className = `toast ${type} show`;
-            setTimeout(() => toast.classList.remove('show'), duration);
+        // Clock Logic
+        function updateClock() {
+            const now = new Date();
+            const isID = document.documentElement.lang === 'id';
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock-time').textContent = `${hours}.${minutes}.${seconds}`;
+            
+            const daysID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
+            const monthsID = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+            const daysEN = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            const monthsEN = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            
+            if (isID) {
+                document.getElementById('clock-date').textContent = `${daysID[now.getDay()]}, ${now.getDate()} ${monthsID[now.getMonth()]} ${now.getFullYear()}`;
+            } else {
+                document.getElementById('clock-date').textContent = `${daysEN[now.getDay()]}, ${monthsEN[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+            }
         }
-        window.showToast = showToast;
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
-    <!-- Floating Clock -->
-    <div id="floating-clock" class="clock-container">
-        <div class="clock-time">00:00:00</div>
-        <div class="clock-date">Memuat...</div>
-    </div>
-
-    <script src="assets/js/clock.js"></script>
 </body>
 
 </html>
